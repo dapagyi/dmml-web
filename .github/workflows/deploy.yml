@@ -1,0 +1,72 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install uv
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+      - name: Install Python environment
+        run: |
+          uv sync --all-extras --dev
+          echo "$(pwd)/.venv/bin" >> $GITHUB_PATH
+
+      - name: Install Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Render Quarto notebooks
+        run: |
+          QUARTO_PROFILE="solutions" uv run quarto render ./notebooks/*.qmd
+
+      - name: Prepare publish directory
+        run: |
+          rm -rf out
+          mkdir -p out
+          cp -r docs/* out/
+          cp -r data out/data
+          mkdir -p out/notebooks
+          cp notebooks/*.html out/notebooks/ || true
+          cp notebooks/*.ipynb out/notebooks/ || true
+          for d in notebooks/*_files; do
+            [ -d "$d" ] && cp -r "$d" out/notebooks/;
+          done
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out
+          publish_branch: gh-pages
+          force_orphan: true
+
+      - name: Deploy via SFTP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: caesar.elte.hu
+          username: apagyidavid
+          password: ${{ secrets.SFTP_PASSWORD }}
+          source: "./out/*"
+          target: "/afs/elte.hu/user/a/apagyidavid/web/2025-2026-1/dmml"
+          strip_components: 1

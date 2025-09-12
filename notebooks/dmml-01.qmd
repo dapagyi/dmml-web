@@ -1,0 +1,539 @@
+---
+title: "DMML-01"
+subtitle: "Kurzusinformációk; módszertan; $k$-means algoritmus; `numpy`, `pandas`, `matplotlib`, `seaborn`, `polars` gyakorlás."
+date: "2025-09-11"
+title-block-banner: true
+format:
+    html:
+      grid: 
+        margin-width: 300px
+    ipynb: default
+execute:
+  echo: true
+toc: true
+reference-location: margin
+citation-location: margin
+# language:
+#     crossref-exr-title: "Feladat #"
+---
+<strong>Honlap:</strong> [apagyidavid.web.elte.hu/2025-2026-1/dmml](https://apagyidavid.web.elte.hu/2025-2026-1/dmml){target="_blank"}
+
+# Módszertani kísérlet
+
+Kísérleti jelleggel a következő gyakorlattól kezdve áthelyezzük a hangsúlyt arról, hogy _hogyan_ lehet az eszközöket kód szintjén használni, arra, hogy _mit_ tudunk, illetve főleg azt _miért_ akarjuk megvalósítani velük.
+
+Emiatt a feladatok megoldásához szükséges programozási ismeretek elsajátítása a Hallgató feladata. (A gyakorlat anyagai között lesznek példakódok, de minimális időt fogunk szentelni a soronkénti értelmezésükre.)
+
+Mihez, illetve kihez tudunk fordulni segítségért? Például a következőkhöz:
+
+* gyakorlati anyagok példakódjai;
+* debugger;
+* keresők (Google, DuckDuckGo stb.);
+* a használt könyvtárak User Guide-jai, dokumentációi;
+* LLM-ek (Copilot, ChatGPT stb.); valamint
+* _csak iránymutatásért_ egymáshoz; illetve
+* bármilyen kérdéssel a gyakorlatvezetőhöz.
+
+Ezen a gyakorlaton ennek alapozunk meg: cél, hogy kipróbáljuk a Copilot, a debugger és a dokumentáció használatát.
+
+::: {.callout-note title="AI használata a gyakorlaton"}
+Az alapelv az, hogy -- megfelelő odafigyeléssel -- szabad, sőt _támogatott_ AI alapú eszközöket használni a tanulás, önfejlesztés eszközeként.
+
+* Először próbáljuk meg a feladatokat hagyományos eszközökkel megközelíteni.
+* Ne vakon használjuk az LLM-eket, értsük meg a válaszokat, győződjünk meg azok helyességéről (szemantikailag helyes-e, nem elavult-e véletlenül). Vegyük észe, és javítsuk ki a hibákat.
+* Használhatjuk ötletelésre, inspirációgyűjtésre, forráskeresésre is.
+* Ne büntessük magunkat AI-sloppal. Kerüljük az LLM-ekre gyakran jellemző felesleges terjengősséget, túlmagyarázást, minden sor kommentelését stb.
+
+:::
+
+# $k$-means algoritmus
+## Emlékeztető
+
+![A k-means algoritmus lépései[^1]](https://apagyidavid.web.elte.hu/2025-2026-1/dmml/static/k-means.png){max-width=500}
+
+[^1]: Részlet az előadás diáiból.
+
+## `numpy` gyakorlás
+
+Az alábbi feladatokhoz ahol csak lehet, használj alkalmas `numpy` függvényeket; ciklusok helyett keresd meg és használd a megfelelő vektorizált alternatívákat.
+
+Böngészd, használd a dokumentációt:
+
+* [NumPy User Guide](https://numpy.org/doc/stable/user/index.html){target="_blank"}
+* [NumPy API Reference](https://numpy.org/doc/stable/reference/index.html){target="_blank"}
+
+```{python}
+# | code-fold: true
+
+
+import numpy as np
+import pandas as pd
+from sklearn.datasets import make_blobs
+import matplotlib.pyplot as plt
+import seaborn as sns
+import polars as pl
+```
+
+
+1. Írj függvényt, amely a klaszterezendő pontok alapján inicializál néhány kezdő középpontot a klasztereknek!
+    * Mi legyen a stratégia? Nyugodtan válasszuk a legegyszerűbbet, ami eszünkbe jut.[^2]
+
+[^2]: Érdemes tudni, hogy léteznek [kifinomultabb módszerek](https://en.wikipedia.org/wiki/K-means%2B%2B){target="_blank"} is.
+
+```{python}
+# | eval: false
+
+
+def initialize_centroids(points: np.ndarray, n_clusters: int) -> np.ndarray:
+    """Initialize centroids for KMeans clustering."""
+
+    # TODO: If the points are in an m × n dimensional array,
+    # the shape of the output should be (n_clusters, n).
+
+    raise NotImplementedError()
+
+
+def test_centroid_initialization():
+    points = np.array([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]])
+    k = 3
+    centroids = initialize_centroids(points, n_clusters=k)
+
+    assert centroids.shape[0] == k
+    assert centroids.shape[1] == points.shape[1]
+
+    return "Success!"
+
+
+test_centroid_initialization()
+```
+
+2. Kódértelmezés: mit csinál az alábbi függvény?
+    * Ha nincs ötleted, futtasd le a kommentben lévő példát.
+    * Ha kész vagy, tedd olvashatóbbá a kódot. (Függvény neve, változónevek, type hintek, docstring.)
+
+```{python}
+# | eval: false
+
+
+def foo_bar(p, c): # <1>
+    """Darth Vader""" # <2>
+
+    whatever = np.linalg.norm(p[:, np.newaxis] - c, axis=2)
+    return whatever
+
+
+# p = np.array([[1, 2], [3, 4], [5, 6]])
+# c = np.array([[2, 2], [6, 6]])
+# print(foo_bar(p, c))
+```
+1. A type hintek jelölik a függvény szignatúráját, ld. pl. az `initialize_centroids` függvénynél: `np.ndarray` és `int` a paraméterek típusa, míg a visszatérési érték típusa `np.ndarray`.
+2. A docstring a függvény rövid leírására szolgál (hármas idézőjelek között).
+
+::: {}
+3. Írj függvényt, amely a pontokat hozzárendeli a legközelebbi középponthoz!
+    * A függvény az inputként megadott pontok számával azonos hosszúságú array-jel térjen vissza; minden pont esetén a hozzá legközelebbi középpont _indexével_. 
+:::
+
+```{python}
+# | eval: false
+
+
+def closest_centroids(points: np.ndarray, centroids: np.ndarray) -> np.ndarray:
+    """Assign each point to the closest centroid."""
+
+    # TODO: The result should be a 1D array where each element represents
+    # the index of the closest centroid for the corresponding point.
+
+    raise NotImplementedError()
+
+
+# Example usage
+points = np.array([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]])
+centroids = np.array([[2, 2], [6, 6]])
+print(closest_centroids(points, centroids))
+```
+
+4. Az előzőek felhasználásával valósítsd meg az alábbi függvényt:
+
+```{python}
+# | eval: false
+
+
+def calculate_new_centroids(X: np.ndarray, labels: np.ndarray, n_clusters: int) -> np.ndarray:
+    # TODO. (Hint: use a list comprehension.)
+    raise NotImplementedError()
+
+# TODO: Example usage
+```
+
+5. Az előbbi függvények felhasználásával készítsd el az algoritmust!
+    * Építs be leállási feltételként maximális iterációszámot (`max_iterations`), illetve egy küszöbértéket is (`tol`). Ha a klaszterek középpontjai már csak összességében az előbbi értéknél kisebb mértékben mozdulnak el, leállunk.
+
+```{python}
+# | eval: false
+
+
+class KMeans:
+    def __init__(
+        self,
+        n_clusters: int,
+        max_iterations: int = 20,
+        tol: float = 1e-3,
+    ):
+        self.n_clusters = n_clusters
+        self.max_iterations = max_iterations
+        self.tol = tol
+
+    def fit(self, X: np.ndarray):
+        self.centroids = initialize_centroids(X, self.n_clusters)
+
+        for _ in range(self.max_iterations):
+            # TODO: Use the previously implemented functions to run the k-means algorithm on X.
+            # (X is just an array of points, as before.)
+            raise NotImplementedError()
+
+    def fit_predict(self, X: np.ndarray) -> np.ndarray:
+        self.fit(X)
+        return self._labels
+
+
+# TODO: Example usage
+kmeans = KMeans(2)
+X = np.array([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]])
+kmeans.fit(X)
+print(kmeans._labels)
+```
+
+```{python}
+# | eval: false
+
+
+random_state = 0
+np.random.seed(random_state)
+
+n_samples = 1500
+X, y = make_blobs(n_samples=n_samples, cluster_std=[1.0, 2.5, 0.5], random_state=random_state)
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6))
+ax1.scatter(X[:, 0], X[:, 1], c=y)
+
+y_pred = KMeans(n_clusters=3).fit_predict(X)
+ax2.scatter(X[:, 0], X[:, 1], c=y_pred)
+plt.show()
+```
+
+6. Biztosak vagyunk, hogy minden esetben megfelelően működik a kódunk? Mikor dobhat mégis kivételt a kód?
+
+::: {.callout-tip collapse="true" title="Segítség #1: Mi okozhat problémát?"}
+[Lásd ezen a linken.](https://user.ceng.metu.edu.tr/~tcan/ceng465_f1314/Schedule/KMeansEmpty.html){target="_blank"}
+:::
+
+::: {.callout-tip collapse="true" title="Segítség #2: Hol lenne érdemes módosítani a meglévő kódot?"}
+Módosítsuk a `calculate_new_centroids` függvényt, hogy kezelje a fenti esetet. [Sokféle ötlet, heurisztika alkalmazása lehetséges.](https://stackoverflow.com/questions/11075272/k-means-empty-cluster){target="_blank"}
+:::
+
+# `pandas` gyakorlás
+
+::: {.callout-note collapse="true" title="Ha egy kicsit is haladóbbnak érzed magad..."}
+Ha egy kicsit is haladóbbnak érzed magad, nyugodtan ugorj a <a href="#polars-gyakorlás">`polars` gyakorlás</a> szakaszra.
+:::
+
+A félév során sokat fogunk zsonglőrködni tabuláris adatokkal, ezért szükséges némi jártasság a `pandas` (vagy a `polars`) csomag terén.
+
+Idézzük fel az idevonatkozó ismereteinket, és válaszoljunk meg néhány alapvető kérdést a Titanic adathalmazról.
+
+```{python}
+# | code-fold: true
+
+
+df = pd.read_csv("https://apagyidavid.web.elte.hu/2025-2026-1/dmml/data/titanic.csv")
+df.rename(columns={"Parch": "ParCh"}, inplace=True)
+print(f"Shape: {df.shape}")
+df.head()
+```
+
+7. Próbáljuk meg kitalálni az egyes oszlopok jelentéseit. [Ezen az oldalon](https://www.kaggle.com/c/titanic/data){target="_blank"} elérhető egy leírás az adathalmazról.
+    * Mik az egyes oszlopokban lévő adatok típusai? Van-e olyan, ami furcsa?
+
+```{python}
+# | eval: false
+
+
+# TODO
+```
+
+8. Hány érték hiányzik az egyes oszlopokból?
+    * `matplotlib` segítségével vizualizáljuk oszloponként a hiányzó értékek arányát az összes sorhoz képest ([`matplotlib` dokumentáció](https://matplotlib.org/){target="_blank"}).
+
+```{python}
+# | eval: false
+
+
+# TODO
+```
+
+9. Listázzuk a numerikus oszlopok _leíró statisztikáit_.
+    * Mely oszlopok esetén van ennek egyáltalán értelme? Módosítsuk a kódunkat, hogy csak értelme esetekben számoljunk statisztikákat.
+    * Vizualizáljuk az előbbi értékek eloszlását `seaborn` segítségével ([`seaborn` dokumentáció](https://seaborn.pydata.org/){target="_blank"}). (Ez csak egy "wrapper" a `matplotlib` felett.)
+
+```{python}
+# | eval: false
+
+
+# TODO
+```
+
+10. Vizualizáljuk nemenként az életkor feltételes eloszlását.
+
+::: {.callout-tip collapse="true" title="Segítség"}
+Használjuk a `groupby` és `hist` függvényeket a `pandas` `DateFrame`-re alkalmazva.
+:::
+
+```{python}
+# | eval: false
+
+
+# TODO
+```
+
+# `polars` gyakorlás
+
+Az elmúlt néhány évben egyre felkapottabbá váltak a Rust alapú eszközök a "Python ecosystem"-ben. Az `uv` és a `ruff` két olyan eszköz, amelyeket szinte minden új projektnél érdemes lehet használni:
+
+* előbbi egy package és project manager ([`uv` dokumentáció](https://docs.astral.sh/uv/){target="_blank"});
+* utóbbi pedig egy linter, formatter ([`ruff` dokumentáció](https://docs.astral.sh/ruff/){target="_blank"}).
+
+Mindkettő ugyanannak a cégnek a terméke, nyílt forráskodúak, viszont a licenszük aggaszt néhányakat.
+
+A `polars` egy gyorsan fejlődő `pandas` alternatíva ([`polars` dokumentáció](https://docs.pola.rs/){target="_blank"}).
+
+::: {.callout-note collapse="true" title="`polars` key features"}
+* "__Fast:__ Written from scratch in Rust, designed close to the machine and without external dependencies.  
+* __I/O:__ First class support for all common data storage layers: local, cloud storage & databases.  
+* __Intuitive API:__ Write your queries the way they were intended. Polars, internally, will determine the most efficient way to execute using its query optimizer.  
+* __Out of Core:__ The streaming API allows you to process your results without requiring all your data to be in memory at the same time.  
+* __Parallel:__ Utilises the power of your machine by dividing the workload among the available CPU cores without any additional configuration.  
+* __Vectorized Query Engine__  
+* __GPU Support:__ Optionally run queries on NVIDIA GPUs for maximum performance for in-memory workloads.  
+* __Apache Arrow support:__ Polars can consume and produce Arrow data often with zero-copy operations. Note that Polars is not built on a Pyarrow/Arrow implementation. Instead, Polars has its own compute and buffer implementations."
+
+(Részlet a dokumentációból.)
+:::
+
+Valószínűleg `pandas` alapok unalomig voltak már más órákon. Nagyon sokan a `polars`-ban látják a jövőt, azonban (főleg az elérhető anyagok, LLM-támogatottság szempontjából) az átállás -- pláne akadémiai közegben -- lassú és fáradságos. _Tegyünk azért a jobb világért!_
+
+11. Böngésszük egy kicsit a dokumentációt, majd oldjuk meg az előző szakaszban lévő feladatokat `polars` segítségével.
+
+```{python}
+# | eval: false
+
+
+# TODO
+```
+
+
+::: {.content-visible when-profile="solutions"}
+::: {.content-visible when-format="html"}
+
+# Megoldások
+
+::: {.callout-tip collapse="true"}
+## 1. feladat megoldása
+Többeknél felmerült, hogy válasszuk az első $k$ pontot az inputból centroidoknak.
+
+Ennél valamivel jobb, ha a $k$ darab kezdeti centroidot véletlenszerűen választjuk a pontok közül.
+
+Említettük, hogy milyen problémái vannak a $k$-means algoritmusnak; az egyik ilyen, hogy érzékeny a kezdeti centroidok választására. Egy naiv megközelítés ennek megoldására, hogy futtassuk le az algoritmust sok különböző kezdeti centroiddal, és válasszuk azt a megoldást, amely a legkedvezőbb a célfüggvény szempontjából.[^3] _Emiatt_ választjuk most inkább azt a megközelítést, hogy random sorsolunk, de persze csinálhatnánk azt is, hogy itt az első $k$ elemet választjuk, és az újrahívások előtt permutálunk egyet a pontok array-én.
+
+[^3]: Mi a célfüggvény? Nem tértünk ki mindenkivel erre a kérdésre, az előadáson várhatóan elő fog kerülni. A lépéseinkkel tulajdonképpen a _klaszteren belüli távolságok négyzetösszegének,_ mint célfüggvénynek a minimalizálására törekszünk. Ez ekvivalens a _klaszterek közötti távolságok négyzetösszegének_ maximalizálásával. Formálisan ld. még [Wikipedia: $k$-means clustering](https://en.wikipedia.org/wiki/K-means_clustering).
+
+```{python}
+def initialize_centroids(points: np.ndarray, n_clusters: int) -> np.ndarray:
+    """Initialize centroids for KMeans clustering."""
+
+    indices = np.random.choice(points.shape[0], size=n_clusters, replace=False)
+    return points[indices]
+
+
+def test_centroid_initialization():
+    points = np.array([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]])
+    k = 3
+    centroids = initialize_centroids(points, n_clusters=k)
+
+    assert centroids.shape[0] == k
+    assert centroids.shape[1] == points.shape[1]
+
+    return "Success!"
+
+
+test_centroid_initialization()
+```
+
+Hiba nélkül lefutottak a tesztek, szóval a dimenziók látszólag rendben vannak. Ellenőrizzünk kézzel is egy példa outputot, hogy azt kaptuk-e, mint amit vártunk:
+
+```{python}
+initialize_centroids(np.array([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]]), n_clusters=3)
+```
+
+:::
+
+::: {.callout-tip collapse="true"}
+## 2. feladat megoldása
+A feladatban szereplő függvény meghatározza a centroidokból a pontokba mutató vektorokat, és kiszámolja azok normáját: ezáltal megkapjuk a pontok centroidtoktól való távolságát.
+
+```{python}
+def calculate_distances(points: np.ndarray, centroids: np.ndarray) -> np.ndarray:
+    """Calculate the Euclidean distance from each point to every centroid."""
+
+    distances = np.linalg.norm(points[:, np.newaxis] - centroids, axis=2)
+    return distances
+
+
+# Example usage
+points = np.array([[1, 2], [3, 4], [5, 6]])
+centroids = np.array([[2, 2], [6, 6]])
+calculate_distances(points, centroids)
+```
+
+Fejben ellenőrizzünk néhány értéket!
+:::
+
+::: {.callout-tip collapse="true"}
+## 3. feladat megoldása
+Használjuk az előző függvényünket: határozzuk meg a távolságokat, majd pedig `np.argmin`-nel határozzuk meg, hogy hanyadik centroidtól való távolság a legrövidebb.
+
+```{python}
+def closest_centroids(points: np.ndarray, centroids: np.ndarray) -> np.ndarray:
+    """Assign each point to the closest centroid.
+
+    The result is a 1D array where each element represents
+    the index of the closest centroid for the corresponding point.
+    """
+    
+    distances = calculate_distances(points, centroids)
+    return np.argmin(distances, axis=1)
+
+
+# Example usage
+points = np.array([[1, 2], [3, 4], [5, 6]])
+centroids = np.array([[2, 2], [6, 6]])
+closest_centroids(points, centroids)
+```
+:::
+
+::: {.callout-tip collapse="true"}
+## 4. feladat megoldása
+
+```{python}
+def calculate_new_centroids(X: np.ndarray, labels: np.ndarray, n_clusters: int) -> np.ndarray:
+    clusters = [X[labels == i] for i in range(n_clusters)]
+    return np.array([cluster.mean(axis=0) for cluster in clusters])
+
+# Example usage
+points = np.array([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]])
+labels = np.array([0, 0, 1, 1, 1])
+calculate_new_centroids(points, labels, 2)
+```
+:::
+
+::: {.callout-tip collapse="true"}
+## 5. feladat megoldása
+```{python}
+class KMeans:
+    def __init__(
+        self,
+        n_clusters: int,
+        max_iterations: int = 20,
+        tol: float = 1e-3,
+    ):
+        self.n_clusters = n_clusters
+        self.max_iterations = max_iterations
+        self.tol = tol
+
+    def fit(self, X: np.ndarray):
+        # Use the previously implemented functions to run KMeans algorithm on X.
+        self.centroids = initialize_centroids(X, self.n_clusters)
+        for _ in range(self.max_iterations):
+            self._labels = closest_centroids(X, self.centroids)
+            new_centroids = calculate_new_centroids(X, self._labels, self.n_clusters)
+
+            if np.linalg.norm(self.centroids - new_centroids) < self.tol:
+                break
+
+            self.centroids = new_centroids
+
+    def fit_predict(self, X: np.ndarray) -> np.ndarray:
+        self.fit(X)
+        return self._labels
+
+
+# Example usage
+kmeans = KMeans(2)
+X = np.array([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]])
+kmeans.fit(X)
+kmeans._labels
+```
+
+Futassuk le a fenti cellát néhányszor. Mit tapasztalunk?
+
+```{python}
+# | fig-cap: "Bal oldalt a valódi klaszterek, jobb oldalt a megtaláltak vannak. Jól látható a $k$-means algoritmus egy gyengesége, hogy csak [Voronoi-cellák](https://en.wikipedia.org/wiki/Voronoi_diagram) mentén tud klasztereket találni, minden ezzel járó következménnyel együtt."
+
+
+random_state = 0
+np.random.seed(random_state)
+
+n_samples = 1500
+X, y = make_blobs(n_samples=n_samples, cluster_std=[1.0, 2.5, 0.5], random_state=random_state)
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6))
+ax1.scatter(X[:, 0], X[:, 1], c=y)
+
+y_pred = KMeans(n_clusters=3).fit_predict(X)
+ax2.scatter(X[:, 0], X[:, 1], c=y_pred)
+plt.show()
+```
+
+:::
+
+::: {.callout-tip collapse="true"}
+## 11. feladat megoldása (részlet)
+
+```{python}
+df = pl.read_csv("https://apagyidavid.web.elte.hu/2025-2026-1/dmml/data/titanic.csv")
+df = df.rename({"Parch": "ParCh"})
+df.head()
+```
+
+```{python}
+df.dtypes
+```
+
+```{python}
+df.schema
+```
+
+Első ránézésre furcsának tűnhet, hogy az `Age` oszlop `Float64` típusú, azonban a korábban linkelt leírás az adathalmazról megmagyarázza ezt: "age: Age is fractional if less than 1. If the age is estimated, is it in the form of xx.5".
+
+A hiányzó értékek arányának meghatározásához sokféle megközelítés lehetséges, például:
+```{python}
+result = df.select(
+    pl.col("*").is_null().sum() / pl.len()
+)
+print(result)
+
+result_melted = result.unpivot()
+print(result_melted)
+
+result_melted.plot.bar(x="variable", y="value")
+```
+
+```{python}
+numerical_cols = [col for col, dtype in zip(df.columns, df.dtypes) if dtype in [pl.Int64, pl.Float64]]
+
+df[numerical_cols].describe()
+```
+
+:::
+
+
+:::
+:::
