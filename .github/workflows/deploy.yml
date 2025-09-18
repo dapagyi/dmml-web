@@ -38,7 +38,11 @@ jobs:
 
       - name: Render Quarto notebooks
         run: |
-          QUARTO_PROFILE="solutions" uv run quarto render ./notebooks/*.qmd
+          for file in notebooks/*.qmd; do
+            if [ -f "$file" ]; then
+              QUARTO_PROFILE="solutions" uv run quarto render "$file"
+            fi
+          done
 
       - name: Prepare publish directory
         run: |
