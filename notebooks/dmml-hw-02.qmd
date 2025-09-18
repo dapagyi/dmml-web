@@ -1,0 +1,220 @@
+---
+title: "DMML-HW-02"
+subtitle: ""
+date: "2025-09-18"
+title-block-banner: true
+format:
+    html:
+      grid: 
+        margin-width: 300px
+    ipynb: default
+execute:
+  echo: true
+toc: true
+reference-location: margin
+citation-location: margin
+---
+<strong>Honlap:</strong> [apagyidavid.web.elte.hu/2025-2026-1/dmml](https://apagyidavid.web.elte.hu/2025-2026-1/dmml){target="_blank"}
+
+<a target="_blank" href="https://colab.research.google.com/github/dapagyi/dmml-web/blob/gh-pages/notebooks/dmml-hw-02.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+# Lineáris regresszió
+
+a) Elsőként valósítsd meg `numpy` használatával az $$f(x)=\dfrac{e^{1-x}\cdot x^2 + \sin^2(x^2)}{3\log(\sin(0.75 \cdot x) + 2)}$$ függvény vektorizált változatát!
+
+Legyenek az $x_i$ mérési pontjaink a $[0, 5]$ intervallum pontjai $0.01$ lépésközzel, az ezekben mért értékek pedig $y_i = f(x_i) + 0.15 \cdot \varepsilon_i$, ahol $\varepsilon_i$ sztenderd normális eloszlású mintából származó zaj. Ábrázoljuk a mérési eredményeket.
+
+```{python}
+# | code-fold: true
+# | eval: false
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.linalg.lapack import dtrtri
+from functools import partial
+
+rng = np.random.default_rng()
+```
+
+```{python}
+# | eval: false
+
+
+def f(x):
+    # TODO
+    return
+
+# TODO
+x = 
+fx = 
+y = 
+```
+
+```{python}
+# | eval: false
+
+
+fig, ax = plt.subplots(figsize=(12, 6), dpi=144)
+ax.plot(x, y, lw=0.8, alpha=0.8)
+plt.show()
+```
+
+b) Írj függvényt, amely kiszámolja egy predikció $R^2$ hibáját![^1]
+
+```{python}
+# | eval: false
+
+
+def r2_score(y_true, y_pred):
+    # TODO
+    return
+```
+
+
+[^1]: [Wikipedia: Coefficient of determination](https://en.wikipedia.org/wiki/Coefficient_of_determination#:~:text=%5B9%5D-,Definitions,-%5Bedit%5D)
+
+c) Illeszünk egyenest a mintára!
+
+Keressük az egyenest $mx + b$ alakban úgy, hogy minimalizáljuk a $\sum_{i=1}^n (y_i - (mx_i + b))^2$ négyzetes hibát.
+
+Ezt a következőképpen tehetjük meg: legyen $A = [x^T, \mathbb{1}^T] \in \mathbb{R}^{n\times 2}$ mátrix, ahol $x=(x_1, \ldots, x_n)$ és $\mathbb{1}$ $n$ hosszú, csupa egyesből álló vektor. Ekkor: $$[m, b] = (A^TA)^{-1}A^Ty$$
+
+`numpy` segítségével definiáld az `A` mátrixot, illetve határozd meg `m` és `b` értékét (írasd is ki). Ábrázold a kapott eredményt, illetve számold ki a modell $R^2$ hibáját.
+
+```{python}
+# | eval: false
+
+
+# TODO
+
+[m, b] = 
+print(f"m = {m:.5f}\nb = {b:.5f}")
+```
+
+```{python}
+# | eval: false
+
+
+def f_hat_1(x):
+    return m * x + b
+
+
+y_hat_1 = f_hat_1(x)
+print(f"R^2 error: {r2_score(y, y_hat_1):.5f}")
+fig, ax = plt.subplots(figsize=(12, 6), dpi=144)
+ax.plot(x, y, lw=0.8, alpha=0.8)
+ax.plot(x, y_hat_1, label="egyenes")
+ax.legend()
+plt.show()
+```
+
+d) Polinomiális regresszió
+
+Az alábbi kódrészlet segítségével könnyen elő tudod állítani az előadás szerinti $\Phi$ mátrixot, mindössze az $f_i$ bázisfüggvényeket kell definiálnod. Egészítsd ki az alábbi kódrészletet úgy, hogy a modellosztályunk a legfeljebb 10-edfokú polinomtér legyen.
+
+```{python}
+# | eval: false
+
+
+class PhiCalculator:
+    def __init__(self, basis_functions):
+        self.basis_functions = basis_functions
+
+    def __call__(self, x):
+        return np.column_stack([f(np.asarray(x)) for f in self.basis_functions])
+
+
+def f_i(x, i, d):
+    # TODO
+    return
+
+
+d = 10
+basis_functions = [partial(f_i, i=i + 1, d=d) for i in range(d)]
+Phi = PhiCalculator(basis_functions)(x)
+
+print(f"Shape of Phi (should be n×d): {Phi.shape}")
+```
+
+Az előadáson tanultak alapján (QR-felbontás segítségével) határozd meg a $\theta$ vektort, azaz a báziselemekhez tartozó együtthatókat.
+
+_Használd ki,_ hogy mindezt azért csináltuk, mivel az $R$ inverzét gyorsan ki tudjuk számolni. Ehhez használd a `dtrtri` függvényt a `scipy.linalg.lapack` könyvtárból.
+
+```{python}
+# | eval: false
+
+
+# TODO
+theta =
+``` 
+
+Ábrázold a kapott eredményt, illetve számold ki a modell $R^2$ hibáját.
+
+```{python}
+# | eval: false
+
+
+def f_hat_2(x):
+    return Phi @ theta
+
+
+y_hat_2 = f_hat_2(x)
+print(f"R^2 error: {r2_score(y, y_hat_2):.5f}")
+fig, ax = plt.subplots(figsize=(12, 6), dpi=144)
+ax.plot(x, y, lw=0.8, alpha=0.8)
+ax.plot(x, y_hat_1, label="egyenes")
+ax.plot(x, y_hat_2, label="polinom")
+ax.legend()
+plt.show()
+```
+
+e) Gauss
+
+A korábbi (polinomiális) bázisfüggvények helyett most használjunk Gauss-függvényeket, azaz legyen $$f_i(x) = \exp\left(\dfrac{-||x-\mu_i||^2}{\sigma_i^2}\right)$$
+
+Legyen pl. $\mu_i = (i-1)/(d-1)$ és $\sigma_i = 2$.
+
+(Ügyelj arra, hogy ez az általános képlet $x\in\mathbb{R}^k$-ra vonatkozik. Ha közvetlenül ilyen formában szeretnéd `numpy`-jal implementálni ezt, könnyen problémád adódhat a dimenziókkal. Egy dimenzióban ez egyszerűbben is felírható.)
+
+
+```{python}
+# | eval: false
+
+
+def f_i_gauss(x, i, d):
+    # TODO
+    return
+
+d = 10
+basis_functions = [partial(f_i_gauss, i=i + 1, d=d) for i in range(d)]
+Phi_gauss = PhiCalculator(basis_functions)(x)
+print(f"Shape of Phi (should be n×d): {Phi_gauss.shape}")
+```
+
+```{python}
+# | eval: false
+
+
+# TODO
+theta_gauss =
+```
+
+```{python}
+# | eval: false
+
+
+def f_hat_3(x):
+    return Phi_gauss @ theta_gauss
+
+
+y_hat_3 = f_hat_3(x)
+print(f"R^2 error: {r2_score(y, y_hat_3):.5f}")
+fig, ax = plt.subplots(figsize=(12, 6), dpi=144)
+ax.plot(x, y, lw=0.8, alpha=0.8)
+ax.plot(x, y_hat_1, label="egyenes")
+ax.plot(x, y_hat_2, label="polinom")
+ax.plot(x, y_hat_3, label="Gauss")
+ax.legend()
+plt.show()
+```

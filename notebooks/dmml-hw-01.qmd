@@ -1,0 +1,34 @@
+---
+title: "DMML-HW-01"
+subtitle: ""
+date: "2025-09-18"
+title-block-banner: true
+format:
+    html:
+      grid: 
+        margin-width: 300px
+    ipynb: default
+execute:
+  echo: true
+toc: true
+reference-location: margin
+citation-location: margin
+---
+<strong>Honlap:</strong> [apagyidavid.web.elte.hu/2025-2026-1/dmml](https://apagyidavid.web.elte.hu/2025-2026-1/dmml){target="_blank"}
+
+<a target="_blank" href="https://colab.research.google.com/github/dapagyi/dmml-web/blob/gh-pages/notebooks/dmml-hw-01.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+# Hipotézisvizsgálat
+
+Fogalmazz meg egy-két, órán nem taglalt hipotézist a Titanic adathalmazzal kapcsolatban. Tárj fel a változók között összefüggéseket, és vonj le egy következtetést az előzetes hipotézisedre vonatkozóan.
+
+Az elemzés során használj minél többféle órán látott módszert: használd a bemutatott `pandas` funkciókat; készíts plotokat, kontingenciatáblázatot; vizsgálj korrelációt, eloszlást, stb.
+
+Nyugodtan használj külső forrásokat, less el más adatelemzési technikákat, ezeket tüntesd fel a megoldásodban.
+
+```{python}
+# | eval: false
+
+
+# TODO
+```

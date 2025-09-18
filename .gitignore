@@ -12,3 +12,8 @@ wheels/
 notebooks/**
 !notebooks/*.qmd
 **/old-*
+ea
+
+**/dmml*_files/
+**/dmml-*.html
+**/dmml-*.ipynb

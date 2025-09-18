@@ -13,10 +13,10 @@ execute:
 toc: true
 reference-location: margin
 citation-location: margin
-# language:
-#     crossref-exr-title: "Feladat #"
 ---
 <strong>Honlap:</strong> [apagyidavid.web.elte.hu/2025-2026-1/dmml](https://apagyidavid.web.elte.hu/2025-2026-1/dmml){target="_blank"}
+
+<a target="_blank" href="https://colab.research.google.com/github/dapagyi/dmml-web/blob/gh-pages/notebooks/dmml-01.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 # Módszertani kísérlet
 
@@ -490,6 +490,64 @@ ax1.scatter(X[:, 0], X[:, 1], c=y)
 y_pred = KMeans(n_clusters=3).fit_predict(X)
 ax2.scatter(X[:, 0], X[:, 1], c=y_pred)
 plt.show()
+```
+
+:::
+
+::: {.callout-tip collapse="true"}
+## 7-10. feladatok megoldása (részletek)
+
+```{python}
+df = pd.read_csv("https://apagyidavid.web.elte.hu/2025-2026-1/dmml/data/titanic.csv")
+df = df.rename({"Parch": "ParCh"})
+df.head()
+```
+
+```{python}
+df.dtypes
+```
+
+```{python}
+df.info()
+```
+
+```{python}
+df.isna().sum()
+```
+
+```{python}
+df.describe()
+```
+
+```{python}
+numerical_cols = df.select_dtypes(include=['number']).columns
+df[numerical_cols].hist(bins=15, figsize=(15, 6), layout=(2, 4))
+plt.tight_layout()
+plt.show()
+```
+
+Aggregálás `groupby`-jal:
+```{python}
+df[["Age"]].agg(["min","max","mean","std"])
+```
+
+```{python}
+df.groupby("Sex")["Age"].agg(["min","max"])
+```
+
+```{python}
+fig, ax = plt.subplots(figsize=(8, 5), dpi=144)
+df.groupby("Sex")["Age"] .hist(alpha=0.5, density=True, legend=True, grid=False, bins=25, ax=ax)
+ax.set_title("Age distribution by sex (normalized)")
+ax.set_xlabel("Age")
+ax.set_ylabel("Density")
+ax.grid(True, which='both', linestyle='--', linewidth=0.5)
+plt.show()
+```
+
+`Age` feltételes eloszlása `Pclass` szerint:
+```{python}
+df.hist("Age", by="Pclass", layout=(1, 3), density=True, figsize=(18, 6))
 ```
 
 :::
