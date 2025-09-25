@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="styles.css">
   <meta name="robots" content="index, follow">
 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" crossorigin="anonymous">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js" integrity="sha384-cMkvdD8LoxVzGF/RPUKAcvmm49FQ0oxwDF3BGKtDXcEc+T1b2N+teh/OJfpU0jr6" crossorigin="anonymous"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
 
@@ -86,7 +87,6 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
       <div class="row g-5 py-2">
@@ -94,13 +94,15 @@
           <h2 id="a-felev-menete" class="text-body-emphasis">A félév menete <a class="anchor-link" href="#a-felev-menete"></a></h2>
 
           <h3 id="01-gyakorlat" class="text-body-emphasis">1. gyakorlat (2025-09-11) <a class="anchor-link" href="#01-gyakorlat"></a></h3>
-          <p><strong>Szükséges előismeretek, amelyekre építeni fogunk:</strong> Python, Jupyter, Google Colab használata; <code>numpy</code>, <code>pandas</code>, <code>matplotlib</code> könyvtárak alapjai.</p>
+          <p>Kurzusinformációk; módszertan; \(k\)-means algoritmus; <code>numpy</code>, <code>pandas</code>, <code>matplotlib</code>, <code>seaborn</code>, <code>polars</code> gyakorlás.</p>
+          <p><strong>Szükséges előismeret:</strong> Python, Jupyter, Google Colab használata; <code>numpy</code>, <code>pandas</code>, <code>matplotlib</code> könyvtárak alapjai.</p>
           <p class="mb-0"><strong>Órai anyagok:</strong></p>
           <ul class="list-style">
             <li><a href="./notebooks/dmml-01" target="_blank">Notebook</a></li>
           </ul>
 
           <h3 id="02-gyakorlat" class="text-body-emphasis">2. gyakorlat (2025-09-18) <a class="anchor-link" href="#02-gyakorlat"></a></h3>
+          <p>Fejlesztői környezet; további EDA módszerek; naiv hipotézisvizsgálat; adatelőkészítés, -feldolgozás.</p>
           <p class="mb-0"><strong>Órai anyagok:</strong></p>
           <ul class="list-style">
             <li><a href="./notebooks/dmml-02" target="_blank">Notebook</a></li>
@@ -112,11 +114,42 @@
           <p class="mb-0"><strong>Házi feladat (határidő: szeptember 30. 23:00):</strong></p>
           <ul class="list-style">
             <li><span class="badge text-bg-warning me-1">HF/2</span><a href="./notebooks/dmml-hw-02" target="_blank">Lineáris regresszió</a> (6 pont)</li>
+            <ul class="list-style">
+              <li>Mivel a QR-felbontás még nem szerepelt az előadáson, így az a rész kihagyható. Aki szeretné használni a \(\theta\) meghatározásához, a diasor 26. oldalán talál további információt erről.</li>
+            </ul>
           </ul>
 
+          <h3 id="03-gyakorlat" class="text-body-emphasis">3. gyakorlat (2025-09-25) <a class="anchor-link" href="#03-gyakorlat"></a></h3>
+          <p>Modelltanítás, <code>scikit-learn</code>, keresztvalidáció, hiperparaméter-optimalizálás.</p>
+          <p class="mb-0"><strong>Órai anyagok:</strong></p>
+          <ul class="list-style">
+            <li><a href="./notebooks/dmml-03" target="_blank">Notebook</a></li>
+            <li><code>scikit-learn</code> User Guide:</li>
+            <ul class="list-style">
+              <li><a href="https://scikit-learn.org/stable/modules/cross_validation.html" target="_blank">3.1. Cross-validation: evaluating estimator performance</a></li>
+              <li><a href="https://scikit-learn.org/stable/modules/grid_search.html" target="_blank">3.2. Tuning the hyper-parameters of an estimator</a></li>
+            </ul>
+          </ul>
+          <p class="mb-0"><strong>Házi feladat (határidő: szeptember 30. 23:00):</strong></p>
+          <ul class="list-style">
+            <li><span class="badge text-bg-info me-1">HF/3</span><a href="./notebooks/dmml-hw-03" target="_blank">Egyszerű modelltanítás</a> (3 pont)</li>
+          </ul>
+          <p class="mb-0"><strong>Házi feladat (határidő: október 7. 23:00):</strong></p>
+          <ul class="list-style">
+            <li><span class="badge text-bg-warning me-1">HF/4</span><a href="./notebooks/dmml-hw-04" target="_blank">Spaceship Titanic</a> (6 pont)</li>
+          </ul>
+          <p class="mb-0"><strong>Szorgalmi feladat (határidő: október 7. 23:00):</strong></p>
+          <ul class="list-style">
+            <li><span class="badge text-bg-danger me-1">Sz/1</span>Háziverseny (3 pont)</li>
+            <ul class="list-style">
+              <li>A verseny állása <a href="./leaderboard?contest_id=dmml-2025-09-25" target="_blank">ezen az oldalon</a> követhető.</li>
+              <li>Az első néhány helyezett (top 50%?) kap pontot: az első (vagy első valahány?) három pontot, a többiek sorban valahogy arányosan egyre kevesebbet.</li>
+              <li>A <a href="#04-gyakorlat">4. gyakorlaton</a> tanulni fogunk további eszközökről, amelyek segíthetnek a jobb eredmény elérésében, ezért érdemes azt megvárni a (véglegesnek szánt) megoldással.</li>
+            </ul>
+          </ul>
 
           <hr />
-          <h3 id="03-gyakorlat" class="text-body-emphasis">3. gyakorlat (2025-09-25) <a class="anchor-link" href="#03-gyakorlat"></a></h3>
+          <h3 id="04-gyakorlat" class="text-body-emphasis">4. gyakorlat (2025-10-02) <a class="anchor-link" href="#04-gyakorlat"></a></h3>
 
         </div>
       </div>

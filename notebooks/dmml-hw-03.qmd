@@ -1,0 +1,129 @@
+---
+title: "DMML-HW-03"
+subtitle: ""
+date: "2025-09-25"
+title-block-banner: true
+format:
+    html:
+      grid: 
+        margin-width: 300px
+    ipynb: default
+execute:
+  echo: true
+toc: true
+reference-location: margin
+citation-location: margin
+---
+<strong>Honlap:</strong> [apagyidavid.web.elte.hu/2025-2026-1/dmml](https://apagyidavid.web.elte.hu/2025-2026-1/dmml){target="_blank"}
+
+<a target="_blank" href="https://colab.research.google.com/github/dapagyi/dmml-web/blob/gh-pages/notebooks/dmml-hw-03.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+# Egyszerű modelltanítás
+
+Tanítsunk egy egyszerű modellt a Spaceship Titanic adathalmazon: a feladat az, hogy megjósoljuk, egy utast átszállítottak-e másik dimenzióba egy baleset során.
+
+::: {.callout-important title="Exploratory Data Analysis (EDA)"}
+Normál esetben az EDA mindig megelőzi a modelltanítást. Ennek a feladatnak azonban most az a célja, hogy minél előbb kipróbáljuk az órán tanultakat (encoding, keresztvalidálás, hiperparaméter-optimalizálás).
+
+Ettől függetlenül természetesen szükséges már valamennyire körüljárni az adathalmazt: bizonyos információkra szükség lehet az adatelőkészítés, illetve modellezés során is, de a később határidős házi feladatnál, illetve a háziversenynél is kelleni fog.
+
+Úgy érdemes tehát ehhez és a következő feladathoz hozzáállni, hogy most még csak _gyorsan_ dolgozunk, a következő feladatnál pedig _okosan_ fogunk majd -- ennek a megoldásnak a továbbfejlesztésével.
+:::
+
+A feladat részei:
+
+- Ismerkedj meg az adathalmazzal, vizsgáld meg a legszembetűnőbb jellemzőit. 
+- Készítsd elő az adatot, amelyik oszlopból származó információra szükség lehet a modellben, azt encode-old valami alkalmas módon, stb.
+- Taníts egy döntési fát a tanító adathalmazon, ehhez:
+  - használj keresztvalidációt a modell kiértékelésére, illetve
+  - végezz hiperparaméter-optimalizálást.
+- Értékeld ki a modellt a teszt adathalmazon.
+
+A hiperparaméter-optimalizáláshoz egyaránt próbáld ki a `GridSearchCV`-t és a `RandomizedSearchCV`-t is. Utóbbinál ne csak felsorold a lehetséges értékeket, hanem adj meg mintavételezési eloszlásokat is a `scipy` csomag `scipy.stats.uniform` vagy `scipy.stats.loguniform` függvényeinek használatával.
+
+A keresztvalidálás során ügyelj arra, hogy a tanító és a validációs halmazban hasonló legyen a célváltozó eloszlása: ehhez a megfelelő kulcsszó, amire keresned kell, az a `stratify` vagy `stratified`. Próbálj meg olyan keresztvalidációs módszert használni, aminek szerinted passzol az adathalmazhoz. Ehhez [ezen az oldalon](https://scikit-learn.org/stable/modules/cross_validation.html){target="_blank"} találsz segítséget.
+
+::: {.callout-note title="Megjegyzés"}
+A feladat hangsúlyos része a modelltanítás, ideértve a keresztvalidálást és a hiperparaméter-optimalizálást. _Ennél a feladatnál_ nem baj, ha csak néhány oszlopot használsz fel, de a következő feladatnál már alaposan körül kell majd járni az adathalmazt.
+
+Épp ezért nyugodtan törekedhetsz akár már most is a minél alaposabb megoldásra, de ráérsz akár majd csak a következő feladatnál is.
+:::
+
+
+## Adatok elérése és predikció beküldése
+
+Először telepítsük a `dmml-contest` csomagot
+
+- _terminalban_ használjuk a `pip install dmml-contest` parancsot vagy
+- _Jupyter Notebookban_ írjuk be ugyanezt egy cellába, de a cella elejére tegyünk egy felkiáltójelet:
+
+```{python}
+# | eval: false
+!pip install dmml-contest
+```
+
+A tanító és a teszt adathalmazt a következőképpen érjük el:
+
+```{python}
+from dmml_contest.contest import Contest
+
+
+contest = Contest(
+    display_name="david",  # This can be anything in case you don't want to use your real name on the leaderboard.
+    user_key="david123",  # Replace with your actual user_key.
+    contest_id="dmml-2025-09-25",  # Don't change this.
+    contest_api_url="https://dmml.dapagyi.dedyn.io",  # Don't change this.
+)
+train_data = contest.fetch_train_data()
+test_data = contest.fetch_test_data()
+print(train_data.shape)
+print(test_data.shape)
+
+train_data.head()
+```
+
+::: {.callout-note title="Kulcs"}
+Ha nincs meg a `user_key`-ed, írj, és átküldöm.
+:::
+
+A predikciók beküldéséhez gyűjtsük össze egyetlen listába (`list`) vagy NumPy tömbbe (`numpy.array`) a modell eredményét. Figyeljünk arra, hogy a predikciók sorrendje megegyezzen a `test_data` adathalmazban szereplő sorok sorrendjével, és csak 0 vagy 1 értékeket tartalmazzon, ahol 1 jelöli azt, hogy átszállították másik dimenzióba az utast.
+
+Az alábbi példa azt szemlélteti, hogy ha az lenne a predikciónk, hogy mindegyik utast átszállítjuk, akkor ezt hogyan tudjuk beküldeni:
+
+```{python}
+import numpy as np
+
+
+sample_submission = np.ones(len(test_data))
+response = contest.submit_prediction(sample_submission)
+print("Submission response:", response)
+```
+
+F1-score a metrika, ami szerint értékelünk, a `submit_prediction` ezt adja vissza.
+
+Az elért eredményünk [ezen az oldalon is](https://apagyidavid.web.elte.hu/2025-2026-1/dmml/leaderboard?contest_id=dmml-2025-09-25){target="_blank"} megjelenik.
+
+## Adathalmaz leírása
+
+In this competition your task is to predict whether a passenger was transported to an alternate dimension during the Spaceship Titanic's collision with the spacetime anomaly. To help you make these predictions, you're given a set of personal records recovered from the ship's damaged computer system.
+
+File and Data Field Descriptions:
+
+- train.csv - Personal records for about 90% of the passengers, to be used as training data.
+    - PassengerId - A unique Id for each passenger. Each Id takes the form gggg_pp where gggg indicates a group the passenger is travelling with and pp is their number within the group. People in a group are often family members, but not always.
+    - HomePlanet - The planet the passenger departed from, typically their planet of permanent residence.
+    - CryoSleep - Indicates whether the passenger elected to be put into suspended animation for the duration of the voyage. Passengers in cryosleep are confined to their cabins.
+    - Cabin - The cabin number where the passenger is staying. Takes the form deck/num/side, where side can be either P for Port or S for Starboard.
+    - Destination - The planet the passenger will be debarking to.
+    - Age - The age of the passenger.
+    - VIP - Whether the passenger has paid for special VIP service during the voyage.
+    - RoomService, FoodCourt, ShoppingMall, Spa, VRDeck - Amount the passenger has billed at each of the Spaceship Titanic's many luxury amenities.
+    - Name - The first and last names of the passenger.
+    - Transported - Whether the passenger was transported to another dimension. This is the target, the column you are trying to predict.
+- test.csv - Personal records for the remaining one-tenth of the passengers, to be used as test data. Your task is to predict the value of Transported for the passengers in this set.
+
+```{python}
+# | eval: false
+
+
+```

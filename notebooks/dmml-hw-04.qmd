@@ -1,0 +1,36 @@
+---
+title: "DMML-HW-04"
+subtitle: ""
+date: "2025-09-25"
+title-block-banner: true
+format:
+    html:
+      grid: 
+        margin-width: 300px
+    ipynb: default
+execute:
+  echo: true
+toc: true
+reference-location: margin
+citation-location: margin
+---
+<strong>Honlap:</strong> [apagyidavid.web.elte.hu/2025-2026-1/dmml](https://apagyidavid.web.elte.hu/2025-2026-1/dmml){target="_blank"}
+
+<a target="_blank" href="https://colab.research.google.com/github/dapagyi/dmml-web/blob/gh-pages/notebooks/dmml-hw-04.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+# Spaceship Titanic
+
+Lásd az előző feladatot.
+
+Járd körül teljeskörűen a Spaceship Titanic adathalmazt, végezz alapos EDA-t (értsd meg minél jobban az adathalmazban lévő mintázatokat, használj vizualizációs technikákat, keress összefüggéseket) és készíts egy minél jobb modellt a célváltozó (Transported) előrejelzésére.
+
+Próbálj meg minél jobb eredményt elérni a teszt adathalmazon előfeldolgozás, encoding, imputing stb. használatával.
+
+_Várhatóan ez a leírás még bővülni fog a napokban._
+
+```{python}
+# | eval: false
+
+
+```
+
