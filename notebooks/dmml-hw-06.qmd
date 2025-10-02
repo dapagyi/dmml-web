@@ -1,0 +1,112 @@
+---
+title: "DMML-HW-06"
+subtitle: ""
+date: "2025-10-02"
+title-block-banner: true
+format:
+    html:
+      grid: 
+        margin-width: 300px
+    ipynb: default
+execute:
+  echo: true
+toc: true
+reference-location: margin
+citation-location: margin
+---
+<strong>Honlap:</strong> [apagyidavid.web.elte.hu/2025-2026-1/dmml](https://apagyidavid.web.elte.hu/2025-2026-1/dmml){target="_blank"}
+
+<a target="_blank" href="https://colab.research.google.com/github/dapagyi/dmml-web/blob/gh-pages/notebooks/dmml-hw-06.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+# Modellek összehasonlítása
+
+::: {.callout-note title="Tanulási cél"}
+A feladat elsődleges célja az, hogy egyfajta tech demoként kipróbáljunk minél többféle eszközt, illetve csomagot, amelyek később hasznosak lehetnek, valamint legyen egy stabil képünk arról, hogy hogyan lehet mérni és összehasonlítani különböző modellek teljesítményét.
+
+A másodlagos cél az, hogy törekedjünk a kódunk minél jobb szervezésére, hogy ne kelljen sokat ismételgetni, illetve kínlódni a kód újrahasznosításával.
+
+Nem cél, hogy jó eredményt érjünk el, de persze lehet rá törekedni. Nem kell érteni, hogy miről szól az adathalmaz, amivel dolgozunk. Nem kell EDA-t végezni sem.
+:::
+
+Keress az interneten egy tetszőleges nyilvános (bináris vagy multi label) klasszifikációs adathalmazt -- [például innen is választhatsz, illetve generálhatsz egyet magadnak](https://scikit-learn.org/stable/datasets.html){target="_blank"} --, amelyen nem vagy alig kell csak előfeldolgozást végezni, és lehetőleg nem túl kicsi.
+
+Válassz le egy teszt adathalmazt, pl. az adatok 20%-t ([`train_test_split`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html){target="_blank"}).
+
+A maradékon taníts be három különböző modellt:
+
+* Az egyik legyen egy decision tree vagy egy random forest.
+* A másik kettő legyen egy-egy boosting modell, de ne a `scikit-learn`-ből. (Ld. az órai Notebookban szereplő hivatkozásokat.)
+
+Validáláshoz legalább egy (de akár az összes) esetben végezz keresztvalidációt. (A másik, egyszerűbb módszer az lenne, hogy a tanító adathalmazt is felosztod egy tanító és egy validációs halmazra (ugyanúgy `train_test_split`-tel), és a validációs halmazon méred a modelltanítási kísérletek eredményét.)
+
+A hiperparaméter-optimalizáláshoz legalább egy esetben próbáld ki az előző óra végén említett [Optuna csomagot](https://optuna.readthedocs.io/en/stable/tutorial/index.html){target="_blank"}.
+
+::: {.callout-note title="Megjegyzés"}
+A keresztvalidációt és a hiperparaméter-optimalizálás kapcsán fontos tisztázni egy részletet, ami felett gyakran szokás átsiklani, pedig bizonyos esetekben problémákhoz vezethet (konkrétan data leakage-hez, vagy legalábbis túlzottan optimista becsléshez a modell teljesítményét illetően).
+
+Amikor pl. $k$-foldot használunk a hiperparaméter-optimalizálás során, akkor annak a foldjai nem feltétlenül használhatóak közvetlenül a modell teljesítményének mérésére, ezért érdemes lehet egy külső $k$-foldot is használni, amelynek a foldjain mérjük a modell teljesítményét.
+
+* [Example (`scikit-learn`): Nested versus non-nested cross-validation](https://scikit-learn.org/stable/auto_examples/model_selection/plot_nested_cross_validation_iris.html#sphx-glr-auto-examples-model-selection-plot-nested-cross-validation-iris-py){target="_blank"}
+
+Ez _opcionális_, de akinek jól mentek a korábbi dolgok, annak mindenképpen érdemes a fenti linket legalább elolvasnia, és felhasználni a feladat megoldásához is.
+:::
+
+Az, hogy milyen metrika mentén optimalizálsz, rád van bízva, de a modell kiértékeléséhez tüntess fel minél többféle metrikát is (pl. accuracy, precision, recall, F1-score, ROC AUC stb.), valamint ábrázolj modellenként egy-egy confusion matrixot és ROC görbét is a teszt adathalmazon kiértékelve a modellt.
+
+::: {.callout-tip title="Megjegyzés"}
+A több metrika szerinti kiértékelés könnyen megvalósítható például az alábbi módon:
+
+* [Example (`scikit-learn`): Demonstration of multi-metric evaluation on `cross_val_score` and `GridSearchCV`](https://scikit-learn.org/stable/auto_examples/model_selection/plot_multi_metric_evaluation.html){target="_blank"}
+:::
+
+
+A megoldásod végén gyűjtsd össze egy DateFrame-ben vagy akár csak printeld ki összesítve a három modell (hiperparaméter-optimalizálás utáni) teljesítményét:
+
+* A tanító teljesítmény többféle metrika mentén.
+    * Ha keresztvalidációt használsz az adott modell kiértékelésére, akkor a foldokon mért teljesítmények átlaga és szórása. Ha csak 
+* A validációs teljesítmény többféle metrika mentén.
+    * Ha keresztvalidációt használsz az adott modell kiértékelésére, akkor a foldokon mért teljesítmények átlaga és szórása.
+    * Ez írja le legjobban a modellünk teljesítményét.
+* A teszt adathalmazon mért teljesítmény többféle metrika mentén.
+    * Ez teljesen különálló halmazon történik, és csak a végén nézzük meg.
+    * Csak egyetlen szám (metrikánként), nem annyira robosztus, mint pl. egy keresztvalidációs mért teljesítmény.
+    * Ez egyrészt egy végső sanity check, hogy hasonló eredményt kapunk-e, mint a validációkor, másrészt azt szimulálja, mintha pl. Kaggle-ön csak egy végső score-t hajkurásznánk.
+    * Ábrázold a confusion matrixot és a ROC görbét is.
+
+## Kódstruktúra
+
+Ez egy elég általános tanács, de ahhoz, hogy ne kelljen sokat ismételgetni, copy-paste-elni a kódokat, próbáld meg az egyes lépéseket egy-egy függvénybe szervezni, és a függvényeket meghívni. Használj loopokat, és pl. csak iterálj végig a modelleken, mindegyikre meghívva ugyanazokat a függvényeket, stb.
+
+(Ld. még: szoftverfejlesztők összes bullshit akronimja, pl.: [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself){target="_blank"}, [KISS](https://en.wikipedia.org/wiki/KISS_principle){target="_blank"}, [YAGNI](https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it){target="_blank"} stb.)
+
+::: {.callout-tip title="Egy specifikusabb tanács"}
+Gyakran egy adaton ugyanazon változásokat hajtjuk végre, ezeket egy jól kezelhető egységbe zárhatjuk a `scikit-learn` pipeline modulja segítségével. Ez nemcsak az adatelőkészítést teszi könnyebbé, hanem a modelltanítást, hiperparaméter-optimalizálást is.
+
+* [User Guide (`scikit-learn`): Pipelines and composite estimators](https://scikit-learn.org/stable/modules/compose.html#combining-estimators){target="_blank"}
+* [Examples (˙scikit-learn`): Pipelines and composite estimators](https://scikit-learn.org/stable/auto_examples/compose/index.html){target="_blank"}
+
+Hasznos eszköz, érdemes használni, én személyesen nagyon szeretem.
+
+Akinek az alapok megvannak, az mindenképpen próbálja ki, de ez _opcionális_ része a feladatnak.
+:::
+
+Végül egy gyakorlatiasabb tanács: Kaggle-ön gyakran meg lehet nézni a versenyek győzteseinek a megoldásait. Ezek nagyon sokszor abból állnak, hogy spamelik a modelleket, és a sok modellből állítanak elő egy ensemble modellt. Ilyen példákból is sokszor el lehet lesni ötleteket, hogy mások hogyan struktúrálják a kódjukat.
+
+::: {.callout-note title="Kiegészítő olvasmányok"}
+Az alábbi néhány példa arról szól, hogy hogyan lehet még "fejleszteni" a ROC görbe ábrázolásán pl. az egyes foldok eredményeinek feltüntetésével, illetve multi label klasszifikáció esetén milyen hasonló dolgot lehet csinálni:
+
+* [Receiver Operating Characteristic (ROC) with cross validation](https://scikit-learn.org/stable/auto_examples/model_selection/plot_roc_crossval.html){target="_blank"}
+* [Multiclass Receiver Operating Characteristic (ROC)](https://scikit-learn.org/stable/auto_examples/model_selection/plot_roc.html){target="_blank"}
+
+_Opcionális_ része a feladatnak az első reprodukálása a házi feladatban elkészített modellek valamelyikével. (Az alapfeladatban a teszt adathalmazon csak egy ROC görbe van, a validációson lehet azt megcsinálni, mint az első linken.)
+
+Ez már egyáltalán nem része opcionálisan sem a feladatnak, de akit érdekel, annak érdemes lehet megnézni a következő példát, hogy hogyan lehet statisztikai alapon (kétféle megközelítéssel) összehasonlítani két modell teljesítményét:
+
+* [Statistical comparison of models using grid search](https://scikit-learn.org/stable/auto_examples/model_selection/plot_grid_search_stats.html){target="_blank"}
+:::
+
+```{python}
+# | eval: false
+
+
+```

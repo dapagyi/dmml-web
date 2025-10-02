@@ -26,8 +26,6 @@ Járd körül teljeskörűen a Spaceship Titanic adathalmazt, végezz alapos EDA
 
 Próbálj meg minél jobb eredményt elérni a teszt adathalmazon előfeldolgozás, encoding, imputing stb. használatával.
 
-_Várhatóan ez a leírás még bővülni fog a napokban._
-
 ```{python}
 # | eval: false
 

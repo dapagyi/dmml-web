@@ -1,0 +1,31 @@
+---
+title: "DMML-HW-06"
+subtitle: ""
+date: "2025-10-02"
+title-block-banner: true
+format:
+    html:
+      grid: 
+        margin-width: 300px
+    ipynb: default
+execute:
+  echo: true
+toc: true
+reference-location: margin
+citation-location: margin
+---
+<strong>Honlap:</strong> [apagyidavid.web.elte.hu/2025-2026-1/dmml](https://apagyidavid.web.elte.hu/2025-2026-1/dmml){target="_blank"}
+
+<a target="_blank" href="https://colab.research.google.com/github/dapagyi/dmml-web/blob/gh-pages/notebooks/dmml-hw-05.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+# Infografika
+
+Keress az interneten 5-10 adatvizualizációt, infografikát amelyeket érdekesnek találsz. Mindegyikről írj egy-egy mondatot vagy egy felsorolást arról, hogy szerinted mitől jó az adott ábra.
+
+Külön örülök, ha olyat is találsz, ami a saját érdeklődési körödbe vág, akár pl. sport, zene stb.
+
+Gazdasági témájú újságok oldalain gyakran találni érdekes infografikákat, mára egészen komoly szintre nőtte ki magát az adatújságírás (data journalism). De bárhol kereshetsz, social mediában, tematikus fórumokon, Redditen stb.
+
+Az ábrákat illeszd be [ebbe a megosztott Google Sheetsbe is](https://docs.google.com/spreadsheets/d/1lN8sHxded2Jn1AVhRYO4pJt3BctQUh7mmhpGdhKam3w/edit?gid=0#gid=0){target="_blank"}. A megállapításokat, ha nem szeretnéd publikusan, elég a beadott munkába beillesztened, nem kell a Google Sheetsbe is.
+
+Alapvetően olyan ábrákat keress, amelyekből remélhetőleg tudunk tanulni valamit -- szóval lehetőleg ne valami 3D-s nagyon összetett interaktív JS oldal legyen, hanem valami egyszerű elemekből felépített, de esztétikus, és valamiért érdekes ábra; vagy valami ami bonyolult összefüggéseket frappáns módon közvetít; vagy olyan, ami egyszerű design elemekkel ér el valami hatást.
