@@ -2,73 +2,108 @@
 <html lang="hu">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  <link rel="stylesheet" href="styles.css">
   <meta name="robots" content="index, follow">
 
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" crossorigin="anonymous">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js" integrity="sha384-cMkvdD8LoxVzGF/RPUKAcvmm49FQ0oxwDF3BGKtDXcEc+T1b2N+teh/OJfpU0jr6" crossorigin="anonymous"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <script defer src="color-modes.js"></script>
 
   <meta name="og:title" property="og:title" content="Adatbányászat és gépi tanulás gyakorlat">
   <meta name="description" content="Az Adatbányászat és gépi tanulás gyakorlat kurzus honlapja.">
   <title>Adatbányászat és gépi tanulás gyakorlat</title>
-
 </head>
 
 <body>
-  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
-    <symbol id="arrow-right-circle" viewbox="0 0 16 16">
-      <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z">
-      </path>
-    </symbol>
-  </svg>
-  <div class="col-lg-8 mx-auto p-4 py-md-5">
-    <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
-      <a href="https://apagyidavid.web.elte.hu/" class="link-primary link-underline-opacity-0 link-underline-opacity-100-hover"><span class="fs-5">2025-2026-1</span></a>
+  <div class="col-lg-8 mx-auto px-4 px-sm-5 pt-4 pt-md-5 pb-4 pb-md-5">
+    <header class="d-flex align-items-center pb-3 mb-5 border-bottom justify-content-between">
+      <a href="/" class="link text-decoration-none"><span class="fs-5">2025-2026-1</span></a>
+      <div class="d-flex align-items-center dropdown color-modes">
+        <button class="btn btn-link px-0 text-decoration-none dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static">
+          <i class="theme-icon-active bi bi-circle-half me-2 opacity-75 theme-icon"></i>
+          <span id="bd-theme-text">Téma</span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme" style="--bs-dropdown-min-width: 10.75rem;">
+          <li>
+            <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light">
+              <i class="bi bi-sun-fill me-2 opacity-75 theme-icon"></i>
+              Világos
+              <i class="bi bi-check2 ms-auto d-none"></i>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark">
+              <i class="bi bi-moon-stars-fill me-2 opacity-75 theme-icon"></i>
+              Sötét
+              <i class="bi bi-check2 ms-auto d-none"></i>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto">
+              <i class="bi bi-circle-half me-2 opacity-75 theme-icon"></i>
+              Automatikus
+              <i class="bi bi-check2 ms-auto d-none"></i>
+            </button>
+          </li>
+        </ul>
+      </div>
     </header>
     <main>
-      <h1 id="adatbanyaszat-es-gepi-tanulas-gyakorlat" class="text-body-emphasis">Adatbányászat és gépi tanulás
-        gyakorlat <a class="anchor-link" href="#adatbanyaszat-es-gepi-tanulas-gyakorlat"></a></h1>
-      <p class="fs-5 col-md-12"></p>
-      <dl class="row col-md-12">
-        <dt class="col-sm-2">Tárgykód</dt>
-        <dd class="col-sm-10">abgtm22ga</dd>
-        <dt class="col-sm-2">Időpont</dt>
-        <dd class="col-sm-10">csütörtök 11:05-11:50</dd>
-        <dt class="col-sm-2">Helyszín</dt>
-        <dd class="col-sm-10">
-          <a href="https://bis.elte.hu/map/budapest/lagymanyos/deli/0/LD-0-820-01-12?locale=hu" target="_blank">LD-0-820
-            Hunfalvy János terem</a>
-        </dd>
-        <dt class="col-sm-2">Elérhetőség</dt>
-        <dd class="col-sm-10">Teams-üzenetben vagy e-mailben. A címem a nevem kisbetűkkel, ékezetek nélkül, egybeírva – mint az URL-ben – és <code>@student.elte.hu</code> vagy <code>@gmail.com</code>.</dd>
+      <h1 id="adatbanyaszat-es-gepi-tanulas-gyakorlat" class="text-body-emphasis mb-3">Adatbányászat és gépi tanulás gyakorlat <a class="anchor-link" href="#adatbanyaszat-es-gepi-tanulas-gyakorlat"></a></h1>
+      <dl class="container-fluid">
+        <div class="row">
+          <dt class="col-md-2 px-0">Tárgykód</dt>
+          <dd class="col-md-10 px-0">abgtm22ga</dd>
+        </div>
+        <div class="row">
+          <dt class="col-md-2 px-0">Időpont</dt>
+          <dd class="col-md-10 px-0">csütörtök 11:05–11:50</dd>
+        </div>
+        <div class="row">
+          <dt class="col-md-2 px-0">Helyszín</dt>
+          <dd class="col-md-10 px-0">
+            <a href="https://bis.elte.hu/map/budapest/lagymanyos/deli/0/LD-0-820-01-12?locale=hu" target="_blank">LD-0-820
+              Hunfalvy János terem</a>
+          </dd>
+        </div>
+        <div class="row">
+          <dt class="col-md-2 px-0">Elérhetőség</dt>
+          <dd class="col-md-10 px-0">Teams-üzenetben vagy e-mailben; a címem a nevem kisbetűkkel, ékezetek nélkül, egybeírva – mint az URL-ben – és <code>@student.elte.hu</code> vagy <code>@gmail.com</code>.</dd>
+        </div>
+        <div class="row">
+          <dt class="col-md-2 px-0">Konzultáció</dt>
+          <dd class="col-md-10 px-0">Bármikor lehet kérni konzultációt, általában a gyakorlat után is ráérek.</dd>
+        </div>
       </dl>
       <strong><a href="https://teams.microsoft.com/l/team/19%3AUx8XeREeoqLwBwqwxY7cVbHQnoPqgUU-qFiAm9BJW4I1%40thread.tacv2/conversations?groupId=0bee3a02-4c34-4bf5-b056-bac1116ecf28&tenantId=b366dbcd-4fc3-4451-82d2-e239564302c3" target="_blank">Teams-csoport</a></strong><br>
       <strong><a href="https://www.math.elte.hu/kepzesek/bsc-alapkepzes/bsc-matematika-tantervi-halo-tervezo/#desc_Adatb%C3%A1ny%C3%A1szat%20%C3%A9s%20g%C3%A9pi%20tanul%C3%A1s:~:text=Adatb%C3%A1ny%C3%A1szat%20%C3%A9s%20g%C3%A9pi%20tanul%C3%A1s%20gyakorlat%20(abgtm22ga),-StartT%C3%A1rgyv%C3%A1laszt%C3%B3Tantervi" target="_blank">A tárgy a tantervhálóban</a></strong><br>
+      <hr class="col-3 col-md-2">
+      <a href="#04-gyakorlat" class="btn btn-outline-primary my-1">
+        <i class="bi bi-arrow-down-circle me-1"></i> Aktuális gyakorlat
+      </a>
       <hr class="col-3 col-md-2 mb-5">
       <div class="row g-5 py-2">
         <div class="col-md-12">
-          <h2 id="a-targy-celja" class="text-body-emphasis">A tárgy célja <a class="anchor-link" href="#a-targy-celja"></a></h2>
-          <p>A tantárgy célja az adatbányászat és a gépi tanulás gyakorlati alapjainak megismertetése. A hallgatók a megismert gépi tanulási modellekkel, algoritmusokkal és eszközökkel képesek lesznek megoldani az adatbányászat főbb feladatait, valamint egyszerűbb adatbányászati projekteket megvalósítani.</p>
-          <p>A gyakorlaton Pythont fogunk használni.</p>
+          <h2 id="a-targy-celja" class="text-body-emphasis fs-3">A tárgy célja <a class="anchor-link" href="#a-targy-celja"></a></h2>
+          <p>A tantárgy célja az adatbányászat és a gépi tanulás gyakorlati alapjainak megismerése. A hallgatók a megismert gépi tanulási modellekkel, algoritmusokkal és eszközökkel képesek lesznek megoldani az adatbányászat főbb feladatait, valamint egyszerűbb adatbányászati projekteket megvalósítani.</p>
         </div>
       </div>
       <div class="row g-5 py-2">
         <div class="col-md-12">
-          <h2 id="kovetelmenyek" class="text-body-emphasis">Követelmények <a class="anchor-link" href="#kovetelmenyek"></a></h2>
+          <h2 id="kovetelmenyek" class="text-body-emphasis fs-3">Követelmények <a class="anchor-link" href="#kovetelmenyek"></a></h2>
           <div class="accordion accordion-flush" id="accordion">
             <div class="accordion-item">
               <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#jegyszerzes" aria-expanded="false" aria-controls="jegyszerzes">
-                  Jegyszerzés
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#hazi-feladatok" aria-expanded="false" aria-controls="hazi-feladatok">
+                  Házi feladatok
                 </button>
               </h2>
-              <div id="jegyszerzes" class="accordion-collapse collapse" data-bs-parent="#accordion">
+              <div id="hazi-feladatok" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <div class="accordion-body">
-                  <p>A félév során körülbelül 10-15 db házi feladat lesz; ezekből, valamint egy nagyobb projektből tevődik majd össze a félév végi jegy. A házi feladatok között lesznek egyszerűbb programozási, illetve valamivel nehezebb, elméleti meggondolást is igénylő feladatok is. A gyakorlati jegy megszerzésének feltétele a házi feladatokért kapható pontok legalább 50%-ának összegyűjtése, valamint a projekt elkészítése.</p>
+                  <p>A félév során körülbelül 10-15 db házi feladat lesz; ezekből, valamint egy nagyobb projektből tevődik majd össze a félév végi jegy. A házi feladatok között lesznek egyszerűbb programozási, illetve valamivel nehezebb, elméleti meggondolást is igénylő feladatok is.</p>
                   <p>A házi feladatokon kívül lesz néhány szorgalmi feladat is, amelyekkel legfeljebb egy jegyet lehet javítani.</p>
                 </div>
               </div>
@@ -82,7 +117,37 @@
               <div id="projekt-informaciok" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <div class="accordion-body">
                   <p>A félév második felében egy projektet kell elkészíteni.</p>
-                  <p><em>TBA</em></p>
+                  <p class="placeholder-glow">
+                    <span class="placeholder col-2"></span>
+                    <span class="placeholder col-3"></span>
+                    <span class="placeholder col-4"></span>
+                    <span class="placeholder col-4"></span>
+                    <span class="placeholder col-4"></span>
+                    <span class="placeholder col-3"></span>
+                    <span class="placeholder col-3"></span>
+                    <span class="placeholder col-3"></span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ponthatarok" aria-expanded="false" aria-controls="ponthatarok">
+                  Jegyszerzés
+                </button>
+              </h2>
+              <div id="ponthatarok" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                <div class="accordion-body">
+                  <p>A gyakorlati jegy megszerzésének feltétele a házi feladatokért kapható pontok legalább 50%-ának összegyűjtése, valamint a projekt elkészítése.</p>
+                  <p>A házi feladatok (együttesen) és a projekt azonos súllyal számítanak bele a végső osztályzatba.</p>
+                  <p class="mb-0"><em>Várható</em> ponthatárok:</p>
+                  <ul>
+                    <li>85%-tól: jeles (5),</li>
+                    <li>75%-tól: jó (4),</li>
+                    <li>65%-tól: közepes (3),</li>
+                    <li>50%-tól: elégséges (2),</li>
+                    <li>50% alatt: elégtelen (1).</li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -91,71 +156,163 @@
       </div>
       <div class="row g-5 py-2">
         <div class="col-md-12">
-          <h2 id="a-felev-menete" class="text-body-emphasis">A félév menete <a class="anchor-link" href="#a-felev-menete"></a></h2>
-
-          <h3 id="01-gyakorlat" class="text-body-emphasis">1. gyakorlat (2025-09-11) <a class="anchor-link" href="#01-gyakorlat"></a></h3>
-          <p>Kurzusinformációk; módszertan; \(k\)-means algoritmus; <code>numpy</code>, <code>pandas</code>, <code>matplotlib</code>, <code>seaborn</code>, <code>polars</code> gyakorlás.</p>
-          <p><strong>Szükséges előismeret:</strong> Python, Jupyter, Google Colab használata; <code>numpy</code>, <code>pandas</code>, <code>matplotlib</code> könyvtárak alapjai.</p>
-          <p class="mb-0"><strong>Órai anyagok:</strong></p>
-          <ul class="list-style">
-            <li><a href="./notebooks/dmml-01" target="_blank">Notebook</a></li>
-          </ul>
-
-          <h3 id="02-gyakorlat" class="text-body-emphasis">2. gyakorlat (2025-09-18) <a class="anchor-link" href="#02-gyakorlat"></a></h3>
-          <p>Fejlesztői környezet; további EDA módszerek; naiv hipotézisvizsgálat; adatelőkészítés, -feldolgozás.</p>
-          <p class="mb-0"><strong>Órai anyagok:</strong></p>
-          <ul class="list-style">
-            <li><a href="./notebooks/dmml-02" target="_blank">Notebook</a></li>
-          </ul>
-          <p class="mb-0"><strong>Házi feladat (határidő: szeptember 23. 23:00):</strong></p>
-          <ul class="list-style">
-            <li><span class="badge text-bg-info me-1">HF/1</span><a href="./notebooks/dmml-hw-01" target="_blank">Hipotézisvizsgálat</a> (3 pont)</li>
-          </ul>
-          <p class="mb-0"><strong>Házi feladat (határidő: szeptember 30. 23:00):</strong></p>
-          <ul class="list-style">
-            <li><span class="badge text-bg-warning me-1">HF/2</span><a href="./notebooks/dmml-hw-02" target="_blank">Lineáris regresszió</a> (6 pont)</li>
-            <ul class="list-style">
-              <li>Mivel a QR-felbontás még nem szerepelt az előadáson, így az a rész kihagyható. Aki szeretné használni a \(\theta\) meghatározásához, a diasor 26. oldalán talál további információt erről.</li>
+          <h2 id="a-felev-menete" class="text-body-emphasis fs-3">A félév menete <a class="anchor-link" href="#a-felev-menete"></a></h2>
+          <section class="py-md-1">
+            <h3 id="01-gyakorlat" class="text-body-emphasis fs-4">1. gyakorlat (2025-09-11) <a class="anchor-link" href="#01-gyakorlat"></a></h3>
+            <p>Kurzusinformációk; módszertan; \(k\)-means algoritmus; <code>numpy</code>, <code>pandas</code>, <code>matplotlib</code>, <code>seaborn</code>, <code>polars</code> gyakorlás.</p>
+            <p><strong>Szükséges előismeret:</strong> Python, Jupyter, Google Colab használata; <code>numpy</code>, <code>pandas</code>, <code>matplotlib</code> könyvtárak alapjai.</p>
+            <p class="mb-0"><strong>Órai anyagok:</strong></p>
+            <ul>
+              <li><a href="./notebooks/dmml-01" target="_blank">Notebook</a></li>
             </ul>
-          </ul>
-
-          <h3 id="03-gyakorlat" class="text-body-emphasis">3. gyakorlat (2025-09-25) <a class="anchor-link" href="#03-gyakorlat"></a></h3>
-          <p>Modelltanítás, <code>scikit-learn</code>, keresztvalidáció, hiperparaméter-optimalizálás.</p>
-          <p class="mb-0"><strong>Órai anyagok:</strong></p>
-          <ul class="list-style">
-            <li><a href="./notebooks/dmml-03" target="_blank">Notebook</a></li>
-            <li><code>scikit-learn</code> User Guide:</li>
-            <ul class="list-style">
-              <li><a href="https://scikit-learn.org/stable/modules/cross_validation.html" target="_blank">3.1. Cross-validation: evaluating estimator performance</a></li>
-              <li><a href="https://scikit-learn.org/stable/modules/grid_search.html" target="_blank">3.2. Tuning the hyper-parameters of an estimator</a></li>
+          </section>
+          <section class="py-md-1">
+            <h3 id="02-gyakorlat" class="text-body-emphasis fs-4">2. gyakorlat (2025-09-18) <a class="anchor-link" href="#02-gyakorlat"></a></h3>
+            <p>Fejlesztői környezet; további EDA módszerek; naiv hipotézisvizsgálat; adatelőkészítés, -feldolgozás.</p>
+            <p class="mb-0"><strong>Órai anyagok:</strong></p>
+            <ul>
+              <li><a href="./notebooks/dmml-02" target="_blank">Notebook</a></li>
             </ul>
-          </ul>
-          <p class="mb-0"><strong>Házi feladat (határidő: szeptember 30. 23:00):</strong></p>
-          <ul class="list-style">
-            <li><span class="badge text-bg-info me-1">HF/3</span><a href="./notebooks/dmml-hw-03" target="_blank">Egyszerű modelltanítás</a> (3 pont)</li>
-          </ul>
-          <p class="mb-0"><strong>Házi feladat (határidő: október 7. 23:00):</strong></p>
-          <ul class="list-style">
-            <li><span class="badge text-bg-warning me-1">HF/4</span><a href="./notebooks/dmml-hw-04" target="_blank">Spaceship Titanic</a> (6 pont)</li>
-          </ul>
-          <p class="mb-0"><strong>Szorgalmi feladat (határidő: október 7. 23:00):</strong></p>
-          <ul class="list-style">
-            <li><span class="badge text-bg-danger me-1">Sz/1</span>Háziverseny (3 pont)</li>
-            <ul class="list-style">
-              <li>A verseny állása <a href="./leaderboard?contest_id=dmml-2025-09-25" target="_blank">ezen az oldalon</a> követhető.</li>
-              <li>Az első néhány helyezett (top 50%?) kap pontot: az első (vagy első valahány?) három pontot, a többiek sorban valahogy arányosan egyre kevesebbet.</li>
-              <li>A <a href="#04-gyakorlat">4. gyakorlaton</a> tanulni fogunk további eszközökről, amelyek segíthetnek a jobb eredmény elérésében, ezért érdemes azt megvárni a (véglegesnek szánt) megoldással.</li>
+            <p class="mb-0"><strong>Házi feladat (határidő: szeptember 23. 23:00):</strong></p>
+            <ul>
+              <li><span class="badge text-bg-info me-1">HF/1</span><a href="./notebooks/dmml-hw-01" target="_blank">Hipotézisvizsgálat</a> (3 pont)</li>
             </ul>
+            <p class="mb-0"><strong>Házi feladat (határidő: szeptember 30. 23:59):</strong></p>
+            <ul>
+              <li><span class="badge text-bg-warning me-1">HF/2</span><a href="./notebooks/dmml-hw-02" target="_blank">Lineáris regresszió</a> (6 pont)
+                <details>
+                  <summary>Megjegyzés</summary>
+                  <ul>
+                    <li>Mivel a QR-felbontás még nem szerepelt az előadáson, így az a rész kihagyható. Aki szeretné használni a \(\theta\) meghatározásához, a diasor 26. oldalán talál további információt erről.</li>
+                  </ul>
+                </details>
+              </li>
+            </ul>
+          </section>
+          <section class="py-md-1">
+            <h3 id="03-gyakorlat" class="text-body-emphasis fs-4">3. gyakorlat (2025-09-25) <a class="anchor-link" href="#03-gyakorlat"></a></h3>
+            <p>Modelltanítás, <code>scikit-learn</code>, keresztvalidáció, hiperparaméter-optimalizálás.</p>
+            <p class="mb-0"><strong>Órai anyagok:</strong></p>
+            <ul>
+              <li><a href="./notebooks/dmml-03" target="_blank">Notebook</a></li>
+              <li>User Guide (<code>scikit-learn</code>):
+                <ul>
+                  <li><a href="https://scikit-learn.org/stable/modules/cross_validation.html" target="_blank">Cross-validation: evaluating estimator performance</a></li>
+                  <li><a href="https://scikit-learn.org/stable/modules/grid_search.html" target="_blank">Tuning the hyper-parameters of an estimator</a></li>
+                </ul>
+              </li>
+            </ul>
+            <p class="mb-0"><strong>Házi feladat (határidő: szeptember 30. 23:59):</strong></p>
+            <ul>
+              <li><span class="badge text-bg-info me-1">HF/3</span><a href="./notebooks/dmml-hw-03" target="_blank">Egyszerű modelltanítás</a> (3 pont)</li>
+            </ul>
+            <p class="mb-0"><strong>Házi feladat (határidő: október 7. 23:59):</strong></p>
+            <ul>
+              <li><span class="badge text-bg-warning me-1">HF/4</span><a href="./notebooks/dmml-hw-04" target="_blank">Spaceship Titanic</a> (6 pont)</li>
+            </ul>
+            <p class="mb-0"><strong>Szorgalmi feladat (határidő: október 7. 23:59):</strong></p>
+            <ul>
+              <li><span class="badge text-bg-danger me-1">Sz/1</span><a href="./leaderboard?contest_id=dmml-2025-09-25" target="_blank">Háziverseny</a> (3 pont)
+                <details>
+                  <summary>Megjegyzés</summary>
+                  <ul>
+                    <li>A verseny állása <a href="./leaderboard?contest_id=dmml-2025-09-25" target="_blank">ezen az oldalon</a> követhető.</li>
+                    <li>Az első néhány helyezett (top 50%?) kap pontot: az első (vagy első valahány?) három pontot, a többiek sorban valahogy arányosan egyre kevesebbet.</li>
+                    <li>A <a href="#04-gyakorlat">4. gyakorlaton</a> tanulni fogunk további eszközökről, amelyek segíthetnek a jobb eredmény elérésében, ezért érdemes azt megvárni a (véglegesnek szánt) megoldással.</li>
+                  </ul>
+                </details>
+              </li>
+            </ul>
+          </section>
+          <section class="py-md-1">
+            <h3 id="04-gyakorlat" class="text-body-emphasis fs-4">4. gyakorlat (2025-10-02) <a class="anchor-link" href="#04-gyakorlat"></a></h3>
+            <p>Ensemble modellek; modellek kiértékelése; metrikák.</p>
+            <p class="mb-0"><strong>Órai anyagok:</strong></p>
+            <ul>
+              <li><a href="./notebooks/dmml-04" target="_blank">Notebook</a></li>
+            </ul>
+            <p class="mb-0"><strong>Házi feladat (határidő: október 7. 23:59):</strong></p>
+            <ul>
+              <li><span class="badge text-bg-info me-1">HF/5</span>TBA (3 pont)
+                <ul>
+                  <li>Péntek délig rögzítem ezt, egyszerű lesz, terv szerint nem is programozás.</li>
+                </ul>
+              </li>
+            </ul>
+            <p class="mb-0"><strong>Házi feladat (határidő: október 14. 23:59):</strong></p>
+            <ul>
+              <li><span class="badge text-bg-warning me-1">HF/6</span><a href="./notebooks/dmml-hw-06" target="_blank">Modellek összehasonlítása</a> (6 pont)</li>
+            </ul>
+            <p class="mb-0"><strong>Szorgalmi feladat (határidő: október 14. 23:59):</strong></p>
+            <ul>
+              <li><span class="badge text-bg-danger me-1">Sz/1</span><a href="./leaderboard?contest_id=dmml-2025-09-25" target="_blank">Modellek összehasonlítása</a> (3 pont)
+                <ul>
+                  <li>Valósítsd meg a HF/6 opcionális részeit is.</li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+          <hr class="col-3 col-md-2">
+          <section class="py-md-1">
+            <h3 id="05-gyakorlat" class="text-body-emphasis fs-4">5. gyakorlat (2025-10-09) <a class="anchor-link" href="#05-gyakorlat"></a></h3>
+            <p class="placeholder-glow"><span class="placeholder" style="width: 16rem;"></span></p>
+            <p class="mb-0"><strong>Órai anyagok:</strong></p>
+            <ul class="list-style placeholder-glow">
+              <li><span class="placeholder" style="width: 10rem;"></span></li>
+              <li><span class="placeholder" style="width: 12rem;"></span></li>
+              <li><span class="placeholder" style="width: 8rem;"></span></li>
+            </ul>
+            <p class="mb-0"><strong>Házi feladat:</strong></p>
+            <ul class="list-style placeholder-glow">
+              <li><span class="placeholder" style="width: 10rem;"></span></li>
+            </ul>
+          </section>
+
+        </div>
+      </div>
+      <div class="row g-5 py-2">
+        <div class="col-md-12">
+          <h2 id="segedanyagok" class="text-body-emphasis fs-3">Segédanyagok <a class="anchor-link" href="#segedanyagok"></a></h2>
+          <p>Az alábbi segédanyagok mélyebb elméleti áttekintést nyújtanak; a legtöbb ingyenesen elérhető hivatalos forrásból, amelyik nem, az is általában online <em>fellelhető</em>.</p>
+          <ul>
+            <li><a href="https://cs229.stanford.edu/main_notes.pdf" target="_blank" class="text-decoration-none">Ng, A., Ma T.: <em>CS229 Lecture Notes</em></a></li>
+            <li><a href="https://www.statlearning.com/" target="_blank" class="text-decoration-none">James, G., Witten, D., Hastie, T., Tibshirani, R.: <em>An Introduction to Statistical Learning</em>, Springer, 2013. (ISBN: 978-1461471380)</a>
+              <ul>
+                <li>Két változata van: az egyikben Python, a másikban R példakódok vannak.</li>
+              </ul>
+            </li>
+            <li><a href="https://www.cambridge.org/core/books/understanding-machine-learning/3059695661405D25673058E43C8BE2A6" target="_blank" class="text-decoration-none">Shalev-Shwartz, S., Ben-David, S.: <em>Understanding Machine Learning: From Theory to Algorithms</em>, Cambridge University Press, 2014. (ISBN: 978-1107298019)</a></li>
+            <li><a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf" target="_blank" class="text-decoration-none">Bishop, C. M.: <em>Pattern Recognition and Machine Learning</em>, Springer, 2006. (ISBN: 978-0387310732)</a></li>
+            <li><a href="https://hastie.su.domains/ElemStatLearn/download.html" target="_blank" class="text-decoration-none">Hastie, T., Tibshirani, R., Friedman, J.: <em>The Elements of Statistical Learning: Data Mining, Inference, and Prediction</em>, 2nd Edition, Springer, 2009. (ISBN: 978-0387848570)</a></li>
+            <li><a href="https://www-users.cse.umn.edu/~kumar001/dmbook/index.php" target="_blank" class="text-decoration-none">Tan, P.-N., Steinbach, M., Karpatne, A., Kumar, V.: <em>Introduction to Data Mining</em>, 2nd Edition, Pearson, 2019. (ISBN: 978-0-273-76922-4)</a>
+              <ul>
+                <li>A könyv nem, de kiegészítő Jupyter Notebookok elérhetőek a honlapon.</li>
+              </ul>
+            </li>
+            <li><a href="https://probml.github.io/pml-book/" target="_blank" class="text-decoration-none">Murphy, K. P.: <em>Probabilistic Machine Learning: An Introduction</em>, MIT Press, 2022. (ISBN: 978-0262046824)</a></li>
           </ul>
-
-          <hr />
-          <h3 id="04-gyakorlat" class="text-body-emphasis">4. gyakorlat (2025-10-02) <a class="anchor-link" href="#04-gyakorlat"></a></h3>
-
+          <p>Az alábbi források sokkal közelebb állnak ahhoz, amit a gyakorlaton csinálunk: elmélet helyett több példakódot (leginkább <code>scikit-learn</code>) tartalmaznak. Egyes részek kezdenek kicsit elavulttá válni – változnak a használt könyvtárak, trendek, stb. –, de ettől függetlenül jól használható, könnyen értelmezhető olvasmányok.</p>
+          <ul>
+            <li><a href="https://machinelearningmastery.com/products/" target="_blank" class="text-decoration-none">Brownlee, J.: <em>Machine Learning Mastery with Python</em></a>
+              <ul>
+                <li><a href="https://machinelearningmastery.com/blog/" target="_blank" class="text-decoration-none">A szerző blogján</a> számos bevezető cikk, tutorial érhető el, főleg <a href="https://machinelearningmastery.com/category/python-machine-learning/" target="_blank" class="text-decoration-none">a régebbi bejegyzések</a> kapcsolódnak a gyakorlat anyagához.</li>
+              </ul>
+            </li>
+            <li><a href="https://www.oreilly.com/library/view/introduction-to-machine/9781449369880/" target="_blank" class="text-decoration-none">Müller, C. A., Guido, S.: <em>Introduction to Machine Learning with Python</em>, O'Reilly Media, 2016. (ISBN: 978-1-449-36941-5)</a></li>
+          </ul>
+          <p class="mb-0">Az előzőeken kívül a gyakorlaton használt csomagok honlapjain is sok hasznos anyag található.</p>
         </div>
       </div>
     </main>
   </div>
+  <footer class="footer mt-auto py-3 bg-body-tertiary">
+    <div class="container text-center">
+      <span class="text-muted"><a class="text-decoration-none" href="https://apagyidavid.web.elte.hu">apagyidavid.web.elte.hu</a></span>
+    </div>
+  </footer>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js" integrity="sha384-cMkvdD8LoxVzGF/RPUKAcvmm49FQ0oxwDF3BGKtDXcEc+T1b2N+teh/OJfpU0jr6" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
 </body>
 
 </html>

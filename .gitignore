@@ -13,6 +13,7 @@ notebooks/**
 !notebooks/*.qmd
 **/old-*
 ea
+out
 
 **/dmml*_files/
 **/dmml-*.html

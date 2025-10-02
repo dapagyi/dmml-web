@@ -25,3 +25,13 @@
   text-decoration: none;
   opacity: 1
 }
+
+.color-modes {
+  .active {
+    font-weight: 600;
+
+    .bi {
+      display: block !important;
+    }
+  }
+}
