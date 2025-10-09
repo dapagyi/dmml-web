@@ -475,6 +475,6 @@ A változó értékeit egy lineáris leképezéssel a $[0,1]$ vagy esetleg a $[-
 
 ::: {.content-visible when-format="html"}
 
-[Óra végi kérdőív.](https://forms.gle/5S15x1ZWDKc9yDvg7)
+[Óra végi kérdőív.](https://forms.gle/5S15x1ZWDKc9yDvg7){target="_blank"}
 
 :::

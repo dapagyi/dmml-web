@@ -14,6 +14,8 @@ notebooks/**
 **/old-*
 ea
 out
+students
+local-data
 
 **/dmml*_files/
 **/dmml-*.html

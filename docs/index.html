@@ -17,7 +17,7 @@
   <title>Adatbányászat és gépi tanulás gyakorlat</title>
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
   <div class="col-lg-8 mx-auto px-4 px-sm-5 pt-4 pt-md-5 pb-4 pb-md-5">
     <header class="d-flex align-items-center pb-3 mb-5 border-bottom justify-content-between">
       <a href="/" class="link text-decoration-none"><span class="fs-5">2025-2026-1</span></a>
@@ -60,7 +60,7 @@
         </div>
         <div class="row">
           <dt class="col-md-2 px-0">Időpont</dt>
-          <dd class="col-md-10 px-0">csütörtök 11:05–11:50</dd>
+          <dd class="col-md-10 px-0">csütörtök 11:10–11:55 <strong>(Módosult.)</strong></dd>
         </div>
         <div class="row">
           <dt class="col-md-2 px-0">Helyszín</dt>
@@ -81,7 +81,7 @@
       <strong><a href="https://teams.microsoft.com/l/team/19%3AUx8XeREeoqLwBwqwxY7cVbHQnoPqgUU-qFiAm9BJW4I1%40thread.tacv2/conversations?groupId=0bee3a02-4c34-4bf5-b056-bac1116ecf28&tenantId=b366dbcd-4fc3-4451-82d2-e239564302c3" target="_blank">Teams-csoport</a></strong><br>
       <strong><a href="https://www.math.elte.hu/kepzesek/bsc-alapkepzes/bsc-matematika-tantervi-halo-tervezo/#desc_Adatb%C3%A1ny%C3%A1szat%20%C3%A9s%20g%C3%A9pi%20tanul%C3%A1s:~:text=Adatb%C3%A1ny%C3%A1szat%20%C3%A9s%20g%C3%A9pi%20tanul%C3%A1s%20gyakorlat%20(abgtm22ga),-StartT%C3%A1rgyv%C3%A1laszt%C3%B3Tantervi" target="_blank">A tárgy a tantervhálóban</a></strong><br>
       <hr class="col-3 col-md-2">
-      <a href="#04-gyakorlat" class="btn btn-outline-primary my-1">
+      <a href="#05-gyakorlat" class="btn btn-outline-primary my-1">
         <i class="bi bi-arrow-down-circle me-1"></i> Aktuális gyakorlat
       </a>
       <hr class="col-3 col-md-2 mb-5">
@@ -103,7 +103,7 @@
               </h2>
               <div id="hazi-feladatok" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <div class="accordion-body">
-                  <p>A félév során körülbelül 10-15 db házi feladat lesz; ezekből, valamint egy nagyobb projektből tevődik majd össze a félév végi jegy. A házi feladatok között lesznek egyszerűbb programozási, illetve valamivel nehezebb, elméleti meggondolást is igénylő feladatok is.</p>
+                  <p>A félév során körülbelül 10 db házi feladat lesz; ezekből, valamint egy nagyobb projektből tevődik majd össze a félév végi jegy. A házi feladatok között lesznek egyszerűbb programozási, illetve valamivel nehezebb, elméleti meggondolást is igénylő feladatok is.</p>
                   <p>A házi feladatokon kívül lesz néhány szorgalmi feladat is, amelyekkel legfeljebb egy jegyet lehet javítani.</p>
                 </div>
               </div>
@@ -116,7 +116,7 @@
               </h2>
               <div id="projekt-informaciok" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <div class="accordion-body">
-                  <p>A félév második felében egy projektet kell elkészíteni.</p>
+                  <p>A félév második felében 2-3 fős csoportokban egy projektet kell elkészíteni.</p>
                   <p class="placeholder-glow">
                     <span class="placeholder col-2"></span>
                     <span class="placeholder col-3"></span>
@@ -139,7 +139,7 @@
               <div id="ponthatarok" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <div class="accordion-body">
                   <p>A gyakorlati jegy megszerzésének feltétele a házi feladatokért kapható pontok legalább 50%-ának összegyűjtése, valamint a projekt elkészítése.</p>
-                  <p>A házi feladatok (együttesen) és a projekt azonos súllyal számítanak bele a végső osztályzatba.</p>
+                  <p>A házi feladatok (együttesen) és a projekt ugyanakkora részét teszik ki a végső osztályzatnak.</p>
                   <p class="mb-0"><em>Várható</em> ponthatárok:</p>
                   <ul>
                     <li>85%-tól: jeles (5),</li>
@@ -179,7 +179,7 @@
             </ul>
             <p class="mb-0"><strong>Házi feladat (határidő: szeptember 30. 23:59):</strong></p>
             <ul>
-              <li><span class="badge text-bg-warning me-1">HF/2</span><a href="./notebooks/dmml-hw-02" target="_blank">Lineáris regresszió</a> (6 pont)
+              <li><span class="badge text-bg-warning me-1">HF/2</span><a href="./notebooks/dmml-hw-02" target="_blank">Lineáris regresszió</a> (6 pont): <a href="https://eltehu.sharepoint.com/:u:/r/sites/Crs25-26-1abgtm22ga1Adatbnyszatsgpitanulsgyakorlat/Megosztott%20dokumentumok/General/Hallgat%C3%B3i%20megold%C3%A1sok/dmml-hw-02-Eniko.html?csf=1&web=1&e=pvcS44" target="_blank">Gy. E. megoldása</a>
                 <details>
                   <summary>Megjegyzés</summary>
                   <ul>
@@ -195,12 +195,6 @@
             <p class="mb-0"><strong>Órai anyagok:</strong></p>
             <ul>
               <li><a href="./notebooks/dmml-03" target="_blank">Notebook</a></li>
-              <li>User Guide (<code>scikit-learn</code>):
-                <ul>
-                  <li><a href="https://scikit-learn.org/stable/modules/cross_validation.html" target="_blank">Cross-validation: evaluating estimator performance</a></li>
-                  <li><a href="https://scikit-learn.org/stable/modules/grid_search.html" target="_blank">Tuning the hyper-parameters of an estimator</a></li>
-                </ul>
-              </li>
             </ul>
             <p class="mb-0"><strong>Házi feladat (határidő: szeptember 30. 23:59):</strong></p>
             <ul>
@@ -233,7 +227,11 @@
             </ul>
             <p class="mb-0"><strong>Házi feladat (határidő: október 7. 23:59):</strong></p>
             <ul>
-              <li><span class="badge text-bg-info me-1">HF/5</span><a href="./notebooks/dmml-hw-05" target="_blank">Infografika</a> (3 pont)</li>
+              <li><span class="badge text-bg-info me-1">HF/5</span><a href="./notebooks/dmml-hw-05" target="_blank">Infografika</a> (3 pont)
+                <ul>
+                  <li>A beküldött vizualizációk <a href="./visualizations" target="_blank">ezen az oldalon</a> tekinthetők meg.</li>
+                </ul>
+              </li>
             </ul>
             <p class="mb-0"><strong>Házi feladat (határidő: október 14. 23:59):</strong></p>
             <ul>
@@ -248,9 +246,22 @@
               </li>
             </ul>
           </section>
-          <hr class="col-3 col-md-2">
           <section class="py-md-1">
             <h3 id="05-gyakorlat" class="text-body-emphasis fs-4">5. gyakorlat (2025-10-09) <a class="anchor-link" href="#05-gyakorlat"></a></h3>
+            <p>Adatvizualizációs eszközök; interaktív vizualizációk; dashboardok.</p>
+            <p class="mb-0"><strong>Órai anyagok:</strong></p>
+            <ul>
+              <li><a href="./notebooks/dmml-05" target="_blank">Notebook</a></li>
+            </ul>
+            <p class="mb-0"><strong>Házi feladat:</strong></p>
+            <ul>
+              <li><span class="badge text-bg-info me-1">HF/7</span> Vizualizáció (?)</li>
+            </ul>
+          </section>
+          <hr class="col-3 col-md-2">
+          <section class="py-md-1">
+            <h3 id="06-gyakorlat" class="text-body-emphasis fs-4">6. gyakorlat (2025-10-16) <a class="anchor-link" href="#06-gyakorlat"></a></h3>
+            <p><em>Szünet előtti utolsó óra.</em></p>
             <p class="placeholder-glow"><span class="placeholder" style="width: 16rem;"></span></p>
             <p class="mb-0"><strong>Órai anyagok:</strong></p>
             <ul class="list-style placeholder-glow">

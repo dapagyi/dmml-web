@@ -15,14 +15,14 @@
   <title>DMML Contest Leaderboard</title>
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
   <div class="container leaderboard my-5 p-3">
-    <h2 id="leaderboard-title" class="text-center">
+    <h1 id="leaderboard-title" class="text-center">
       <div class="spinner-border" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>
-    </h2>
-    <h3 id="leaderboard-title" class="text-center">Leaderboard</h3>
+    </h1>
+    <h2 id="leaderboard-title" class="text-center">Leaderboard</h2>
     <p class="py-3 text-center">Last updated: <span id="last-updated">Never</span></p>
     <div class="table-responsive">
       <table class="table table-hover align-middle">
@@ -48,6 +48,11 @@
       </table>
     </div>
   </div>
+  <footer class="footer mt-auto py-3 bg-body-tertiary">
+    <div class="container text-center">
+      <span class="text-muted"><a class="text-decoration-none" href="https://apagyidavid.web.elte.hu">apagyidavid.web.elte.hu</a></span>
+    </div>
+  </footer>
   <script defer src="contest.js"></script>
 </body>
 

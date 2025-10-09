@@ -39,7 +39,7 @@ A maradékon taníts be három különböző modellt:
 
 Validáláshoz legalább egy (de akár az összes) esetben végezz keresztvalidációt. (A másik, egyszerűbb módszer az lenne, hogy a tanító adathalmazt is felosztod egy tanító és egy validációs halmazra (ugyanúgy `train_test_split`-tel), és a validációs halmazon méred a modelltanítási kísérletek eredményét.)
 
-A hiperparaméter-optimalizáláshoz legalább egy esetben próbáld ki az előző óra végén említett [Optuna csomagot](https://optuna.readthedocs.io/en/stable/tutorial/index.html){target="_blank"}.
+A hiperparaméter-optimalizáláshoz ~~legalább egy esetben~~ _opcionálisan_ (frissítve: október 9.) próbáld ki az előző óra végén említett [Optuna csomagot](https://optuna.readthedocs.io/en/stable/tutorial/index.html){target="_blank"}.
 
 ::: {.callout-note title="Megjegyzés"}
 A keresztvalidációt és a hiperparaméter-optimalizálás kapcsán fontos tisztázni egy részletet, ami felett gyakran szokás átsiklani, pedig bizonyos esetekben problémákhoz vezethet (konkrétan data leakage-hez, vagy legalábbis túlzottan optimista becsléshez a modell teljesítményét illetően).
