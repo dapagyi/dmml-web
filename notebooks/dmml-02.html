@@ -1,0 +1,1894 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-09-18">
+
+<title>DMML-02</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="dmml-02_files/libs/clipboard/clipboard.min.js"></script>
+<script src="dmml-02_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="dmml-02_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="dmml-02_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="dmml-02_files/libs/quarto-html/popper.min.js"></script>
+<script src="dmml-02_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="dmml-02_files/libs/quarto-html/anchor.min.js"></script>
+<link href="dmml-02_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="dmml-02_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="dmml-02_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="dmml-02_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="dmml-02_files/libs/bootstrap/bootstrap-d5c0a7d331a92c253c21bc27dd112ea5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="quarto-light">
+
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">DMML-02</h1>
+            <p class="subtitle lead">Fejlesztői környezet; további EDA módszerek; naiv hipotézisvizsgálat; adatelőkészítés, -feldolgozás.</p>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 18, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#ajánlott-fejlesztői-környezet" id="toc-ajánlott-fejlesztői-környezet" class="nav-link active" data-scroll-target="#ajánlott-fejlesztői-környezet">Ajánlott fejlesztői környezet</a></li>
+  <li><a href="#további-eda-módszerek" id="toc-további-eda-módszerek" class="nav-link" data-scroll-target="#további-eda-módszerek">További EDA módszerek</a>
+  <ul class="collapse">
+  <li><a href="#kategorikus-változók-további-hasznos-pandas-funkciók" id="toc-kategorikus-változók-további-hasznos-pandas-funkciók" class="nav-link" data-scroll-target="#kategorikus-változók-további-hasznos-pandas-funkciók">Kategorikus változók, további hasznos <code>pandas</code> funkciók</a></li>
+  </ul></li>
+  <li><a href="#hipotézisvizsgálat" id="toc-hipotézisvizsgálat" class="nav-link" data-scroll-target="#hipotézisvizsgálat">Hipotézisvizsgálat</a>
+  <ul class="collapse">
+  <li><a href="#hipotézis-első-osztályon-utazó-hölgyek" id="toc-hipotézis-első-osztályon-utazó-hölgyek" class="nav-link" data-scroll-target="#hipotézis-első-osztályon-utazó-hölgyek">1. hipotézis: első osztályon utazó hölgyek</a></li>
+  <li><a href="#hipotézis-kor" id="toc-hipotézis-kor" class="nav-link" data-scroll-target="#hipotézis-kor">2. hipotézis: kor</a></li>
+  <li><a href="#gyakorlás" id="toc-gyakorlás" class="nav-link" data-scroll-target="#gyakorlás">Gyakorlás</a></li>
+  </ul></li>
+  <li><a href="#adatelőkészítés--feldologzás" id="toc-adatelőkészítés--feldologzás" class="nav-link" data-scroll-target="#adatelőkészítés--feldologzás">Adatelőkészítés, -feldologzás</a>
+  <ul class="collapse">
+  <li><a href="#encoding" id="toc-encoding" class="nav-link" data-scroll-target="#encoding">Encoding</a>
+  <ul class="collapse">
+  <li><a href="#numerikus-változók" id="toc-numerikus-változók" class="nav-link" data-scroll-target="#numerikus-változók">Numerikus változók</a></li>
+  <li><a href="#kategorikus-változók" id="toc-kategorikus-változók" class="nav-link" data-scroll-target="#kategorikus-változók">Kategorikus változók</a></li>
+  </ul></li>
+  <li><a href="#skálázás-scaling" id="toc-skálázás-scaling" class="nav-link" data-scroll-target="#skálázás-scaling">Skálázás (Scaling)</a>
+  <ul class="collapse">
+  <li><a href="#standarizálás" id="toc-standarizálás" class="nav-link" data-scroll-target="#standarizálás">Standarizálás</a></li>
+  <li><a href="#min-max-skálázás" id="toc-min-max-skálázás" class="nav-link" data-scroll-target="#min-max-skálázás">Min-max skálázás</a></li>
+  </ul></li>
+  <li><a href="#gyakorlás-1" id="toc-gyakorlás-1" class="nav-link" data-scroll-target="#gyakorlás-1">Gyakorlás</a>
+  <ul class="collapse">
+  <li><a href="#encoding-1" id="toc-encoding-1" class="nav-link" data-scroll-target="#encoding-1">Encoding</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="dmml-02.ipynb" download="dmml-02.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
+</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p><strong>Honlap:</strong> <a href="https://apagyidavid.web.elte.hu/2025-2026-1/dmml" target="_blank">apagyidavid.web.elte.hu/2025-2026-1/dmml</a></p>
+<p><a target="_blank" href="https://colab.research.google.com/github/dapagyi/dmml-web/blob/gh-pages/notebooks/dmml-02.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a></p>
+<section id="ajánlott-fejlesztői-környezet" class="level1">
+<h1>Ajánlott fejlesztői környezet</h1>
+<p>Én ezeket használom, ajánlom:</p>
+<ul>
+<li>WSL2 (Windows Subsystem for Linux), Debian</li>
+<li>uv (package and project management)</li>
+<li>VS Code, Copilot</li>
+</ul>
+<p>Ezek közül legalább a VS Code és az uv telepítését erősen javaslom. (A WSL2 mellőzhető, a Copilot pedig integrálva van a VS Code-ba.)</p>
+<p>Néhány hasznos link ezekhez:</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/windows/wsl/install">How to install Linux on Windows with WSL</a></li>
+<li><a href="https://code.visualstudio.com/docs/remote/wsl-tutorial">Remote development in WSL</a></li>
+<li><a href="https://code.visualstudio.com/docs/remote/wsl">Developing in WSL</a></li>
+<li><a href="https://docs.astral.sh/uv/">uv</a></li>
+<li><a href="https://code.visualstudio.com/docs/datascience/jupyter-notebooks">Jupyter Notebooks in VS Code</a></li>
+<li><a href="https://code.visualstudio.com/docs/python/debugging">Python debugging in VS Code</a></li>
+<li><a href="https://code.visualstudio.com/docs/copilot/overview">GitHub Copilot in VS Code</a></li>
+</ul>
+<p>A legutolsó link elég jól szemlélteti, hogy miért érdemes ezek beállításába egy kevés energiát fektetni.</p>
+</section>
+<section id="további-eda-módszerek" class="level1">
+<h1>További EDA módszerek</h1>
+<p><em>Előzmény:</em> előző óra (<code>pandas</code> gyakorlás és megoldások).</p>
+<p>Néhány további EDA, azaz <em>Exploratory Data Analysis</em> (“feltáró adatelemzés” (?)) módszert fogunk alkalmazni a Titanic adathalmazon.</p>
+<div id="ebe29ec3" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"https://apagyidavid.web.elte.hu/2025-2026-1/dmml/data/titanic.csv"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.rename({<span class="st">"Parch"</span>: <span class="st">"ParCh"</span>})</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">PassengerId</th>
+<th data-quarto-table-cell-role="th">Survived</th>
+<th data-quarto-table-cell-role="th">Pclass</th>
+<th data-quarto-table-cell-role="th">Name</th>
+<th data-quarto-table-cell-role="th">Sex</th>
+<th data-quarto-table-cell-role="th">Age</th>
+<th data-quarto-table-cell-role="th">SibSp</th>
+<th data-quarto-table-cell-role="th">Parch</th>
+<th data-quarto-table-cell-role="th">Ticket</th>
+<th data-quarto-table-cell-role="th">Fare</th>
+<th data-quarto-table-cell-role="th">Cabin</th>
+<th data-quarto-table-cell-role="th">Embarked</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>1</td>
+<td>0</td>
+<td>3</td>
+<td>Braund, Mr. Owen Harris</td>
+<td>male</td>
+<td>22.0</td>
+<td>1</td>
+<td>0</td>
+<td>A/5 21171</td>
+<td>7.2500</td>
+<td>NaN</td>
+<td>S</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>Cumings, Mrs. John Bradley (Florence Briggs Th...</td>
+<td>female</td>
+<td>38.0</td>
+<td>1</td>
+<td>0</td>
+<td>PC 17599</td>
+<td>71.2833</td>
+<td>C85</td>
+<td>C</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>3</td>
+<td>1</td>
+<td>3</td>
+<td>Heikkinen, Miss. Laina</td>
+<td>female</td>
+<td>26.0</td>
+<td>0</td>
+<td>0</td>
+<td>STON/O2. 3101282</td>
+<td>7.9250</td>
+<td>NaN</td>
+<td>S</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>4</td>
+<td>1</td>
+<td>1</td>
+<td>Futrelle, Mrs. Jacques Heath (Lily May Peel)</td>
+<td>female</td>
+<td>35.0</td>
+<td>1</td>
+<td>0</td>
+<td>113803</td>
+<td>53.1000</td>
+<td>C123</td>
+<td>S</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>5</td>
+<td>0</td>
+<td>3</td>
+<td>Allen, Mr. William Henry</td>
+<td>male</td>
+<td>35.0</td>
+<td>0</td>
+<td>0</td>
+<td>373450</td>
+<td>8.0500</td>
+<td>NaN</td>
+<td>S</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<section id="kategorikus-változók-további-hasznos-pandas-funkciók" class="level2">
+<h2 class="anchored" data-anchor-id="kategorikus-változók-további-hasznos-pandas-funkciók">Kategorikus változók, további hasznos <code>pandas</code> funkciók</h2>
+<p>A <code>Cabin</code> oszlopról hasznos információk érhetők el <a href="https://www.kaggle.com/code/gunesevitan/titanic-advanced-feature-engineering-tutorial?scriptVersionId=27280410&amp;cellId=22">ebben az elemzésben</a> (1.2.4 szakasz):</p>
+<iframe src="https://www.kaggle.com/embed/gunesevitan/titanic-advanced-feature-engineering-tutorial?cellId=22&amp;cellIds=22&amp;kernelSessionId=27280410" height="300" style="margin: 0 auto; width: 100%; max-width: 950px;" frameborder="0" scrolling="auto" title="Titanic - Advanced Feature Engineering Tutorial">
+</iframe>
+<p>Contingency table (cross tabulation, crosstab; magyarul leginkább kontingenciatáblázat/-tábla):</p>
+<div id="55945f24" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pd.crosstab(df[<span class="st">"Sex"</span>] ,df[<span class="st">"Pclass"</span>], values<span class="op">=</span>df[<span class="st">"Fare"</span>], aggfunc<span class="op">=</span><span class="st">"mean"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">Pclass</th>
+<th data-quarto-table-cell-role="th">1</th>
+<th data-quarto-table-cell-role="th">2</th>
+<th data-quarto-table-cell-role="th">3</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Sex</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">female</th>
+<td>106.125798</td>
+<td>21.970121</td>
+<td>16.118810</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">male</th>
+<td>67.226127</td>
+<td>19.741782</td>
+<td>12.661633</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Pivottal ugyanez:</p>
+<div id="16766dcf" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pd.pivot_table(df, index<span class="op">=</span>[<span class="st">"Sex"</span>], columns<span class="op">=</span>[<span class="st">"Pclass"</span>], values<span class="op">=</span><span class="st">"Fare"</span>, aggfunc<span class="op">=</span><span class="st">"mean"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">Pclass</th>
+<th data-quarto-table-cell-role="th">1</th>
+<th data-quarto-table-cell-role="th">2</th>
+<th data-quarto-table-cell-role="th">3</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Sex</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">female</th>
+<td>106.125798</td>
+<td>21.970121</td>
+<td>16.118810</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">male</th>
+<td>67.226127</td>
+<td>19.741782</td>
+<td>12.661633</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Ha szükségünk van egy egyszerű – de nem túl szép – vizualizációra, akkor közvetlenül <code>pandas</code>-szal gyorsan készíthetünk egy ábrát (valójában a <code>matplotlib</code>-et használja a háttérben):</p>
+<div id="9d3116d5" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df.groupby(<span class="st">"Sex"</span>)[<span class="st">"Pclass"</span>].value_counts().unstack().plot.bar(legend<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="dmml-02_files/figure-html/cell-5-output-1.png" width="798" height="684" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="hipotézisvizsgálat" class="level1">
+<h1>Hipotézisvizsgálat</h1>
+<p>Gyakran hangoztatott nézet, hogy először a <em>nőket és a gyerekeket</em> mentették ki a katasztrófa során. Egy másik gyakori megállapítás szokott lenni az, hogy az <em>első osztályon utazó vendégek</em> előnyt élveztek a mentés során.</p>
+<p>Hipotézisvizsgálat formálisan a matematikai statisztika tárgyon lesz, mi most csak naivan próbálunk meg feltárni hasonló összefüggéseket.</p>
+<p>Fogalmazzunk meg és teszteljünk néhány hipotézist a túlélésre vonatkozóan!</p>
+<ul>
+<li><em>1. hipotézis:</em> A nők előnyt élveztek a kimentés során, de azon belül is az első osztályon utazó hölgyek.</li>
+<li><em>2. hipotézis:</em> A túléléssel leginkább korreláló numerikus változó a kor.</li>
+</ul>
+<p>Próbáljuk meg megválaszolni a kérdéseket!</p>
+<section id="hipotézis-első-osztályon-utazó-hölgyek" class="level2">
+<h2 class="anchored" data-anchor-id="hipotézis-első-osztályon-utazó-hölgyek">1. hipotézis: első osztályon utazó hölgyek</h2>
+<p>Érdemes ellenőrizni, hogy mekkora létszámokról van szó, ugyanis ha például nagyon kis elemszámú valamelyik vizsgált kategória, akkor nem biztos, hogy van értelme egyáltalán a kérdésfelvetésnek.</p>
+<div id="1df8e253" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df.pivot_table(index<span class="op">=</span>[<span class="st">"Sex"</span>], columns<span class="op">=</span>[<span class="st">"Pclass"</span>], values<span class="op">=</span><span class="st">"Survived"</span>, aggfunc<span class="op">=</span><span class="st">"count"</span>, margins<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">Pclass</th>
+<th data-quarto-table-cell-role="th">1</th>
+<th data-quarto-table-cell-role="th">2</th>
+<th data-quarto-table-cell-role="th">3</th>
+<th data-quarto-table-cell-role="th">All</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Sex</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">female</th>
+<td>94</td>
+<td>76</td>
+<td>144</td>
+<td>314</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">male</th>
+<td>122</td>
+<td>108</td>
+<td>347</td>
+<td>577</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">All</th>
+<td>216</td>
+<td>184</td>
+<td>491</td>
+<td>891</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Nincs túl kevés adat egyik kategóriában sem, tehát érdemes tovább vizsgálódni.</p>
+<div id="8d88051d" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df.pivot_table(index<span class="op">=</span>[<span class="st">"Sex"</span>], columns<span class="op">=</span>[<span class="st">"Pclass"</span>], values<span class="op">=</span><span class="st">"Survived"</span>, aggfunc<span class="op">=</span><span class="st">"mean"</span>, margins<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">Pclass</th>
+<th data-quarto-table-cell-role="th">1</th>
+<th data-quarto-table-cell-role="th">2</th>
+<th data-quarto-table-cell-role="th">3</th>
+<th data-quarto-table-cell-role="th">All</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Sex</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">female</th>
+<td>0.968085</td>
+<td>0.921053</td>
+<td>0.500000</td>
+<td>0.742038</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">male</th>
+<td>0.368852</td>
+<td>0.157407</td>
+<td>0.135447</td>
+<td>0.188908</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">All</th>
+<td>0.629630</td>
+<td>0.472826</td>
+<td>0.242363</td>
+<td>0.383838</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>A fenti táblázatból több kézenfekvő megállapítás adódik:</p>
+<ul>
+<li>A nők túlélési aránya 74.2%, a férfiaké 18.9%. (Az összes utasra vonatkoztatva 38.4% ez az érték).</li>
+<li>Az első és második osztályon utazó nők túlélési aránya 96.8% és 92.1%, a harmadik osztályon utazóké 50%.</li>
+<li>A férfiak esetében is igaz az, hogy a magasabb osztályon utazók túlélési aránya nagyobb.</li>
+</ul>
+<p>Ezek a megállapítások alátámasztják az 1. hipotézist.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Precízebb vizsgálat">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Precízebb vizsgálat
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ha matematikailag korrektebb megállapításokat szeretnénk tenni, akkor statisztikai teszteket kell végeznünk. Néhány Wikipedia szócikk iránymutatásképpen:</p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Statistical_hypothesis_test">Statistical hypothesis test</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Chi-squared_test">Chi-squared test</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Fisher%27s_exact_test">Fisher’s exact test</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Category:Statistical_tests_for_contingency_tables">Category:Statistical tests for contingency tables</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Category:Statistical_tests">Category:Statistical tests</a></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="hipotézis-kor" class="level2">
+<h2 class="anchored" data-anchor-id="hipotézis-kor">2. hipotézis: kor</h2>
+<p>Vizsgáljuk meg a kor eloszlását a túléltek és az elhunytak között!</p>
+<div id="dce4ae5f" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df.boxplot(column<span class="op">=</span><span class="st">"Age"</span>, by<span class="op">=</span><span class="st">"Survived"</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="dmml-02_files/figure-html/cell-8-output-1.png" width="660" height="538" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="6cc7d1fd" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Age"</span>].groupby(df[<span class="st">"Survived"</span>]).describe()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">count</th>
+<th data-quarto-table-cell-role="th">mean</th>
+<th data-quarto-table-cell-role="th">std</th>
+<th data-quarto-table-cell-role="th">min</th>
+<th data-quarto-table-cell-role="th">25%</th>
+<th data-quarto-table-cell-role="th">50%</th>
+<th data-quarto-table-cell-role="th">75%</th>
+<th data-quarto-table-cell-role="th">max</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Survived</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>424.0</td>
+<td>30.626179</td>
+<td>14.172110</td>
+<td>1.00</td>
+<td>21.0</td>
+<td>28.0</td>
+<td>39.0</td>
+<td>74.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>290.0</td>
+<td>28.343690</td>
+<td>14.950952</td>
+<td>0.42</td>
+<td>19.0</td>
+<td>28.0</td>
+<td>36.0</td>
+<td>80.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="25e18512" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df.hist(column<span class="op">=</span><span class="st">"Age"</span>, by<span class="op">=</span><span class="st">"Survived"</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>), bins<span class="op">=</span><span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>array([&lt;Axes: title={'center': '0'}&gt;, &lt;Axes: title={'center': '1'}&gt;],
+      dtype=object)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="dmml-02_files/figure-html/cell-10-output-2.png" width="660" height="497" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>A fenti ábrák alapján elmondható, hogy a túlélők között valamivel több a fiatalabb korú személy, de a különbség nem túl szembetűnő.</p>
+<p>Korreláció (numerikus változókra között + plot):</p>
+<div id="7447c78b" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>display(df.select_dtypes(<span class="st">"number"</span>).corr()[<span class="st">"Survived"</span>])</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>df.select_dtypes(<span class="st">"number"</span>).corr()[<span class="st">"Survived"</span>].plot(kind<span class="op">=</span><span class="st">"bar"</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<pre><code>PassengerId   -0.005007
+Survived       1.000000
+Pclass        -0.338481
+Age           -0.077221
+SibSp         -0.035322
+Parch          0.081629
+Fare           0.257307
+Name: Survived, dtype: float64</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="dmml-02_files/figure-html/cell-11-output-2.png" width="656" height="552" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>A <code>Survived</code> oszloppal leginkább korreláló numerikus feature-ök a <code>Pclass</code> (-0.34) és a <code>Fare</code> (0.26). Tehát minél magasabb osztályon utazott valaki, annál nagyobb a megmenekülésének valószínűsége (a nemtől függetlenül, lásd 1. hipotézis).</p>
+<p>Nem várható, hogy mentéskor a jegy árát kérdezgették az emberektől. Ez a klasszikus rejtett vagy harmadik változó esete: a vizsgált (független) változó és a célváltozó (függő változó) között van egy harmadik (rejtett) változó, amely a korrelációt okozza. Jelen esetben ezt tudhatjuk is, a jegyár nyilvánvalóan az utas osztály függvénye:</p>
+<div id="33754d7b" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Fare"</span>].corr(df[<span class="st">"Pclass"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>np.float64(-0.5494996199439074)</code></pre>
+</div>
+</div>
+</section>
+<section id="gyakorlás" class="level2">
+<h2 class="anchored" data-anchor-id="gyakorlás">Gyakorlás</h2>
+<p>Az elemzés során használj minél többféle órán látott módszert. Nézz utána, milyen beállításokkal tudod még jobban kihasználni a <code>pandas</code> (vagy <code>polars</code>) adta lehetőségeket.</p>
+<ol type="1">
+<li>Vizsgáld meg egy (órán eddig nem vizsgált) kategorikus és egy folytonos, numerikus változó eloszlását, és ábrázold is egy megfelelő diagramon.</li>
+</ol>
+<div id="5b228510" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol start="2" type="1">
+<li>Hogyan hat a túlélés valószínűségére, ha egy családtagod utazott veled együtt (<code>SibSp</code> és <code>ParCh</code> oszlopok)? Fogalmazz meg előre egy hipotézist, és próbáld meg ellenőrizni. A kapott eredményhez készíts megfelelő vizualizációt és számolj statisztikákat. Mennyire tartod meglepőnek az eredményt? Mit gondolsz, ha kettő helyett négy oszlopunk lenne, külön a testvéreknek, házastársnak, szülőnek és gyereknek, hasonló eredményre jutnánk?</li>
+</ol>
+<div id="c68b5063" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol start="3" type="1">
+<li>A <code>.query()</code> metódussal a sorokra lehet szűrni. Próbáld meg megérteni, jellemezni néhány grafikon segítségével a harmadosztályú utasokat.</li>
+</ol>
+<div id="9fcb2324" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol start="4" type="1">
+<li>Válassz egy oszlopot, pl. <code>Age</code> és vedd a <code>df["Age"]</code> <code>pd.Series</code>-t. Milyen műveleteket tudsz rajta elvégezni, amiket már egy <code>np.array</code>-en megszoktál? Meg tudod szorozni, tudod venni az átlagát, stb.? Találsz olyan műveletet, amit csak ezen lehet? És olyat, amit csak egy <code>np.array</code>-jel tudtál megcsinálni? Mi van, ha két oszlopot veszel, pl. <code>df[["Age", "Pclass"]]</code>? Mennyire viselkedik ez a típusú objektum egy többdimenziós <code>np.array</code>-hez hasonlóan?</li>
+</ol>
+<div id="6eea1c79" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol start="5" type="1">
+<li>Az alábbi művelet kilistázza azon utasokat, akiknek nem került semmibe a jegye:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df.query(<span class="st">"Fare == 0"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Vizsgáld meg, hogy lehet-e ennek valami értelmes magyarázata, vagy ezeket hibás (kiugró) értékekként kell kezelnünk. Pl. gyerek, és ezért utazik ingyen, vagy valami családtaggal stb.</p>
+<div id="cb1a85d5" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="adatelőkészítés--feldologzás" class="level1">
+<h1>Adatelőkészítés, -feldologzás</h1>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Categorical_variable">Kategorikus változók</a></li>
+<li><a href="https://scikit-learn.org/stable/modules/classes.html#module-sklearn.preprocessing">Scikit-learn, preprocessing</a></li>
+<li><a href="https://towardsdatascience.com/categorical-feature-encoding-547707acf4e5#1056">Towards Data Science</a></li>
+</ul>
+<section id="encoding" class="level2">
+<h2 class="anchored" data-anchor-id="encoding">Encoding</h2>
+<p>A modelleink többsége, amiket tanulni fogunk, numerikus adatokkal tud csak dolgozni. A nem numerikus változók elkódolása (numerikus értékké alakítása, <em>encoding</em>) ezért általában szükséges, mielőtt a modellezéssel foglalkoznánk. Modellezzéssel csak a következő órán fogunk foglalkozni, előtte most néhány egyszerűbb technikát tekintünk át.</p>
+<section id="numerikus-változók" class="level3">
+<h3 class="anchored" data-anchor-id="numerikus-változók">Numerikus változók</h3>
+<ul>
+<li>Binning: folytonos eloszlás diszkrétté tétele</li>
+<li>Binary: egy küszöbértékhez viszonyított érték alapján</li>
+</ul>
+<section id="binning" class="level4">
+<h4 class="anchored" data-anchor-id="binning">Binning</h4>
+<p>Folytonos változót <em>vödrökbe</em> rakjuk. Hívják ezért <em>grouping</em>nek és <em>bucketing</em>nek is. Pl.</p>
+<div id="bbf66e8f" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Age"</span>].value_counts(bins<span class="op">=</span><span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>(16.336, 32.252]    346
+(32.252, 48.168]    188
+(0.339, 16.336]     100
+(48.168, 64.084]     69
+(64.084, 80.0]       11
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<div id="4b5acb87" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"AgeBin"</span>] <span class="op">=</span> pd.cut(df[<span class="st">"Age"</span>], bins<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">12</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>, <span class="dv">90</span>, <span class="dv">100</span>], right<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">"Age"</span>, <span class="st">"AgeBin"</span>]].head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Age</th>
+<th data-quarto-table-cell-role="th">AgeBin</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>22.0</td>
+<td>[20.0, 30.0)</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>38.0</td>
+<td>[30.0, 40.0)</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>26.0</td>
+<td>[20.0, 30.0)</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>35.0</td>
+<td>[30.0, 40.0)</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>35.0</td>
+<td>[30.0, 40.0)</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>54.0</td>
+<td>[50.0, 60.0)</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>2.0</td>
+<td>[0.0, 12.0)</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>27.0</td>
+<td>[20.0, 30.0)</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>14.0</td>
+<td>[12.0, 20.0)</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Akár az <code>apply</code> metódust is használhatjuk:</p>
+<div id="1be04eaf" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> age_group_mapping(age: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span>:</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> age <span class="op">&lt;</span> <span class="dv">2</span>:</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"baby"</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="dv">2</span> <span class="op">&lt;=</span> age <span class="op">&lt;</span> <span class="dv">18</span>:</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"children"</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="dv">18</span> <span class="op">&lt;=</span> age <span class="op">&lt;</span> <span class="dv">30</span>:</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"youth"</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="dv">30</span> <span class="op">&lt;=</span> age <span class="op">&lt;</span> <span class="dv">50</span>:</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"adult"</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="dv">50</span> <span class="op">&lt;=</span> age:</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"old"</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>display(df[<span class="st">"Age"</span>].<span class="bu">apply</span>(age_group_mapping).head())</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"AgeGroup"</span>] <span class="op">=</span> df[<span class="st">"Age"</span>].<span class="bu">apply</span>(age_group_mapping)</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"AgeGroup"</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<pre><code>0    youth
+1    adult
+2    youth
+3    adult
+4    adult
+Name: Age, dtype: object</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>AgeGroup
+youth       271
+adult       256
+children     99
+old          74
+baby         14
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<p>Gyors vizualizáció:</p>
+<div id="79c0d27b" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"AgeGroup"</span>].value_counts().reindex([<span class="st">"baby"</span>,<span class="st">"children"</span>,<span class="st">"youth"</span>,<span class="st">"adult"</span>,<span class="st">"old"</span>]).plot.barh(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="dmml-02_files/figure-html/cell-21-output-1.png" width="547" height="485" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="be166e5b" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"AgeGroup"</span>].value_counts().reindex([<span class="st">"baby"</span>,<span class="st">"children"</span>,<span class="st">"youth"</span>,<span class="st">"adult"</span>,<span class="st">"old"</span>]).plot.pie(autopct<span class="op">=</span><span class="st">'</span><span class="sc">%.2f%%</span><span class="st">'</span>, cmap<span class="op">=</span><span class="st">"Purples"</span>, figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="dmml-02_files/figure-html/cell-22-output-1.png" width="487" height="463" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Kördiagram">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Kördiagram
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A kördiagram általában elég rossz vizualizációs módszer, most csak a <code>pandas</code> nyújtotta lehetőségek szemléltetésére használjuk.</p>
+</div>
+</div>
+</section>
+<section id="binary-encoding" class="level4">
+<h4 class="anchored" data-anchor-id="binary-encoding">Binary encoding</h4>
+<p>Ha egy folytonos, numerikus változót egy adott küszöbértékhez szeretnénk viszonyítani.</p>
+<div id="1ce7c99f" class="cell" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>threshold <span class="op">=</span> df[<span class="st">"Fare"</span>].mean()</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(threshold)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"FareCheap"</span>] <span class="op">=</span> (df[<span class="st">"Fare"</span>] <span class="op">&lt;</span> threshold).astype(<span class="st">"int"</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>df.groupby(<span class="st">"Pclass"</span>)[<span class="st">"FareCheap"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>).unstack()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>32.204207968574636</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">FareCheap</th>
+<th data-quarto-table-cell-role="th">0</th>
+<th data-quarto-table-cell-role="th">1</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Pclass</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>0.736111</td>
+<td>0.263889</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2</th>
+<td>0.119565</td>
+<td>0.880435</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">3</th>
+<td>0.061100</td>
+<td>0.938900</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="430f9a17" class="cell" data-execution_count="23">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>df.groupby(<span class="st">"Pclass"</span>)[<span class="st">"FareCheap"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>).unstack().plot.bar(stacked<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="dmml-02_files/figure-html/cell-24-output-1.png" width="571" height="425" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="b02c747f" class="cell" data-execution_count="24">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>pd.crosstab(df[<span class="st">"Pclass"</span>], df[<span class="st">"FareCheap"</span>], normalize<span class="op">=</span><span class="st">"index"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">FareCheap</th>
+<th data-quarto-table-cell-role="th">0</th>
+<th data-quarto-table-cell-role="th">1</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Pclass</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>0.736111</td>
+<td>0.263889</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2</th>
+<td>0.119565</td>
+<td>0.880435</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">3</th>
+<td>0.061100</td>
+<td>0.938900</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="fbba4c51" class="cell" data-execution_count="25">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>pd.crosstab(df[<span class="st">"Pclass"</span>], df[<span class="st">"FareCheap"</span>], normalize<span class="op">=</span><span class="st">"index"</span>).plot.barh(</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    stacked<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span>[<span class="st">"orange"</span>, <span class="st">"lightblue"</span>], ax<span class="op">=</span>ax</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>ax.legend(</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"Ticket price"</span>,</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    labels<span class="op">=</span>[<span class="st">"expensive"</span>, <span class="st">"cheap"</span>],</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    bbox_to_anchor<span class="op">=</span>(<span class="dv">1</span>, <span class="fl">1.02</span>),</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    loc<span class="op">=</span><span class="st">"upper left"</span>,</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> container <span class="kw">in</span> ax.containers:</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>    ax.bar_label(container, label_type<span class="op">=</span><span class="st">"center"</span>, fmt<span class="op">=</span><span class="st">"</span><span class="sc">%.2f</span><span class="st">"</span>)</span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="dmml-02_files/figure-html/cell-26-output-1.png" width="773" height="487" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="kategorikus-változók" class="level3">
+<h3 class="anchored" data-anchor-id="kategorikus-változók">Kategorikus változók</h3>
+<ul>
+<li>One-hot encoding: minden egyes egyedi értékhez egy indikátor változót rendel</li>
+<li>Label encoding: egyedi értékekhez rendelünk egyedi számot
+<ul>
+<li>Ordinal: van értelme a sorrendnek</li>
+<li>Nominal: nincs értelme a sorrendnek</li>
+</ul></li>
+</ul>
+<section id="one-hot-encoding" class="level4">
+<h4 class="anchored" data-anchor-id="one-hot-encoding">One-hot encoding</h4>
+<p>Dummy kódolásnak is nevezik. Nézzük az <code>Embarked</code> oszlopot! Három lehetséges értéke az <code>S,C,Q</code>. Vegyünk 3 indikátor változót, nevezzük őket <code>Embarked_S, Embarked_C, Embarked_Q</code>-nak. A szabály a következő: ha <code>X</code> városban szállt be valaki, akkor <code>Embarked_X</code> értéke legyen 1, a többié 0. Tehát például, ha valaki Southamptonban szállt fel, akkor <code>Embarked_S=1</code>, <code>Embarked_C=0</code>, <code>Embarked_Q=0</code>. Ezen indikátor változókat nevezzük dummy változóknak, a belőlük képzett vektort pedig dummy vektornak. Ez előző esetben például a dummy vektor a következő lenne: <span class="math inline">\([1,0,0]\)</span>. Az egyes oszlopok ekkor arra a kérdésre válaszolnak valójában, hogy az illető <code>X</code> városban szállt-e fel.</p>
+<div id="328359dd" class="cell" data-execution_count="26">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>df_dummy <span class="op">=</span> pd.get_dummies(df, columns<span class="op">=</span>[<span class="st">"Embarked"</span>], prefix<span class="op">=</span><span class="st">"Embarked"</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>df_dummy.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">PassengerId</th>
+<th data-quarto-table-cell-role="th">Survived</th>
+<th data-quarto-table-cell-role="th">Pclass</th>
+<th data-quarto-table-cell-role="th">Name</th>
+<th data-quarto-table-cell-role="th">Sex</th>
+<th data-quarto-table-cell-role="th">Age</th>
+<th data-quarto-table-cell-role="th">SibSp</th>
+<th data-quarto-table-cell-role="th">Parch</th>
+<th data-quarto-table-cell-role="th">Ticket</th>
+<th data-quarto-table-cell-role="th">Fare</th>
+<th data-quarto-table-cell-role="th">Cabin</th>
+<th data-quarto-table-cell-role="th">AgeBin</th>
+<th data-quarto-table-cell-role="th">AgeGroup</th>
+<th data-quarto-table-cell-role="th">FareCheap</th>
+<th data-quarto-table-cell-role="th">Embarked_C</th>
+<th data-quarto-table-cell-role="th">Embarked_Q</th>
+<th data-quarto-table-cell-role="th">Embarked_S</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>1</td>
+<td>0</td>
+<td>3</td>
+<td>Braund, Mr. Owen Harris</td>
+<td>male</td>
+<td>22.0</td>
+<td>1</td>
+<td>0</td>
+<td>A/5 21171</td>
+<td>7.2500</td>
+<td>NaN</td>
+<td>[20, 30)</td>
+<td>youth</td>
+<td>1</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>Cumings, Mrs. John Bradley (Florence Briggs Th...</td>
+<td>female</td>
+<td>38.0</td>
+<td>1</td>
+<td>0</td>
+<td>PC 17599</td>
+<td>71.2833</td>
+<td>C85</td>
+<td>[30, 40)</td>
+<td>adult</td>
+<td>0</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>3</td>
+<td>1</td>
+<td>3</td>
+<td>Heikkinen, Miss. Laina</td>
+<td>female</td>
+<td>26.0</td>
+<td>0</td>
+<td>0</td>
+<td>STON/O2. 3101282</td>
+<td>7.9250</td>
+<td>NaN</td>
+<td>[20, 30)</td>
+<td>youth</td>
+<td>1</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>4</td>
+<td>1</td>
+<td>1</td>
+<td>Futrelle, Mrs. Jacques Heath (Lily May Peel)</td>
+<td>female</td>
+<td>35.0</td>
+<td>1</td>
+<td>0</td>
+<td>113803</td>
+<td>53.1000</td>
+<td>C123</td>
+<td>[30, 40)</td>
+<td>adult</td>
+<td>0</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>5</td>
+<td>0</td>
+<td>3</td>
+<td>Allen, Mr. William Henry</td>
+<td>male</td>
+<td>35.0</td>
+<td>0</td>
+<td>0</td>
+<td>373450</td>
+<td>8.0500</td>
+<td>NaN</td>
+<td>[30, 40)</td>
+<td>adult</td>
+<td>1</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="bbd41179" class="cell" data-execution_count="27">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>cities <span class="op">=</span> <span class="bu">list</span>(<span class="bu">filter</span>(pd.notna, df[<span class="st">"Embarked"</span>].unique()))</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cities)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> city <span class="kw">in</span> cities:</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    df[<span class="ss">f"is_Embarked_</span><span class="sc">{</span>city<span class="sc">}</span><span class="ss">"</span>] <span class="op">=</span> (df[<span class="st">"Embarked"</span>] <span class="op">==</span> city).astype(<span class="st">"int"</span>)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">list</span>(<span class="bu">filter</span>(<span class="kw">lambda</span> col: <span class="st">"Embarked"</span> <span class="kw">in</span> col, df.columns)))</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">"Embarked"</span>, <span class="st">"is_Embarked_S"</span>, <span class="st">"is_Embarked_C"</span>, <span class="st">"is_Embarked_Q"</span>]].head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>['S', 'C', 'Q']
+['Embarked', 'is_Embarked_S', 'is_Embarked_C', 'is_Embarked_Q']</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Embarked</th>
+<th data-quarto-table-cell-role="th">is_Embarked_S</th>
+<th data-quarto-table-cell-role="th">is_Embarked_C</th>
+<th data-quarto-table-cell-role="th">is_Embarked_Q</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>S</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>C</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>S</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>S</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>S</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Mindenhol egy darab egyes van?</p>
+<div id="fce67673" class="cell" data-execution_count="28">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="bu">all</span>(df[[<span class="st">"is_Embarked_S"</span>, <span class="st">"is_Embarked_C"</span>, <span class="st">"is_Embarked_Q"</span>]].<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>) <span class="op">==</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<pre><code>False</code></pre>
+</div>
+</div>
+<p>Mik a problémás sorok? Hát azok, ahol hiányzik az <code>Embarked</code> érték.</p>
+<div id="b82b6de2" class="cell" data-execution_count="29">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>df[df[[<span class="st">"is_Embarked_S"</span>, <span class="st">"is_Embarked_C"</span>, <span class="st">"is_Embarked_Q"</span>]].<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>) <span class="op">!=</span> <span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">PassengerId</th>
+<th data-quarto-table-cell-role="th">Survived</th>
+<th data-quarto-table-cell-role="th">Pclass</th>
+<th data-quarto-table-cell-role="th">Name</th>
+<th data-quarto-table-cell-role="th">Sex</th>
+<th data-quarto-table-cell-role="th">Age</th>
+<th data-quarto-table-cell-role="th">SibSp</th>
+<th data-quarto-table-cell-role="th">Parch</th>
+<th data-quarto-table-cell-role="th">Ticket</th>
+<th data-quarto-table-cell-role="th">Fare</th>
+<th data-quarto-table-cell-role="th">Cabin</th>
+<th data-quarto-table-cell-role="th">Embarked</th>
+<th data-quarto-table-cell-role="th">AgeBin</th>
+<th data-quarto-table-cell-role="th">AgeGroup</th>
+<th data-quarto-table-cell-role="th">FareCheap</th>
+<th data-quarto-table-cell-role="th">is_Embarked_S</th>
+<th data-quarto-table-cell-role="th">is_Embarked_C</th>
+<th data-quarto-table-cell-role="th">is_Embarked_Q</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">61</th>
+<td>62</td>
+<td>1</td>
+<td>1</td>
+<td>Icard, Miss. Amelie</td>
+<td>female</td>
+<td>38.0</td>
+<td>0</td>
+<td>0</td>
+<td>113572</td>
+<td>80.0</td>
+<td>B28</td>
+<td>NaN</td>
+<td>[30, 40)</td>
+<td>adult</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">829</th>
+<td>830</td>
+<td>1</td>
+<td>1</td>
+<td>Stone, Mrs. George Nelson (Martha Evelyn)</td>
+<td>female</td>
+<td>62.0</td>
+<td>0</td>
+<td>0</td>
+<td>113572</td>
+<td>80.0</td>
+<td>B28</td>
+<td>NaN</td>
+<td>[60, 70)</td>
+<td>old</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="c17a271c" class="cell" data-execution_count="30">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Embarked"</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="25">
+<pre><code>Embarked
+S    644
+C    168
+Q     77
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<p>Vegyük észre, hogy az utolsó oszlopot akár el is lehet hagyni: <code>Embarked_Q</code> pontosan akkor 1, ha a többi 0. (Hiszen az első <span class="math inline">\(n-1\)</span> indikátor változó meghatározza az <span class="math inline">\(n\)</span>-diket, ha a rendszer teljes.)</p>
+</section>
+<section id="label-encoding" class="level4">
+<h4 class="anchored" data-anchor-id="label-encoding">Label encoding</h4>
+<p>Egy <span class="math inline">\(n\)</span> különböző értéket felvevő kategorikus változó értékeit 0-tól <span class="math inline">\(n-1\)</span>-ig terjedő skálán reprezentáljuk.</p>
+<div id="cf5d8f33" class="cell" data-execution_count="31">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Embarked"</span>].astype(<span class="st">"category"</span>).cat.codes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="26">
+<pre><code>0      2
+1      0
+2      2
+3      2
+4      2
+      ..
+886    2
+887    2
+888    2
+889    0
+890    1
+Length: 891, dtype: int8</code></pre>
+</div>
+</div>
+<p>Manuálisan is meghatározhatjuk a leképezést:</p>
+<div id="caf5831b" class="cell" data-execution_count="32">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>embarked_mapping <span class="op">=</span> {<span class="st">"S"</span>: <span class="dv">0</span>, <span class="st">"C"</span>: <span class="dv">1</span>, <span class="st">"Q"</span>: <span class="dv">2</span>}</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Embarked"</span>].<span class="bu">map</span>(embarked_mapping)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="27">
+<pre><code>0      0.0
+1      1.0
+2      0.0
+3      0.0
+4      0.0
+      ... 
+886    0.0
+887    0.0
+888    0.0
+889    1.0
+890    2.0
+Name: Embarked, Length: 891, dtype: float64</code></pre>
+</div>
+</div>
+<p>Ha a kategóriáknak van természetes sorrendjük – például az <code>AgeGroup</code> változó esetén –, akkor érdemes ezt figyelembe venni: ekkor <em>ordinal encodingról</em> beszélünk.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Korreláció és kategorikus változók">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Korreláció és kategorikus változók
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Egy kategorikus változó numerikussá tétele után a <code>df.corr()</code> hívásban már ez a változó is szerepelni. Ez attól még <em>nem jelenti azt,</em> hogy az eredmény értelmes. Ha egy kategorikus változó (a szó köznapi értelmében) erősen korrelál egy másikkal, akkor különböző leképezések során különböző értéket fogsz kapni.</p>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="skálázás-scaling" class="level2">
+<h2 class="anchored" data-anchor-id="skálázás-scaling">Skálázás (Scaling)</h2>
+<p>Néha a numerikus értékeket szeretnénk átskálázni is (ha pl. a konkrét érték helyett az egymáshoz viszonyított érték számít).</p>
+<section id="standarizálás" class="level3">
+<h3 class="anchored" data-anchor-id="standarizálás">Standarizálás</h3>
+<p>Ha adott egy <span class="math inline">\(N(m,\sigma)\)</span> normális eloszlású változó, érdemes lehet standard normálissá transzformálni.</p>
+<div id="1b76d559" class="cell" data-execution_count="33">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Age"</span>].hist(grid<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="dmml-02_files/figure-html/cell-34-output-1.png" width="575" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="a498a70f" class="cell" data-execution_count="34">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>age_mean <span class="op">=</span> df[<span class="st">"Age"</span>].mean()</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>age_std <span class="op">=</span> df[<span class="st">"Age"</span>].std()</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Age_standardized"</span>] <span class="op">=</span> (df[<span class="st">"Age"</span>] <span class="op">-</span> age_mean) <span class="op">/</span> age_std</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Age_standardized"</span>].hist(grid<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="dmml-02_files/figure-html/cell-35-output-1.png" width="575" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="min-max-skálázás" class="level3">
+<h3 class="anchored" data-anchor-id="min-max-skálázás">Min-max skálázás</h3>
+<p>A változó értékeit egy lineáris leképezéssel a <span class="math inline">\([0,1]\)</span> vagy esetleg a <span class="math inline">\([-1,1]\)</span> intervallumba képezzük.</p>
+</section>
+</section>
+<section id="gyakorlás-1" class="level2">
+<h2 class="anchored" data-anchor-id="gyakorlás-1">Gyakorlás</h2>
+<section id="encoding-1" class="level3">
+<h3 class="anchored" data-anchor-id="encoding-1">Encoding</h3>
+<ol start="6" type="1">
+<li>A <code>Sex</code> kategorikus változót kódold el numerikus értékké! Milyen kódolást használtál? Lehet-e mást?</li>
+</ol>
+<div id="d840eef3" class="cell" data-execution_count="35">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol start="7" type="1">
+<li>Az <code>Age</code> oszlopot az átlag helyett kódold el a <em>medián</em> szerint binárisan! Nézd meg, hogy az utasosztályok szerint milyen eloszlást kapsz!</li>
+</ol>
+<div id="8040ae41" class="cell" data-execution_count="36">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol start="8" type="1">
+<li>Az <em>ordinal encoding</em> során a transzformálni kívánt változónak van egy <em>természetes</em> sorrendje (pl. napok, hónapok). Ekkor a kódolás során ezt szeretnénk megtartani. Jelen esetben ilyen például az <code>AgeGroup</code> változó. Alakítsd át numerikus értékké a sorrend tiszteletben tartásával!</li>
+</ol>
+<div id="756302b7" class="cell" data-execution_count="37">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol start="9" type="1">
+<li>A <code>scikit-learn.preprocessing</code> modul nem csak a skálázásra, de az elkódolásra is tartalmaz beépített függvényt. A <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html#sklearn.preprocessing.LabelEncoder">LabelEncoder</a> segítségével ismételd meg az <code>Embarked</code> oszlop órán látott Label encoding változatát!</li>
+</ol>
+<div id="763a2072" class="cell" data-execution_count="38">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol start="10" type="1">
+<li>Készíts egy vezetéknév oszlopot és nézd nézd meg a leggyakoribb neveket. A vezetéknév kinyeréséhez figyeld meg, hogy mindenki vezetékneve vesszővel elválasztva szerepel a <code>string</code> elején. Ismered a megfelelő python parancsot erre? Ha nem, nézd meg, hogy mit csinál <code>.split(",")</code> parancs az oszlop egy tetszőleges elemén.</li>
+</ol>
+<div id="79d77893" class="cell" data-execution_count="39">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol start="11" type="1">
+<li>Kódold el az <code>Age</code> oszlopot a kvartilisek alapján! Használd a <code>quantile</code> vagy <code>percentile</code> függvényeket. Milyen típusú kódolás ez? Mit gondolsz, milyen modellek esetén érdemes így elkódolni egy adatot, és mikor felesleges, sőt hátrányos?</li>
+</ol>
+<div id="c407d266" class="cell" data-execution_count="40">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol start="12" type="1">
+<li>A <em>target encoding</em> során egy kategorikus változót aszerint kódolunk el, hogy a <em>célváltozónak mennyi az átlaga</em> a változó adott szintjén. Készítsd el az <code>Embarked</code> oszlop target encode-olt változatát. Mi ennek a kódolásnak a hátránya? Érdemes szerinted használni?</li>
+</ol>
+<div id="1e3e5044" class="cell" data-execution_count="41">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><a href="https://forms.gle/5S15x1ZWDKc9yDvg7" target="_blank">Óra végi kérdőív.</a></p>
+</section>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
