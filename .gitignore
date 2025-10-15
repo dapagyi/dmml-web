@@ -18,6 +18,7 @@ out
 students
 local-data
 .env
+data/**/*.zip
 
 **/dmml*_files/
 **/dmml-*.html

@@ -1,0 +1,370 @@
+---
+title: "DMML-06"
+subtitle: "Kaggle, experiment tracking, custom `scikit-learn` transformers."
+date: "2025-10-16"
+title-block-banner: true
+format:
+    html:
+      grid: 
+        margin-width: 300px
+    ipynb: default
+execute:
+  echo: true
+toc: true
+reference-location: margin
+citation-location: margin
+---
+<strong>Web page:</strong> [apagyidavid.web.elte.hu/2025-2026-1/dmml](https://apagyidavid.web.elte.hu/2025-2026-1/dmml){target="_blank"}
+
+<a target="_blank" href="https://colab.research.google.com/github/dapagyi/dmml-web/blob/gh-pages/notebooks/dmml-06.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+# Kaggle
+
+Save your `KAGGLE_USERNAME` and `KAGGLE_KEY` in a `.env` file next to your notebooks, like this:
+
+```{filename=".env"}
+KAGGLE_USERNAME=your_username
+KAGGLE_KEY=your_key
+```
+
+```{python}
+from dotenv import load_dotenv  # Install the "python-dotenv" package if you don't have it yet.
+import mlflow  # Install the "mlflow" package if you don't have it yet.
+import pandas as pd
+import os
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+from sklearn.model_selection import RandomizedSearchCV, cross_val_score
+import numpy as np
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+import matplotlib.pyplot as plt
+
+load_dotenv()
+print(f"KAGGLE_USERNAME={os.getenv('KAGGLE_USERNAME')}")
+
+```
+
+You can download datasets from Kaggle using the `kaggle` command. (Install the `kaggle` package if you don't have it yet.)
+
+```{python}
+!kaggle competitions download -c house-prices-advanced-regression-techniques -p ../data/house-prices
+!unzip -o ../data/house-prices/house-prices-advanced-regression-techniques.zip -d ../data/house-prices
+
+```
+
+```{python}
+df = pd.read_csv("../data/house-prices/train.csv")
+df.head()
+
+```
+
+```{python}
+df.info()
+
+```
+
+We will use only a few columns for simplicity.
+
+```{python}
+selected_features = [
+    "LotArea",
+    "YearBuilt",
+    "TotalBsmtSF",
+    "Neighborhood",
+    "BldgType",
+    "HouseStyle",
+]
+target_column = "SalePrice"
+df = df[[*selected_features, target_column]]
+
+df.head()
+
+```
+
+# Experiment tracking
+
+Some notable experiment tracking tools:
+
+- [Weights & Biases](https://wandb.ai/site){target="_blank"}
+  - Maybe the most popular one, most user friendly.
+- [MLflow](https://mlflow.org/){target="_blank"}
+  - Open source, can be self-hosted, also works locally.
+  - There's no "official" cloud for MLflow, but you can use [DagsHub](https://dagshub.com/){target="_blank"} for free hosting.
+- [Neptune](https://neptune.ai/){target="_blank"}
+- [Comet](https://www.comet.ml/){target="_blank"}
+
+I prefer MLflow (I also self-host it on a server), so this showcase will use MLflow and DagsHub, but feel free to use any other tool. 
+
+After creating a repository on DagsHub, copy your MLflow tracking URI, username and password to your `.env` file:
+
+```{filename=".env"}
+# (...)
+
+MLFLOW_TRACKING_USERNAME=your_username
+MLFLOW_TRACKING_PASSWORD=your_tracking_password
+MLFLOW_TRACKING_URI=https://dagshub.com/your_username/your_repo.mlflow
+MLFLOW_EXPERIMENT_NAME="House Prices Prediction"
+```
+
+Load these environment variables into your kernel:
+
+```{python}
+load_dotenv()
+print(f"MLFLOW_TRACKING_URI={os.getenv('MLFLOW_TRACKING_URI')}")
+
+```
+
+Create a simple experiment that tracks some hyperparameters and metrics.
+
+```{python}
+X, y = df.drop(columns=[target_column]), df[target_column]
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+print(f"Train set size: {X_train.shape[0]}, Test set size: {X_test.shape[0]}")
+
+categorical_cols = ["Neighborhood", "BldgType", "HouseStyle"]
+numerical_cols = ["LotArea", "YearBuilt", "TotalBsmtSF"]
+
+preprocessor = ColumnTransformer(
+    transformers=[
+        ("num", StandardScaler(), numerical_cols),
+        ("cat", OneHotEncoder(handle_unknown="ignore"), categorical_cols),
+    ],
+    remainder="drop",
+)
+
+preprocessor
+
+```
+
+```{python}
+def train_and_evaluate(pipeline, param_distributions, X_train, y_train, X_test, y_test):
+    random_search = RandomizedSearchCV(
+        pipeline,
+        param_distributions,
+        n_iter=10,
+        cv=3,
+        random_state=42,
+        scoring="neg_root_mean_squared_error",
+        n_jobs=-1,
+    )
+    mlflow.set_experiment("House Prices Prediction")
+    with mlflow.start_run():
+        random_search.fit(X_train, y_train)
+
+        mlflow.log_params(random_search.best_params_)
+
+        y_pred_train = random_search.best_estimator_.predict(X_train)
+        y_pred_test = random_search.best_estimator_.predict(X_test)
+
+        scores = cross_val_score(
+            random_search.best_estimator_,
+            X_train,
+            y_train,
+            cv=3,
+            scoring="neg_root_mean_squared_error",
+            n_jobs=-1,
+        )
+
+        mlflow.log_metrics(
+            {
+                "cv_rmse_mean": -scores.mean(),
+                "cv_rmse_std": scores.std(),
+            }
+        )
+
+        mlflow.log_metrics(
+            {
+                "rmse_train": mean_squared_error(y_train, y_pred_train),
+                "rmse_test": mean_squared_error(y_test, y_pred_test),
+                "r2_train": r2_score(y_train, y_pred_train),
+                "r2_test": r2_score(y_test, y_pred_test),
+                "mae_train": mean_absolute_error(y_train, y_pred_train),
+                "mae_test": mean_absolute_error(y_test, y_pred_test),
+            }
+        )
+
+        os.makedirs("plots", exist_ok=True)
+
+        fig, ax = plt.subplots(figsize=(8, 6))
+        ax.scatter(y_test, y_pred_test, alpha=0.7, color="b")
+        ax.plot([min(y_test), max(y_test)], [min(y_test), max(y_test)], "--r", linewidth=2)
+        ax.set_xlabel("Actual")
+        ax.set_ylabel("Predicted")
+        ax.set_title("Predicted vs Actual Values")
+        plot_path = "plots/prediction_plot.png"
+        fig.savefig(plot_path)
+        plt.close(fig)
+        mlflow.log_artifact(plot_path)
+
+        residuals = y_test - y_pred_test
+        fig, ax = plt.subplots(figsize=(8, 6))
+        ax.scatter(y_pred_test, residuals, alpha=0.7, color="g")
+        ax.axhline(y=0, color="r", linestyle="--", linewidth=2)
+        ax.set_xlabel("Predicted")
+        ax.set_ylabel("Residuals")
+        ax.set_title("Residual Plot")
+        residual_plot_path = "plots/residual_plot.png"
+        fig.savefig(residual_plot_path)
+        plt.close(fig)
+        mlflow.log_artifact(residual_plot_path)
+
+        mean_scores = -random_search.cv_results_["mean_test_score"]
+        std_scores = random_search.cv_results_["std_test_score"]
+        param_combinations = range(len(mean_scores))
+
+        fig, ax = plt.subplots(figsize=(8, 6))
+        ax.errorbar(
+            param_combinations,
+            mean_scores,
+            yerr=std_scores,
+            fmt="o",
+            capsize=5,
+            color="b",
+            ecolor="r",
+            elinewidth=2,
+            capthick=2,
+        )
+        ax.set_xlabel("Parameter Combination Index")
+        ax.set_ylabel("Mean RMSE (Random Search Cross-Validation)")
+        ax.set_title("Random Search Cross-Validation Scores with Confidence Intervals")
+        cross_val_plot_path = "plots/random_search_cross_validation_plot.png"
+        fig.savefig(cross_val_plot_path)
+        plt.close(fig)
+        mlflow.log_artifact(cross_val_plot_path)
+
+
+pipeline = Pipeline(
+    steps=[
+        ("preprocessor", preprocessor),
+        ("regressor", RandomForestRegressor(random_state=42)),
+    ]
+)
+
+param_distributions = {
+    "regressor__n_estimators": np.arange(50, 300, 50),
+    "regressor__max_depth": [None, 10, 20, 30, 40],
+    "regressor__min_samples_split": np.arange(2, 10, 2),
+    "regressor__min_samples_leaf": np.arange(1, 10, 2),
+}
+
+train_and_evaluate(pipeline, param_distributions, X_train, y_train, X_test, y_test)
+
+```
+
+# Custom `scikit-learn` transformers
+
+In some cases, you might need to create your own custom transformers for `scikit-learn` pipelines.
+
+```{python}
+df.head()
+```
+
+Let's say we want to create a transformer that adds a new feature: the age of the house at the time of sale. We can create a custom transformer by inheriting from `BaseEstimator` and `TransformerMixin`:
+
+```{python}
+from sklearn.base import BaseEstimator, TransformerMixin
+from datetime import datetime
+
+
+class DateDiffTransformer(BaseEstimator, TransformerMixin):
+    def __init__(self, current_year=None):
+        self.current_year = current_year if current_year is not None else datetime.now().year
+
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        _X = X.copy()
+        _X["HouseAge"] = self.current_year - _X["YearBuilt"]
+        return _X[["HouseAge"]]
+
+
+display(df.head())
+transformer = DateDiffTransformer()
+transformed_df = transformer.fit_transform(df)
+display(transformed_df.head())
+
+```
+
+Now we can integrate this custom transformer into our existing pipeline.
+
+```{python}
+year_built_col = "YearBuilt"
+numerical_cols.remove(year_built_col)
+
+preprocessor = ColumnTransformer(
+    transformers=[
+        ("year", DateDiffTransformer(), [year_built_col]),
+        ("num", StandardScaler(), numerical_cols),
+        ("cat", OneHotEncoder(handle_unknown="ignore"), categorical_cols),
+    ],
+    remainder="drop",
+)
+
+pipeline = Pipeline(
+    steps=[
+        ("preprocessor", preprocessor),
+        ("regressor", RandomForestRegressor(random_state=42)),
+    ]
+)
+
+pipeline
+
+```
+
+```{python}
+
+train_and_evaluate(pipeline, param_distributions, X_train, y_train, X_test, y_test)
+
+```
+
+```{python}
+fig, ax = plt.subplots(1, 2, figsize=(16, 6))
+df[target_column].hist(bins=50, ax=ax[0])
+np.log(df[target_column]).hist(bins=50, ax=ax[1])
+ax[0].set_title("Original SalePrice Distribution")
+ax[1].set_title("Log-Transformed SalePrice Distribution")
+plt.show()
+```
+
+Extend the pipeline to include a log transformation of the target variable.
+
+```{python}
+from sklearn.compose import TransformedTargetRegressor
+
+
+pipeline = Pipeline(
+    steps=[
+        ("preprocessor", preprocessor),
+        ("regressor", RandomForestRegressor(random_state=42)),
+    ]
+)
+
+pipeline = TransformedTargetRegressor(
+    regressor=pipeline,
+    func=np.log1p,  # log(1 + x) to handle zero values
+    inverse_func=np.expm1,  # exp(x) - 1 to revert the transformation
+)
+
+param_distributions = {
+    "regressor__regressor__n_estimators": np.arange(50, 300, 50),
+    "regressor__regressor__max_depth": [None, 10, 20, 30, 40],
+    "regressor__regressor__min_samples_split": np.arange(2, 10, 2),
+    "regressor__regressor__min_samples_leaf": np.arange(1, 10, 2),
+}
+
+train_and_evaluate(pipeline, param_distributions, X_train, y_train, X_test, y_test)
+
+```
+
+
+Useful links:
+
+- [Transforming target in regression](https://scikit-learn.org/stable/modules/compose.html#transforming-target-in-regression){target="_blank"}
+- [Custom transformers](https://scikit-learn.org/stable/modules/preprocessing.html#custom-transformers){target="_blank"}
+- [Column Transformer with Heterogeneous Data Sources](https://scikit-learn.org/stable/auto_examples/compose/plot_column_transformer.html){target="_blank"}
