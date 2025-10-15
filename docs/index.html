@@ -52,6 +52,9 @@
       </div>
     </header>
     <main>
+      <div class="alert alert-info my-5" role="alert">
+        <strong>Frissítés (október 15.): </strong> Elérhető a projekt leírása, valamint némi útmutatás a házi feladathoz.
+      </div>
       <h1 id="adatbanyaszat-es-gepi-tanulas-gyakorlat" class="text-body-emphasis mb-3">Adatbányászat és gépi tanulás gyakorlat <a class="anchor-link" href="#adatbanyaszat-es-gepi-tanulas-gyakorlat"></a></h1>
       <dl class="container-fluid">
         <div class="row">
@@ -110,23 +113,148 @@
             </div>
             <div class="accordion-item">
               <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#projekt-informaciok" aria-expanded="false" aria-controls="projekt-informaciok">
-                  Projekt információk
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#projekt-altalanos-tudnivalok" aria-expanded="false" aria-controls="projekt-altalanos-tudnivalok">
+                  Projekt általános tudnivalók
                 </button>
               </h2>
-              <div id="projekt-informaciok" class="accordion-collapse collapse" data-bs-parent="#accordion">
+              <div id="projekt-altalanos-tudnivalok" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <div class="accordion-body">
-                  <p>A félév második felében 2-3 fős csoportokban egy projektet kell elkészíteni.</p>
-                  <p class="placeholder-glow">
-                    <span class="placeholder col-2"></span>
-                    <span class="placeholder col-3"></span>
-                    <span class="placeholder col-4"></span>
-                    <span class="placeholder col-4"></span>
-                    <span class="placeholder col-4"></span>
-                    <span class="placeholder col-3"></span>
-                    <span class="placeholder col-3"></span>
-                    <span class="placeholder col-3"></span>
-                  </p>
+                  <p>A félév második felében 2-3 fős csoportokban egy projektet kell elkészíteni. A projekt egyik célja üzleti kontextus szimulálása, és az elért eredmények a kevésbé szakmai közönség számára is érthető módon való bemutatása. Másrészt az is célja a feladatnak, hogy olyan anyagokat állítsanak elő a hallgatók, amelyek akár portfólióba is illeszthetők, illetve önéletrajzban felhasználhatók.</p>
+                  <p>A feladat fő része egy választott adathalmaz elemzése, és az alapján egy predikciós (klasszifikációs vagy regressziós) probléma megoldása. A mellékfeladatok néhány olyan (kötelezően) választható elemet jelentenek, amelyeket a főfeladaton kívül kell megvalósítani. (Ezek többnyire az előbbi másodlagos cél szellemében kerültek összeállításra.)</p>
+                  <p>A mellékfeladatok három kategóriába (specializációba) vannak sorolva, mindegyiknek van egy kötelező alapszintje és egy nehezebb haladó szintje.</p>
+                  <div class="table-responsive d-none d-md-block">
+                    <table class="table align-middle">
+                      <caption>Az egyes mellékfeladatok kulcsszavakban</caption>
+                      <thead>
+                        <tr>
+                          <th scope="col">Szint</th>
+                          <th scope="col">Software Engineer</th>
+                          <th scope="col">Business Analyst</th>
+                          <th scope="col">Researcher</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">Alapszint</th>
+                          <td>Git, GitHub</td>
+                          <td>Igényes ábrák, legalább egy interaktív</td>
+                          <td>Módszertan, reprodukálhatóság</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Haladó szint</th>
+                          <td>Scriptek, experiment tracking</td>
+                          <td>Dashboard vagy web app</td>
+                          <td>Extra kérdésfelvetés</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="d-md-none">
+                    <h3 class="text-muted mb-3 fs-6">Az egyes mellékfeladatok kulcsszavakban</h3>
+                    <div class="p-2 mb-2 bg-body-tertiary shadow-sm">
+                      <h6 class="fw-bold mb-1">Software Engineer</h6>
+                      <div class="small">
+                        <div><em>Alapszint:</em> Git, GitHub</div>
+                        <div><em>Haladó szint:</em> Scriptek, experiment tracking</div>
+                      </div>
+                    </div>
+                    <div class="p-2 mb-2 bg-body-tertiary shadow-sm">
+                      <h6 class="fw-bold mb-1">Business Analyst</h6>
+                      <div class="small">
+                        <div><em>Alapszint:</em> Igényes ábrák, legalább egy interaktív</div>
+                        <div><em>Haladó szint:</em> Dashboard vagy web app</div>
+                      </div>
+                    </div>
+                    <div class="p-2 mb-2 bg-body-tertiary shadow-sm">
+                      <h6 class="fw-bold mb-1">Researcher</h6>
+                      <div class="small">
+                        <div><em>Alapszint:</em> Módszertan, reprodukálhatóság</div>
+                        <div><em>Haladó szint:</em> Extra kérdésfelvetés</div>
+                      </div>
+                    </div>
+                  </div>
+                  <p>Az alapszintet minden kategóriából teljesíteni kell; a haladó szintű mellékfeladatokból a kétfős csapatoknak legalább egyet, a háromfős csapatoknak legalább kettőt kell teljesíteniük.</p>
+                  <p>A félév végefelé egy-egy <em>rövid prezentáció</em> keretein belül a csoportoknak be kell mutatniuk a projektjeiket, néhány nappal előtte pedig be kell adniuk a projekt <em>poszterét</em> vagy <em>dokumentációját.</em></p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#projekt-reszletes-informaciok" aria-expanded="false" aria-controls="projekt-reszletes-informaciok">
+                  Projekt részletes információk
+                </button>
+              </h2>
+              <div id="projekt-reszletes-informaciok" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                <div class="accordion-body">
+                  <h3 class="fs-6">Adathalmaz</h3>
+                  <p><a href="https://docs.google.com/spreadsheets/d/1lN8sHxded2Jn1AVhRYO4pJt3BctQUh7mmhpGdhKam3w/edit?gid=1045504940#gid=1045504940" target="_blank">Ebben a táblázatban számos ötlet elérhető,</a> viszont olyat ajánlott keresni (a listán kívül), ami a csapat számára érdekesnek tűnik. Fontos kritérium, hogy értelmezhetők legyenek rajta a feladat elvárásai, ne legyen túl kicsi vagy túl egyszerű.</p>
+                  <p>Október 20., hétfőig kell egy előzetes adathalmazt választani vagy javasolni a táblázatban, amire válaszolok majd a hét folyamán.</p>
+                  <h3 class="fs-6">Projekt mérföldkő</h3>
+                  <p>A mérföldkőig (november 13., csütörtök) a csoportoknak legalább alapszinten meg kell ismerkedniük a választott adathalmazukkal, és legalább egy baseline modellt el kell készíteniük. A gyakorlat egésze konzultációra lesz fenntartva, minden csoportból legyen legalább egyvalaki jelen, aki be tudja mutatni az eddigi munkát. Ez formailag egy rövid beszélgetést, egyeztetést jelent az adathalmazról, problémáról, kódról, eddigi eredményekről, valamint a további tervekről.</p>
+                  <h3 class="fs-6">Poszter vagy dokumentáció</h3>
+                  <p>A dokumentáció egy néhány oldalas összefoglaló, ami teljeskörűen bemutatja a csoport által végzett munkát – úgy kell elkészíteni, hogy a kód elolvasása nélkül is minden világos legyen. Javasolt, de nem kötelező \(\LaTeX\)-ben elkészíteni. A dokumentáció végén fel kell tüntetni egy <em>Author Contributions Statementben</em>, hogy a csoport tagjai milyen arányban, milyen módon vettek részt a munka különböző részein.</p>
+                  <p>Kísérleti jelleggel lehet posztert is készíteni dokumentáció helyett – ha valamelyik csoportnak ez az opció szimpatikusabb, külön egyeztessünk róla.</p>
+                  <p class="mb-0">Értékelési szempontok:</p>
+                  <ul>
+                    <li>szerkesztés, felépítés, alaposság;</li>
+                    <li>formázás egységessége, tagolás;</li>
+                    <li>érthetőség, nyelvhelyesség.</li>
+                  </ul>
+                  <h3 class="fs-6">Projektbemutató</h3>
+                  <p>A prezentáció egy <em>diasor</em> elkészítését, majd bemutatását jelenti. A bemutatókra december 4-én fog sor kerülni, a pontos időkeret a későbbiekben fog kiderülni. A dokumentációban (vagy a poszteren), valamint a prezentációban ne szerepeljen kód.</p>
+                  <p class="mb-0">Előadás és diasor értékelési szempontok:</p>
+                  <ul>
+                    <li>szerkesztés, felépítés, alaposság;</li>
+                    <li>formázás egységessége, tagolás;</li>
+                    <li>tartalom, fókuszok, érthetőség;</li>
+                    <li>előadásmód;</li>
+                    <li>időkeret.</li>
+                  </ul>
+                  <h3 class="fs-6">Értékelés</h3>
+                  <p>A projektre minden csoporttag ugyanazt az értékelést, illetve pontszámot kapja.</p>
+                  <p>A fentebb említett szempontok (poszter vagy dokumentáció, prezentáció) a projektért kapható pontszám kb. &frac13;-át teszik ki, a fennmaradó részt a megvalósítás tartalmi elemei képezik. Ezek terén hozzávetőlegesen <a href="https://docs.google.com/spreadsheets/d/1lN8sHxded2Jn1AVhRYO4pJt3BctQUh7mmhpGdhKam3w/edit?gid=1125602681#gid=1125602681" target="_blank">a tavalyi szempontok az irányadóak,</a> de ez még módosulhat.</p>
+                  <h3 class="fs-6">Ütemezés</h3>
+                  <p class="mb-0">A projekthez kapcsolódó időpontok, határidők:</p>
+                  <ul>
+                    <li>október 23., csütörtök: adathalmaz véglegesítése, a megelőző hétfőig kell <a href="https://docs.google.com/spreadsheets/d/1lN8sHxded2Jn1AVhRYO4pJt3BctQUh7mmhpGdhKam3w/edit?gid=1045504940#gid=1045504940" target="_blank">egy előzetes adathalmazt választani vagy javasolni a táblázatban,</a> amire válaszolok majd a hét folyamán;</li>
+                    <li>november 13., csütörtök: projekt mérföldkő;</li>
+                    <li>november 29., csütörtök: igény esetén a gyakorlat részben vagy egészben konzultáció lesz;</li>
+                    <li>december 2., kedd: <strong>poszter vagy dokumentáció leadási határidő;</strong></li>
+                    <li>december 4., csütörtök (utolsó előtti óra): <strong>projektbemutatók.</strong></li>
+                  </ul>
+                  <h3 class="fs-6">Mellékfeladatok leírásai</h3>
+                  <h4 class="fs-6 fw-normal fst-italic">Software Engineer</h4>
+                  <p class="mb-0">Alapszint:</p>
+                  <ul>
+                    <li>Git, GitHub használata a projekt során a verziókezeléshez és az együttműködéshez. Ha a Git ismeretlen, akkor elég csak a projekt végén feltölteni az anyagokat GitHubra.</li>
+                  </ul>
+                  <p class="mb-0">Haladó szint:</p>
+                  <ul>
+                    <li>Experiment tracking szoftver használata.</li>
+                    <li>A Jupyter Notebookok gyakran elég hamar kaotikussá, nehezen használhatóvá válnak, körülményes Gitet használni velük, stb. <em>Törekedjetek a kód minél nagyobb részének Python scriptként való megírására.</em> A Notebookoknak is van helye, pl. EDA-hoz kifejezetten jól használhatók, de egy komplexebb modellezést mindenféle segédfüggvénnyel már nehezebb áttekinthetően stuktúrálni bennük. Az is jól működhet, ha pl. modulokként importáltok saját kódokat a Notebookba, és a Notebookot már csak egy gyors áttekintés céljából használjátok, ahol minden plotot egyszerre láttok.</li>
+                  </ul>
+                  <h4 class="fs-6 fw-normal fst-italic">Business Analyst</h4>
+                  <p class="mb-0">Alapszint:</p>
+                  <ul>
+                    <li>Igényes, esztétikus ábrák; szerepeljenek rajtuk a szükséges információk; legyenek minimális kontextussal is értelmezhetők.</li>
+                    <li>Készítsetek legalább egy interaktív vizualizációt.</li>
+                  </ul>
+                  <p class="mb-0">Haladó szint:</p>
+                  <ul>
+                    <li>Egy dashboardot vagy web app készítése az adathalmazhoz kapcsolódóan, amit utána feltölthettek az ELTE-s honlapotokra.</li>
+                    <li>Dashboard helyett alternatív lehetőségként van ötletem, hogy hogy lehetne egy egyszerű webappot készíteni, amihez nyújtanék valami vázat és néhány megoldási ötletet. Ha valakiket érdekel ez az irány, akkor külön egyeztessük erről.</li>
+                  </ul>
+                  <h4 class="fs-6 fw-normal fst-italic">Researcher</h4>
+                  <p class="mb-0">Alapszint:</p>
+                  <ul>
+                    <li>Legyen módszertanilag megalapozott, helyes a probléma megoldása.</li>
+                    <li>Legyen minden eredmény reprodukálható: random seedek legyenek beállítva, a kód legyen használható, Jupyter Notebookban sorban le lehessen futtatni a cellákat anélkül, hogy plusz trükközésekre lenne szükség, stb.</li>
+                  </ul>
+                  <p class="mb-0">Haladó szint:</p>
+                  <ul>
+                    <li>Egy extra, érdekes kérdésfelvetés körüljárása az adathalmaz mentén. Használjatok releváns kapcsolódó anyagokat; lehet például további domain tudásnak utánanézni, további adathalmazokat felhasználni, cikkeket olvasni, stb.</li>
+                    <li>Ez eléggé függ az adathalmaztól. Ha ezt az irányt szeretnétek megvalósítani, akkor egyeztessünk erről minél hamarabb, lehetőleg még az adathalmaz választásakor.</li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -206,7 +334,7 @@
             </ul>
             <p class="mb-0"><strong>Szorgalmi feladat (határidő: október 7. 23:59):</strong></p>
             <ul>
-              <li><span class="badge text-bg-danger me-1">Sz/1</span><a href="./leaderboard?contest_id=dmml-2025-09-25" target="_blank">Háziverseny</a> (3 pont)
+              <li><span class="badge text-bg-danger me-1">Sz/1</span><a href="./leaderboard?contest_id=dmml-2025-09-25" target="_blank">Háziverseny</a> (3 pont): <a href="https://eltehu.sharepoint.com/:u:/r/sites/Crs25-26-1abgtm22ga1Adatbnyszatsgpitanulsgyakorlat/Megosztott%20dokumentumok/General/Hallgat%C3%B3i%20megold%C3%A1sok/dmml-extra-01-Laci.html?csf=1&web=1&e=rhDDlJ" target="_blank">L. L. megoldása</a>
                 <details>
                   <summary>Megjegyzés</summary>
                   <ul>
@@ -233,11 +361,15 @@
                 </ul>
               </li>
             </ul>
-            <p class="mb-0"><strong>Házi feladat (határidő: október 14. 23:59):</strong></p>
+            <p class="mb-0"><strong>Házi feladat (határidő: október <s>14.</s> 18. 23:59):</strong></p>
             <ul>
-              <li><span class="badge text-bg-warning me-1">HF/6</span><a href="./notebooks/dmml-hw-06" target="_blank">Modellek összehasonlítása</a> (6 pont)</li>
+              <li><span class="badge text-bg-warning me-1">HF/6</span><a href="./notebooks/dmml-hw-06" target="_blank">Modellek összehasonlítása</a> (6 pont)
+                <ul>
+                  <li><strong>Frissítés (október 9.):</strong> Az Optuna átkerült a kötelező részből a szorgalmihoz, valamint a határidők módosultak.</li>
+                </ul>
+              </li>
             </ul>
-            <p class="mb-0"><strong>Szorgalmi feladat (határidő: október 14. 23:59):</strong></p>
+            <p class="mb-0"><strong>Szorgalmi feladat (határidő: október <s>14.</s> 18. 23:59):</strong></p>
             <ul>
               <li><span class="badge text-bg-danger me-1">Sz/1</span><a href="./notebooks/dmml-hw-06" target="_blank">Modellek összehasonlítása</a> (3 pont)
                 <ul>
@@ -252,10 +384,6 @@
             <p class="mb-0"><strong>Órai anyagok:</strong></p>
             <ul>
               <li><a href="./notebooks/dmml-05" target="_blank">Notebook</a></li>
-            </ul>
-            <p class="mb-0"><strong>Házi feladat:</strong></p>
-            <ul>
-              <li><span class="badge text-bg-info me-1">HF/7</span> Vizualizáció (?)</li>
             </ul>
           </section>
           <hr class="col-3 col-md-2">

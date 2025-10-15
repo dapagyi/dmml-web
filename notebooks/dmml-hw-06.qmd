@@ -63,7 +63,7 @@ A több metrika szerinti kiértékelés könnyen megvalósítható például az 
 A megoldásod végén gyűjtsd össze egy DateFrame-ben vagy akár csak printeld ki összesítve a három modell (hiperparaméter-optimalizálás utáni) teljesítményét:
 
 * A tanító teljesítmény többféle metrika mentén.
-    * Ha keresztvalidációt használsz az adott modell kiértékelésére, akkor a foldokon mért teljesítmények átlaga és szórása. Ha csak 
+    * Ha keresztvalidációt használsz az adott modell kiértékelésére, akkor a foldokon mért teljesítmények átlaga és szórása. Ha hold-out validációt használsz, akkor csak egyetlen szám (metrikánként).
 * A validációs teljesítmény többféle metrika mentén.
     * Ha keresztvalidációt használsz az adott modell kiértékelésére, akkor a foldokon mért teljesítmények átlaga és szórása.
     * Ez írja le legjobban a modellünk teljesítményét.
@@ -110,3 +110,156 @@ Ez már egyáltalán nem része opcionálisan sem a feladatnak, de akit érdekel
 
 
 ```
+
+::: {.callout-tip title="Útmutatás" collapse="true"}
+
+Én példaképpen az alábbi egyetemista szellemiségű adathalmazt választottam:
+
+- [Liver Disorders: Liver Cirrhosis and Healthy Liver Prediction](https://www.kaggle.com/datasets/fatemehmehrparvar/liver-disorders/data){target="_blank"}
+
+Ehhez először megnéztem a feladat elején lévő scikit-learnös linket, majd rájöttem, hogy amit szerettem volna adathalmaz (Housing Dataset), az regressziós feladat, és a házit klasszifikációs problémaként írtam ki. Hát nem segítettem ki magamat.
+
+Google-ön kerestem tovább ("common datasets for classification" kulcsszóval), megnéztem néhány ismerős Kaggle linket, összesítő GitHub repót, stb. Végül megtaláltam a fenti adathalmazt, ami:
+
+- aránylag egyszerű,
+- nem túl nagy (kb. 600 sor),
+- főként numerikus feature-öket tartalmaz,
+- bináris klasszifikációs feladatról szól.
+
+Ránéztem néhány Kaggle-ös notebookra is, hogy mire számíthatok, és kb. okénak tűnt.
+
+A célnak most megfelel.
+
+EDA nem része a feladatnak, de minimálisan azért megnézem, hogy mivel lehet szükséges foglalkoznom. Most `polars`-t fogok használni, mert annyira nem vagyok járatos benne, és szeretném próbálgatni, `pandas`-hoz azonban több elérhető online anyag van, így talán az kezdőbarátabb.
+
+```{python}
+# | code-fold: true
+
+
+import polars as pl
+
+df = pl.read_csv("../data/liver_disorders.csv")
+print(f"Shape: {df.shape}")
+
+print(f"Duplicates: {df.is_duplicated().sum()}")
+df = df.unique()
+print(f"Shape (after removing duplicates): {df.shape}")
+```
+
+Volt pár duplikátum, amiket töröltem. Ezeknél valószínűbbnek tűnt az, hogy valami hibából kerültek be, mintsem hogy bármi különösebb jelentőségük lenne, pl. hogy pont ugyanolyan paraméterekkel rendelkező emberek volnának. (De nem olvastam utána -- Kaggle-ön a Discussion oldalon gyakran találni ilyen infókat.)
+
+Ennél többet már nem csinálok az adattal, nehogy esetleg valami data leakage-et okozzak. Még megnézek valamit, de már nem módosítok az adaton globálisan; máris leválasztom a teszt halmazt -- ráadásul úgy, hogy biztosan hasonló arányban legyenek a címkék a train és a test halmazban is (`stratify` paraméter).
+
+```{python}
+# | code-fold: true
+
+
+from sklearn.model_selection import train_test_split
+
+train_df, test_df = train_test_split(df, test_size=0.2, random_state=42, stratify=df["Selector"])
+
+print(f"Train shape: {train_df.shape}, Test shape: {test_df.shape}")
+print(train_df["Selector"].value_counts())
+print(test_df["Selector"].value_counts())
+```
+
+Hiányzó értékek vannak esetleg?
+
+```{python}
+# | code-fold: true
+
+
+print(df.null_count())
+
+df.filter(pl.any_horizontal(pl.all().is_null()))
+```
+
+Négy hiányzó érték nem túl jelentős szerencsére. Az "A/G Ratio" egy vérvizsgálati eredmény. Egyelőre nem tudok róla sokat, de megnézem, hogy milyen értékeket vesz fel másoknál.
+
+```{python}
+# | code-fold: true
+
+
+import seaborn as sns
+
+sns.histplot(df, x="A/G Ratio", hue="Selector", palette="colorblind", kde=True)
+
+```
+
+Ezt a négy hiányzó értéket kitöltöm majd a feature mediánjával.
+
+Mi a helyzet a többi feature eloszlásával?
+
+```{python}
+# | code-fold: true
+
+
+import matplotlib.pyplot as plt
+
+
+sns.pairplot(df.to_pandas(), hue="Selector", corner=True, palette="colorblind")
+plt.suptitle("Numerical Features", y=1.02)
+plt.show()
+```
+
+
+Néhány oszlop eloszlásának elég hosszú a farka, ezeknek más esetben érdemes lehetne a logaritmusát venni, hogy kezelhetőbbé váljanak, de a fa alapú modellek erre nem érzékenyek. (_Gondoljuk meg, hogy ez mit jelenthet, illetve hogy miért lehet ez._)
+
+A fentiek után elkezdtem összerakni a kódot apránként egy külön fájlban. Közel sincs kész, de aránylag könnyen folytatható. Amikor már elég sok modellből áll a megoldás, biztos refaktorálnám még, hogy kevesebb legyen a kódismétlés, mert jelenleg elég sok boilerplate van.
+
+```{.python filename="dmml-hw-06-guidance.py"}
+{{< include dmml-hw-06-guidance.py >}}
+
+```
+
+Példa futtatás eredménye:
+
+```
+david@david-thinkpad:~/code/dmml$ uv run notebooks/dmml-hw-06-guidance.py 
+Train set size: 342, Test set size: 228
+Cross-validated ROC-AUC score: 0.7020 ± 0.0298
+Test ROC-AUC: 0.7116535727646839
+              precision    recall  f1-score   support
+
+           1       0.74      0.83      0.78       162
+           2       0.42      0.30      0.35        66
+
+    accuracy                           0.68       228
+   macro avg       0.58      0.57      0.57       228
+weighted avg       0.65      0.68      0.66       228
+
+Fitting 5 folds for each of 25 candidates, totalling 125 fits
+Randomized search CV - Cross-validated ROC-AUC score: 0.7178 ± 0.0515
+Cross-validated ROC-AUC score: 0.7215 ± 0.0238
+{'model__criterion': 'entropy', 'model__max_depth': 5, 'model__min_samples_leaf': 2, 'model__min_samples_split': 10, 'model__n_estimators': 396}
+Test ROC-AUC: 0.7307332585110363
+              precision    recall  f1-score   support
+
+           1       0.73      0.94      0.82       162
+           2       0.47      0.14      0.21        66
+
+    accuracy                           0.71       228
+   macro avg       0.60      0.54      0.52       228
+weighted avg       0.65      0.71      0.64       228
+
+Best hyperparameters found:
+  criterion: entropy
+  max_depth: 5
+  n_estimators: 250
+  min_samples_split: 10
+  min_samples_leaf: 2
+Cross-validated ROC-AUC score: 0.7222 ± 0.0255
+Test ROC-AUC: 0.7300785634118967
+              precision    recall  f1-score   support
+
+           1       0.73      0.93      0.82       162
+           2       0.48      0.15      0.23        66
+
+    accuracy                           0.71       228
+   macro avg       0.60      0.54      0.52       228
+weighted avg       0.66      0.71      0.65       228
+
+```
+
+
+:::

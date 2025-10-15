@@ -11,11 +11,13 @@ wheels/
 
 notebooks/**
 !notebooks/*.qmd
+!notebooks/*.py
 **/old-*
 ea
 out
 students
 local-data
+.env
 
 **/dmml*_files/
 **/dmml-*.html
