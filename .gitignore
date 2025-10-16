@@ -19,6 +19,7 @@ students
 local-data
 .env
 data/**/*.zip
+psets/*.pdf
 
 **/dmml*_files/
 **/dmml-*.html
