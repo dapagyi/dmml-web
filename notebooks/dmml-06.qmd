@@ -1,13 +1,16 @@
 ---
 title: "DMML-06"
-subtitle: "Kaggle, experiment tracking, custom `scikit-learn` transformers."
+subtitle: "Kaggle; experiment tracking; custom `scikit-learn` transformers."
 date: "2025-10-16"
 title-block-banner: true
 format:
-    html:
-      grid: 
-        margin-width: 300px
-    ipynb: default
+  html:
+    grid: 
+      margin-width: 300px
+    html-math-method: katex
+    include-in-header:
+      - file: partials/analytics.html
+  ipynb: default
 execute:
   echo: true
 toc: true

@@ -4,10 +4,13 @@ subtitle: "Ensemble modellek; modellek kiértékelése; metrikák."
 date: "2025-10-02"
 title-block-banner: true
 format:
-    html:
-      grid: 
-        margin-width: 300px
-    ipynb: default
+  html:
+    grid: 
+      margin-width: 300px
+    html-math-method: katex
+    include-in-header:
+      - file: partials/analytics.html
+  ipynb: default
 execute:
   echo: true
 toc: true

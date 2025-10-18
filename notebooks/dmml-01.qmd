@@ -4,10 +4,13 @@ subtitle: "Kurzusinformációk; módszertan; $k$-means algoritmus; `numpy`, `pan
 date: "2025-09-11"
 title-block-banner: true
 format:
-    html:
-      grid: 
-        margin-width: 300px
-    ipynb: default
+  html:
+    grid: 
+      margin-width: 300px
+    html-math-method: katex
+    include-in-header:
+      - file: partials/analytics.html
+  ipynb: default
 execute:
   echo: true
 toc: true
@@ -31,7 +34,7 @@ Mihez, illetve kihez tudunk fordulni segítségért? Például a következőkhö
 * keresők (Google, DuckDuckGo stb.);
 * a használt könyvtárak User Guide-jai, dokumentációi;
 * LLM-ek (Copilot, ChatGPT stb.); valamint
-* _csak iránymutatásért_ egymáshoz; illetve
+* _iránymutatásért_ egymáshoz; illetve
 * bármilyen kérdéssel a gyakorlatvezetőhöz.
 
 Ezen a gyakorlaton ennek alapozunk meg: cél, hogy kipróbáljuk a Copilot, a debugger és a dokumentáció használatát.
@@ -42,7 +45,6 @@ Az alapelv az, hogy -- megfelelő odafigyeléssel -- szabad, sőt _támogatott_ 
 * Először próbáljuk meg a feladatokat hagyományos eszközökkel megközelíteni.
 * Ne vakon használjuk az LLM-eket, értsük meg a válaszokat, győződjünk meg azok helyességéről (szemantikailag helyes-e, nem elavult-e véletlenül). Vegyük észe, és javítsuk ki a hibákat.
 * Használhatjuk ötletelésre, inspirációgyűjtésre, forráskeresésre is.
-* Ne büntessük magunkat AI-sloppal. Kerüljük az LLM-ekre gyakran jellemző felesleges terjengősséget, túlmagyarázást, minden sor kommentelését stb.
 
 :::
 

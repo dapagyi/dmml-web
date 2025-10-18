@@ -30,35 +30,35 @@ jobs:
             typst compile "$f" "docs/${f%.typ}.pdf"
           done
 
-      # - name: Set up Python
-      #   uses: actions/setup-python@v5
-      #   with:
-      #     python-version: '3.13'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
 
-      # - name: Install uv
-      #   run: |
-      #     curl -LsSf https://astral.sh/uv/install.sh | sh
-      #     echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+      - name: Install uv
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
-      # - name: Install Python environment
-      #   run: |
-      #     uv sync --all-extras --dev
-      #     echo "$(pwd)/.venv/bin" >> $GITHUB_PATH
+      - name: Install Python environment
+        run: |
+          uv sync --all-extras --dev
+          echo "$(pwd)/.venv/bin" >> $GITHUB_PATH
 
-      # - name: Install Quarto
-      #   uses: quarto-dev/quarto-actions/setup@v2
+      - name: Install Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
 
-      # - name: Render Quarto notebooks (parallel)
-      #   run: |
-      #     find notebooks -maxdepth 1 -name "*.qmd" -print0 | \
-      #       xargs -0 -n 1 -P $(nproc) -I {} \
-      #       bash -c 'QUARTO_PROFILE="solutions" uv run quarto render "{}" --quiet'
-      #   env:
-      #     KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
-      #     KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
-      #     MLFLOW_TRACKING_USERNAME: ${{ secrets.MLFLOW_TRACKING_USERNAME }}
-      #     MLFLOW_TRACKING_PASSWORD: ${{ secrets.MLFLOW_TRACKING_PASSWORD }}
-      #     MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
+      - name: Render Quarto notebooks (parallel)
+        run: |
+          find notebooks -maxdepth 1 -name "*.qmd" -print0 | \
+            xargs -0 -n 1 -P $(nproc) -I {} \
+            bash -c 'QUARTO_PROFILE="solutions" uv run quarto render "{}" --quiet'
+        env:
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+          MLFLOW_TRACKING_USERNAME: ${{ secrets.MLFLOW_TRACKING_USERNAME }}
+          MLFLOW_TRACKING_PASSWORD: ${{ secrets.MLFLOW_TRACKING_PASSWORD }}
+          MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
 
       - name: Prepare publish directory
         run: |
@@ -66,12 +66,12 @@ jobs:
           mkdir -p out
           cp -r docs/* out/
           cp -r data out/data
-          # mkdir -p out/notebooks
-          # cp notebooks/*.html out/notebooks/ || true
-          # cp notebooks/*.ipynb out/notebooks/ || true
-          # for d in notebooks/*_files; do
-          #   [ -d "$d" ] && cp -r "$d" out/notebooks/;
-          # done
+          mkdir -p out/notebooks
+          cp notebooks/*.html out/notebooks/ || true
+          cp notebooks/*.ipynb out/notebooks/ || true
+          for d in notebooks/*_files; do
+            [ -d "$d" ] && cp -r "$d" out/notebooks/;
+          done
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4

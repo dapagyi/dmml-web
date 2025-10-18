@@ -9,10 +9,13 @@ wheels/
 # Virtual environments
 .venv
 
-notebooks/**
+notebooks/dmml-*_files/
+notebooks/plots
 !notebooks/*.qmd
 !notebooks/*.py
+!notebooks/partials/analytics.html
 **/old-*
+
 ea
 out
 students

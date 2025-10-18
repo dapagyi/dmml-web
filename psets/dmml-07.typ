@@ -1,3 +1,16 @@
+#set document(
+  author: "Dávid Apagyi",
+  title: "DMML Practical Class 7",
+  date: datetime(year: 2025, month: 11, day: 6, hour: 10, minute: 10, second: 0),
+)
+#set page(
+  paper: "a4",
+  number-align: center,
+  // numbering: "— 1/1 —",
+  numbering: "— 1 —",
+)
+#set text(lang: "en")
+
 #let qs(body) = {
   set enum(numbering: "(a)")
   set par(justify: true)
@@ -7,73 +20,149 @@
 #let pt(body) = {
   body
 }
+#show math.equation.where(block: true): eq => {
+  block(width: 100%, inset: (top: 0em, bottom: 0.5em), align(center, eq))
+}
+
 #align(center)[
-  *DMML*\ 7. gyakorlat (2025-11-06)\ _VC-dimenzió_
+  *DMML*\ Practical Lesson 7  (November 6, 2025)#footnote([
+    #link("https://apagyidavid.web.elte.hu/2025-2026-1/dmml")[#raw("https://apagyidavid.web.elte.hu/2025-2026-1/dmml")]
+  ])\ _VC Dimension_
+  #v(1em)
 ]
 
-#set document(
-  author: "Apagyi Dávid",
-  title: "DMML 7. gyakorlat",
-  date: datetime(year: 2025, month: 11, day: 6, hour: 10, minute: 10, second: 0),
-)
-#set text(lang: "hu")
++ #qs[
+    + #pt[
+        $cal(X) = RR^2$, $cal(F) = {"linear classifiers"}$, i.e., $cal(H) = {"half-planes"}$.
+      ]
+    + #pt[
+        $cal(X) = RR^d$, $cal(F) = {"linear classifiers"}$.
+      ]
+  ]
++ #qs[
+    + #pt[
+        Prove that if $cal(H)_1 subset.eq cal(H)_2$, then $dim_"VC" (cal(H)_1) <= dim_"VC" (cal(H)_2)$.
+      ]
+    + #pt[
+        Prove that if $cal(H)$ is finite, then $dim_"VC" (cal(H)) <= log_2 |cal(H)|$.
+      ]
+  ]
++ #qs[
+    $cal(X) = {1,2,..., 999}$, $cal(H) = {H_0, H_1, ..., H_9}$, where $H_i$ is the set of numbers in $cal(X)$ whose decimal representation contains the digit $i$. Determine $dim_"VC" (cal(H))$.
+  ]
++ #qs[
+    + #pt[
+        $cal(X) = RR$, $cal(F) = { f_(a,b)(x) = II(a <= x <= b) : a,b in RR}$, i.e., $cal(H) = {"intervals"}$.
+      ]
+    + #pt[
+        $cal(X) = RR$, $cal(F) = { f_(a,b,s) : a,b in RR, s in {-1,1}}$ ("signed intervals"), where:
+        $ f_(a,b,s) (x) = cases(s\, &"if" x in [a,b], -s\, #h(1em)&"if" x in.not [a,b].) $
+      ]
+    + #pt[
+        $cal(X) = RR$, $cal(H) = {"union of" k "closed intervals"}$.
+      ]
+  ]
++ #qs[
+    + #pt[
+        $cal(X) = RR^2$, $cal(H) = {"axis-aligned rectangles"}$.
+      ]
+    + #pt[
+        $cal(X) = RR^2$, $cal(H) = {"axis-aligned squares"}$.
+      ]
+    // + #pt[
+    //     $cal(X) = RR^2$, $cal(H) = {"rectangles"}$.
+    //   ]
+    + #pt[
+        $cal(X) = RR^d$, $cal(H) = {"axis-aligned rectangles"}$.
+      ]
+  ]
++ #qs[
+    + #pt[
+        $cal(X) = RR^2$, $cal(H) = {"triangles"}$.
+      ]
+    + #pt[
+        $cal(X) = RR^2$, $cal(H) = {"convex" k"-gons"}$ for some fixed $k$.
+      ]
+    + #pt[
+        $cal(X) = RR^2$, $cal(H) = {"convex polygons"}$.
+      ]
+  ]
+// + #qs[
+//     + #pt[
+//         $cal(X) = RR^2$, $cal(H) = {"origin-centered circles"}$.
+//       ]
+//     + #pt[
+//         $cal(X) = RR^2$, $cal(H) = {"circles"}$.
+//       ]
+//     + #pt[
+//         $cal(X) = RR^d$, $cal(H) = {"spheres"}$.
+//       ]
+//   ]
++ #qs[
+    Let $k<=|cal(X)|<infinity$.
+    + #pt[
+        Determine $dim_"VC" (cal(H)_(<=k))$, where $cal(H)_(<=k) = { H subset.eq cal(X) : |H| <= k }$.
+      ]
+    + #pt[
+        Determine $dim_"VC" (cal(H)_(=k))$, where $cal(H)_(=k) = { H subset.eq cal(X) : |H| = k }$.
+      ]
+  ]
++ #qs[
+    Let $cal(X)={0,1}^n$. For $I subset.eq {1,2,...,n}$, the parity function $f_I$ is defined as follows:
+    $ f_I (x_1, x_2, ..., x_n) = (sum_(i in I) x_i) mod 2. $ What is the VC dimension of the class of parity functions?
+  ]
 
-= Feladatok
+#line(length: 100%, stroke: 0.5pt)
 
-+ #qs[
-    + #pt[
-        $cal(X) = RR^2$, $cal(F) = {"lineáris klasszifikátorok"}$, azaz $cal(H) = {"félsíkok"}$.
-      ]
-    + #pt[
-        $cal(X) = RR^d$, $cal(F) = {"lineáris klasszifikátorok"}$.
-      ]
-  ]
-+ #qs[
-    Igazoljuk, hogy ha $cal(H)$ véges, akkor $dim_"VC" (cal(H)) <= log_2 |cal(H)|$.
-  ]
-+ #qs[
-    $cal(X) = {1,2,..., 999}$, $cal(C) = {C_0, C_1, ..., C_9}$, ahol $C_i$ azokból az $n in cal(X)$ számokból áll, amelyek tízes számrendszerbeli leírása tartalmazza az $i$ számjegyet. Mennyi $dim_"VC" (cal(C))$?
-  ]
-+ #qs[
-    + #pt[
-        $cal(X) = RR^2$, $cal(H) = {"tengelypárhuzamos téglalapok"}$.
-      ]
-    + #pt[
-        $cal(X) = RR^(d)$, $cal(H) = {"tengelypárhuzamos téglák"}$.
-      ]
-  ]
-+ #qs[
-    + #pt[
-        $cal(X) = RR$, $cal(F) = { f_(a,b)(x) = II(a <= x <= b) : a,b in RR}$, azaz $cal(H) = {"intervallumok"}$.
-      ]
-    + #pt[
-        ("Előjeles intervallumok.") $cal(X) = RR$, $cal(F) = { f_(a,b,s) : a,b in RR, s in {-1,1}}$, ahol:
-        $ f_(a,b,s) (x) = cases(s\, &"ha" x in [a,b], -s\, #h(1em)&"ha" x in.not [a,b]) $
-      ]
-  ]
-+ #qs[
-    + #pt[
-        Legyen $k<=|cal(X)|<infinity$, $cal(H)_(<=k) = { H subset.eq cal(X) : |H| <= k }$. Mennyi $dim_"VC" (cal(H)_(<=k))$?
-      ]
-    + #pt[
-        Legyen $k<=|cal(X)|<infinity$, $cal(H)_(=k) = { H subset.eq cal(X) : |H| = k }$. Mennyi $dim_"VC" (cal(H)_(=k))$?
-      ]
-  ]
-+ #qs[
-    Legyen $cal(X)={0,1}^n$. Definiáljuk minden $I subset.eq {1,2,...,n}$ részhalmazra az $f_I$ paritásfüggvényt a következő módon:
-    $ f_I (x_1, x_2, ..., x_n) = (sum_(i in I) x_i) mod 2. $
-    Mennyi a paritásfüggvényekből álló osztály VC-dimenziója?
-  ]
-
-= VC-dimenzió
-
-_Előadáson (Csáji Balázs Csanád):_
+_At the lecture:_
 - A class of sets $cal(C)$ _shatters_ a set $A$ if $ forall S subset.eq A : exists C in cal(C) : S = A inter C. $
-- A _class of classifiers_ $cal(F)$ shatters a set $A subset.eq cal(X)$, if the class generated by $cal(F)$, i.e., $ cal(C)_cal(F) = { C subset.eq cal(X) : exists f in cal(F) : C = f^(-1)({1})}, $ shatters $A$.
+- A _class of classifiers_ $cal(F)$ shatters a set $A subset.eq cal(X)$, if the class generated by $cal(F)$, i.e.,$ cal(C)_cal(F) = { C subset.eq cal(X) : exists f in cal(F) : C = f^(-1)({1})}, $ shatters $A$.
 - The _Vapnik--Chervonenkis_ (VC) dimension of $cal(F)$ is the largest $h$, such that there is a set $A$ with $|A| = h$ that is shattered by $cal(F)$.
 
-_Halmazrendszerekkel (Hajnal Péter):_
-- Legyen $cal(H)$ egy halmazrendszer a $V$ halmaz felett. $A subset.eq V$ esetén $cal(H)$ nyoma $A$-ban
-$ tr_A (cal(H)) = {H inter A: H in cal(H)}. $
-- Egy $cal(H)$ halmazrendszer alaphalmazának egy $A$ részhalmazát _teljesnek_ nevezzük, ha $tr_A (cal(H)) = 2^A.$
-- Egy $cal(H)$ halmazrendszer _Vapnyik--Cservonyenszkisz-dimenziója_ $ dim_"VC" (cal(H)) = max{|U| : U subset.eq V "teljes"}. $
+_Alternatively:_
+- Let $cal(H)$ be a set system over $cal(X)$. For $A subset.eq cal(X)$, the _trace_ of $cal(H)$ on $A$ is defined as as $ tr_A (cal(H)) = {H inter A: H in cal(H)}. $
+- A subset $A subset.eq cal(X)$ is _shattered_ by $cal(H)$ if $ tr_A (cal(H)) = 2^A. $
+- The _Vapnik--Chervonenkis_ dimension of $cal(H)$ is $ dim_"VC" (cal(H)) = max{|A| : A subset.eq cal(X) "is shattered by" cal(H)}. $
+
+#let solutions = (
+  (3, $d+1$),
+  none,
+  emoji.face.blank, // 2,
+  (2, 3, $2k$),
+  (4, 3, $2d$), // (4, 3, 7, $2d$),
+  (7, $2k+1$, $infinity$),
+  // (none, none, none),
+  ($k$, $min(k, |cal(X)| - k)$),
+  $n$,
+)
+
+#align(bottom)[
+  #set text(size: 0.8em)
+  _Solutions:_
+  #rotate(180deg)[
+    #let s = [#h(1.0em)]
+
+    #{
+      let parts = ()
+      for (i, sol) in solutions.enumerate() {
+        let num = i + 1
+        if sol == none {
+          continue
+        } else if type(sol) == array {
+          // Multiple parts (a), (b), etc.
+          for (j, answer) in sol.enumerate() {
+            let letter = str.from-unicode(97 + j) // 'a', 'b', 'c', ...
+            if answer == none {
+              continue
+            }
+            parts.push([#num.~(#letter)~#h(0.2em)~#answer])
+          }
+        } else {
+          // Single answer
+          parts.push([#num.~#h(0.2em)~#sol])
+        }
+      }
+      parts.join(s)
+    }
+  ]
+]
