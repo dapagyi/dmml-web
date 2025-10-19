@@ -1,6 +1,6 @@
 ---
 title: "DMML-03"
-subtitle: "Modelltanítás, `scikit-learn`, keresztvalidáció, hiperparaméter-optimalizálás."
+subtitle: "Modelltanítás; `scikit-learn`; keresztvalidáció; hiperparaméter-optimalizálás."
 date: "2025-09-25"
 title-block-banner: true
 format:
