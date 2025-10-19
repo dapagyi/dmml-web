@@ -11,6 +11,7 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.head_commit.message, '[ci skip]') }}
 
     steps:
       - name: Checkout main branch
@@ -51,7 +52,7 @@ jobs:
       - name: Render Quarto notebooks (parallel)
         run: |
           find notebooks -maxdepth 1 -name "*.qmd" -print0 | \
-            xargs -0 -n 1 -P $(nproc) -I {} \
+            xargs -0 -P $(nproc) -I {} \
             bash -c 'QUARTO_PROFILE="solutions" uv run quarto render "{}" --quiet'
         env:
           KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}

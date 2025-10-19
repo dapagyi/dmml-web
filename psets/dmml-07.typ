@@ -1,6 +1,6 @@
 #set document(
   author: "Dávid Apagyi",
-  title: "DMML Practical Class 7",
+  title: "DMML Practical Lesson 7",
   date: datetime(year: 2025, month: 11, day: 6, hour: 10, minute: 10, second: 0),
 )
 #set page(
