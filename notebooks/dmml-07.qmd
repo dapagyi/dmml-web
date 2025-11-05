@@ -1,0 +1,401 @@
+---
+title: "DMML-07"
+subtitle: "Linear Models Revisited: Ridge and LAD Regression; `statsmodels` package"
+date: "2025-11-06"
+title-block-banner: true
+format:
+  html:
+    grid: 
+      margin-width: 300px
+    html-math-method: katex
+    include-in-header:
+      - file: partials/analytics.html
+  ipynb: default
+execute:
+  echo: true
+toc: true
+reference-location: margin
+citation-location: margin
+---
+<strong>Web page:</strong> [apagyidavid.web.elte.hu/2025-2026-1/dmml](https://apagyidavid.web.elte.hu/2025-2026-1/dmml){target="_blank"}
+
+<a target="_blank" href="https://colab.research.google.com/github/dapagyi/dmml-web/blob/gh-pages/notebooks/dmml-07.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+# Linear Models Revisited
+
+We have already seen the OLS, i.e., ordinary least squares linear regression model in the exercise <span class="badge text-bg-warning me-1">HW/2</span><a href="./dmml-hw-02" target="_blank">Linear regression.</a>
+
+Today, we will consider some extensions and alternatives of the OLS linear regression model, primarily focusing on regularized[^1] linear regression models.
+
+:::{.callout-note title="Reminder: Importance of Regularization"}
+Regularization can help in several issues, for example:
+
+- To convert an _ill-posed_ problem to a _well-posed_ problem.
+- To make an _ill-conditioned_ approach better _conditioned._
+- To reduce _over-fitting_ and thus to help the _generalization._
+- To force the _sparsity_ of the solution.
+- Or in general to control _shape_ and _smoothness._
+
+:::
+
+[^1]: The _Importance of Regularization_ section is quoted from the lecture notes.
+
+The OLS solution minimizes the residual sum of squares (RSS):
+$$
+|| \varepsilon(\theta) |_2^2 = || y - \Phi \theta ||_2^2,
+$$
+where $y$ is the vector of observed values, $\Phi$ is the design matrix (or regression matrix) calculated from the input features. ($\Phi \in \mathbb{R}^{n \times d}$, where $n$ is the number of samples and $d$ is the number of basis functions/features.)
+
+Some other important linear models are the following (the lambdas are regularization parameters):
+
+- **Ridge Regression** (or Tikhonov regularization):
+$$
+|| y - \Phi \theta ||_2^2 + \lambda || \theta ||_2^2,
+$$
+- **LASSO Regression:**
+$$
+|| y - \Phi \theta ||_2^2 + \lambda || \theta ||_1,
+$$
+- **Elastic Net Regression:**
+$$
+|| y - \Phi \theta ||_2^2 + \lambda_1 || \theta ||_1 + \lambda_2 || \theta ||_2^2,
+$$
+- **Least Absolute Deviations (LAD) Regression:**
+$$
+|| y - \Phi \theta ||_1.
+$$
+
+**Question:** Consider the loss functions of the ridge regression and the lasso regression. What "properties" do the $L_2$ and $L_1$ regularization terms impose on the solution?
+
+:::{.callout-tip title="Hint" collapse="true"}
+Naturally, both terms try to keep the parameter values small, but in the case of the $L_1$ norm, this leads to some other interesting properties as well.
+
+Consider the geometric interpretation of the constraints imposed by the two norms.
+:::
+
+:::{.callout-tip title="Answer" collapse="true"}
+Check [this image](https://commons.wikimedia.org/wiki/File:Regularization.jpg){target="_blank"} for the geometric interpretation of the constraints.
+
+For more details, see the [Wikipedia article "Regularization (mathematics)"](https://en.wikipedia.org/wiki/Regularization_(mathematics)){target="_blank"}.
+
+In short, both norms try to keep the parameter values small, but in the case of the $L_1$ norm (LASSO), it also helps to achieve sparsity in the solution.
+
+(Although, as noted in the article, the $L_1$ norm does not necessarily lead to sparse solutions, and the $L_0$ norm would be more appropriate for that purpose, but the $L_0$ norm cannot be optimized efficiently. There are also criticisms about the practical usefulness of the $L_1$ norm for achieving sparsity, other than for some kind of feature selection.)
+:::
+
+## Ridge Regression
+It is straightforward to see that the ridge regression can be solved based on the OLS solution. Let
+$$
+\Phi' = \begin{bmatrix}
+\Phi \\
+\sqrt{\lambda} I
+\end{bmatrix}
+$$
+and 
+$$
+y' = \begin{bmatrix}
+y \\
+0
+\end{bmatrix},
+$$
+then the Ridge regression solution is equivalent to the OLS solution with $\Phi'$ and $y'$:
+$$
+|| y' - \Phi' \theta ||_2^2 = || y - \Phi \theta ||_2^2 + \lambda || \theta ||_2^2,
+$$
+since
+$$
+y' - \Phi' \theta = \begin{bmatrix}
+y \\
+0
+\end{bmatrix} - \begin{bmatrix}
+\Phi \\
+\sqrt{\lambda} I
+\end{bmatrix} \theta = \begin{bmatrix}
+y - \Phi \theta \\
+- \sqrt{\lambda} \theta
+\end{bmatrix}.
+$$
+
+Thus, the ridge regression solution is
+$$
+\hat{\theta} = (\Phi'^T \Phi')^{-1} \Phi'^T y' = (\Phi^T \Phi + \lambda I)^{-1} \Phi^T y.
+$$
+
+Let's implement ridge regression based on the solution of HW/2.
+
+```{python}
+# | code-fold: true
+
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.metrics import r2_score, mean_squared_error
+from scipy.linalg.lapack import dtrtri
+from functools import partial
+
+rng = np.random.default_rng()
+```
+
+This was our solution for the OLS in HW/2 using polynomial basis functions (some details have been altered, e.g., the approximated function is slightly different):
+
+```{python}
+# | code-fold: true
+
+
+def f(x):
+    return (np.exp(1 - x) * x**2 + 0.3 * np.sin((x / 1.5)**2) ** 2) / (3 * np.log(np.sin(0.75 * x) + 200))
+
+
+x = np.arange(0, 5.01, 0.01)
+fx = f(x)
+y = fx + 5e-3 * rng.standard_normal(x.size)
+
+fig, ax = plt.subplots(figsize=(8, 4))
+ax.plot(x, y, color="green", lw=1, label="True function")
+ax.legend()
+plt.tight_layout()
+plt.show()
+```
+
+
+```{python}
+class PhiCalculator:
+    def __init__(self, basis_functions):
+        self.basis_functions = basis_functions
+
+    def __call__(self, x):
+        return np.column_stack([f(np.asarray(x)) for f in self.basis_functions])
+
+
+def f_i(x, i, d):
+    return x ** (i - 1)
+
+
+d = 11
+basis_functions = [partial(f_i, i=i + 1, d=d) for i in range(d)]
+Phi = PhiCalculator(basis_functions)(x)
+
+print(f"Shape of Phi (should be n×d): {Phi.shape}")
+
+[Q, R] = np.linalg.qr(Phi)
+R_inv, _ = dtrtri(R, lower=0)
+theta = (R_inv @ Q.T) @ y
+preds = Phi @ theta
+```
+
+```{python}
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 8))
+ax1.plot(x, y, color="green", lw=1, label="True function")
+ax1.plot(x, preds, color="red", lw=2, label="Prediction (OLS)")
+ax1.legend()
+ax1.set_title(f"OLS Prediction (R²: {r2_score(y, preds):.6f}, RMSE: {mean_squared_error(y, preds):.6f})")
+
+display(theta)
+ax2.bar(x=range(theta.size), height=theta)
+ax2.set_title("Estimated parameters (OLS)")
+
+plt.tight_layout()
+plt.show()
+```
+
+
+**Exercise:** Based on the OLS solution above, implement the `RidgeRegression` class below by completing the `fit` and `predict` methods.
+
+```{python}
+# | eval: false
+
+class RidgeRegression:
+    def __init__(self, lambda_=0.01, d=None, basis_functions=None):
+        self.lambda_ = lambda_
+
+        if not basis_functions:
+            if not d:
+                d = 11
+            basis_functions = [partial(f_i, i=i + 1, d=d) for i in range(d)]
+        self.basis_functions = basis_functions
+
+    def fit(self, X, y):
+        # TODO
+
+    def predict(self, X):
+        # TODO
+
+```
+
+```{python}
+# | echo: false
+
+# Solution
+class RidgeRegression:
+    def __init__(self, lambda_=0.01, d=None, basis_functions=None):
+        self.lambda_ = lambda_
+
+        if not basis_functions:
+            if not d:
+                d = 11
+            basis_functions = [partial(f_i, i=i + 1, d=d) for i in range(d)]
+        self.basis_functions = basis_functions
+
+    def fit(self, X, y):
+        Phi = PhiCalculator(self.basis_functions)(X)
+        n_features = len(self.basis_functions)
+        
+        Phi_prime = np.vstack([Phi, np.sqrt(self.lambda_) * np.eye(n_features)])
+        y_prime = np.hstack([y, np.zeros(n_features)])
+        Q, R = np.linalg.qr(Phi_prime)
+        R_inv, _ = dtrtri(R, lower=0)
+        self.theta_ = (R_inv @ Q.T) @ y_prime
+
+    def predict(self, X):
+        Phi = PhiCalculator(self.basis_functions)(X)
+        return Phi @ self.theta_
+
+
+```
+
+Some examples with different values of the regularization parameter $\lambda$:
+
+```{python}
+# | code-fold: true
+# | fig-cap: "Ridge Regression with λ=0.001."
+
+
+def ridge_demo(lambda_: float, plot=True) -> tuple[np.ndarray, float, float]:
+    ridge_model = RidgeRegression(lambda_=lambda_)
+    ridge_model.fit(x, y)
+    ridge_preds = ridge_model.predict(x)
+
+    r2 = r2_score(y, ridge_preds)
+    rmse = mean_squared_error(y, ridge_preds)
+
+    if plot:
+        fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 8))
+        ax1.plot(x, y, color="green", lw=1, label="True function")
+        ax1.plot(x, ridge_preds, color="blue", lw=2, label="Prediction (Ridge)")
+        ax1.legend()
+        ax1.set_title(f"Ridge Regression ($\\lambda ={lambda_}$): R²: {r2:.4f}, RMSE: {rmse:.6f}")
+
+        ax2.bar(x=[f"$\\theta_{i}$" for i in range(ridge_model.theta_.size)], height=ridge_model.theta_)
+        ax2.set_title("Estimated parameters (Ridge)")
+        
+        plt.tight_layout()
+        plt.show()
+
+    return ridge_model.theta_, r2, rmse
+
+
+ridge_demo(lambda_=1e-3)
+pass
+```
+
+Let's see what happens with a larger regularization parameter:
+```{python}
+# | code-fold: true
+# | fig-cap: "Ridge Regression with λ=0.1. The estimated parameters are shrunk towards zero."
+
+ridge_demo(lambda_=1e-1)
+pass
+```
+
+```{python}
+# | code-fold: true
+
+lambdas = np.logspace(-7, 1, 100)
+thetas = np.zeros((lambdas.size, 11))
+r2s = np.zeros(lambdas.size)
+rmses = np.zeros(lambdas.size)
+for i, lambda_ in enumerate(lambdas):
+    theta_, r2, rmse = ridge_demo(lambda_, plot=False)
+    thetas[i, :] = theta_
+    r2s[i] = r2
+    rmses[i] = rmse
+
+```
+
+```{python}
+# | code-fold: true
+
+fig, axs = plt.subplots(3, 1, figsize=(8, 12))
+ax = axs[0]
+colors = plt.get_cmap("plasma", thetas.shape[1])
+for i in range(thetas.shape[1]):
+    ax.plot(lambdas, thetas[:, i], label=f"$\\theta_{{{i}}}$", color=colors(i))
+ax.set_xscale("log")
+ax.set_title("Ridge Regression: Parameter paths")
+ax.set_xlabel("$\\lambda$")
+ax.set_ylabel("Parameter values")
+ax.legend()
+
+ax = axs[1]
+ax.plot(lambdas, r2s, label="R²", color="green")
+ax.set_xscale("log")
+ax.set_title("Ridge Regression: R² vs. $\\lambda$")
+ax.set_xlabel("$\\lambda$")
+ax.set_ylabel("R²")
+ax.legend()
+
+ax = axs[2]
+ax.plot(lambdas, rmses, label="RMSE", color="red")
+ax.set_xscale("log")
+ax.set_title("Ridge Regression: RMSE vs. $\\lambda$")
+ax.set_xlabel("$\\lambda$")
+ax.set_ylabel("RMSE")
+ax.legend()
+
+plt.tight_layout()
+plt.show()
+```
+
+## LAD Regression
+
+Least Absolute Deviations (LAD) (or least absolute errors (LAE), least absolute residuals (LAR), least absolute values (LAV)[^2]) regression minimizes the sum of absolute deviations:
+
+[^2]: See [Wikipedia: Least absolute deviations.](https://en.wikipedia.org/wiki/Least_absolute_deviations){target="_blank"}
+
+$$
+|| y - \Phi \theta ||_1 = \sum_{i=1}^{n} |y_i - \phi_i^T \theta|.
+$$
+
+LAD regression can be formulated as a linear programming problem. The objective is to minimize the sum of absolute deviations, which can be expressed as:
+
+$$
+\begin{align*}
+\text{minimize} \quad & u^T \mathbf{1} \\
+\text{subject to} \quad & y - \Phi \theta \leq u \\
+& - (y - \Phi \theta) \leq u
+\end{align*}
+$$
+
+There are several LP (MILP) solvers available in Python, e.g., Python-Mip, `scipy.optimize.linprog`, PuLP, CVXPY, OR-Tools.
+
+**Exercise:** Implement the `LADRegression` class below using your favorite LP solver, and test it on a small example dataset.
+
+```{python}
+# | eval: false
+
+class LADRegression:
+    def __init__(self):
+        # TODO
+
+    def fit(self, X, y):
+        # TODO
+
+    def predict(self, X):
+        # TODO
+```
+
+# The `statsmodels` package
+
+The `statsmodels` package provides an R-like interface for statistical modeling in Python. It includes several models, tests, and data exploration tools.
+
+Let's see how to perform (OLS) linear regression using `statsmodels`:
+
+```{python}
+import statsmodels.api as sm
+
+X_sm = sm.add_constant(Phi)
+model = sm.OLS(y, X_sm)
+results = model.fit()
+print(results.summary())
+```
+
+For more details, check the [documentation.](https://www.statsmodels.org/stable/examples/notebooks/generated/ols.html){target="_blank"}
