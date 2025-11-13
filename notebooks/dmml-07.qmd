@@ -65,10 +65,10 @@ $$
 || y - \Phi \theta ||_1.
 $$
 
-**Question:** Consider the loss functions of the ridge regression and the lasso regression. What "properties" do the $L_2$ and $L_1$ regularization terms impose on the solution?
+**Question:** Consider the loss functions of the ridge regression and the lasso regression. What "properties" do the $L^2$ and $L^1$ regularization terms impose on the solution?
 
 :::{.callout-tip title="Hint" collapse="true"}
-Naturally, both terms try to keep the parameter values small, but in the case of the $L_1$ norm, this leads to some other interesting properties as well.
+Naturally, both terms try to keep the parameter values small, but in the case of the $L^1$ norm, this leads to some other interesting properties as well.
 
 Consider the geometric interpretation of the constraints imposed by the two norms.
 :::
@@ -76,11 +76,11 @@ Consider the geometric interpretation of the constraints imposed by the two norm
 :::{.callout-tip title="Answer" collapse="true"}
 Check [this image](https://commons.wikimedia.org/wiki/File:Regularization.jpg){target="_blank"} for the geometric interpretation of the constraints.
 
-For more details, see the [Wikipedia article "Regularization (mathematics)"](https://en.wikipedia.org/wiki/Regularization_(mathematics)){target="_blank"}.
+For more details, see the [Wikipedia article "Regularization (mathematics)."](https://en.wikipedia.org/wiki/Regularization_(mathematics)){target="_blank"}
 
-In short, both norms try to keep the parameter values small, but in the case of the $L_1$ norm (LASSO), it also helps to achieve sparsity in the solution.
+In short, both norms try to keep the parameter values small, but in the case of the $L^1$ norm (LASSO), it also helps to achieve sparsity in the solution.
 
-(Although, as noted in the article, the $L_1$ norm does not necessarily lead to sparse solutions, and the $L_0$ norm would be more appropriate for that purpose, but the $L_0$ norm cannot be optimized efficiently. There are also criticisms about the practical usefulness of the $L_1$ norm for achieving sparsity, other than for some kind of feature selection.)
+(Although, as noted in the article, the $L^1$ norm does not necessarily lead to sparse solutions, and the $L^0$ norm (which counts the number of non-zero coefficients) would be more appropriate for that purpose, but the $L^0$ norm cannot be optimized efficiently. There are also criticisms about the practical usefulness of the $L^1$ norm for achieving sparsity, other than for some kind of feature selection.)
 :::
 
 ## Ridge Regression
@@ -214,15 +214,19 @@ class RidgeRegression:
         self.basis_functions = basis_functions
 
     def fit(self, X, y):
+        pass
         # TODO
 
     def predict(self, X):
+        pass
         # TODO
 
 ```
 
+:::{.callout-tip title="Solution" collapse="true"}
+
 ```{python}
-# | echo: false
+# | echo: true
 
 # Solution
 class RidgeRegression:
@@ -238,7 +242,7 @@ class RidgeRegression:
     def fit(self, X, y):
         Phi = PhiCalculator(self.basis_functions)(X)
         n_features = len(self.basis_functions)
-        
+
         Phi_prime = np.vstack([Phi, np.sqrt(self.lambda_) * np.eye(n_features)])
         y_prime = np.hstack([y, np.zeros(n_features)])
         Q, R = np.linalg.qr(Phi_prime)
@@ -251,6 +255,8 @@ class RidgeRegression:
 
 
 ```
+
+:::
 
 Some examples with different values of the regularization parameter $\lambda$:
 
