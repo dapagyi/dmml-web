@@ -1,0 +1,76 @@
+---
+title: "DMML-OHW-05"
+subtitle: ""
+date: "2025-11-20"
+title-block-banner: true
+lightbox: true
+format:
+  html:
+    grid: 
+      margin-width: 300px
+    html-math-method: katex
+    include-in-header:
+      - file: partials/analytics.html
+  ipynb: default
+execute:
+  echo: true
+toc: true
+reference-location: margin
+citation-location: margin
+---
+__Honlap:__ [apagyidavid.web.elte.hu/2025-2026-1/dmml](https://apagyidavid.web.elte.hu/2025-2026-1/dmml){target="_blank"}
+
+<a target="_blank" href="https://colab.research.google.com/github/dapagyi/dmml-web/blob/gh-pages/notebooks/dmml-ohw-05.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+# Vizsgakérdések
+
+A megajánlott előadásjegyért menő írásbeli vizsgán olyan feleletválasztós kérdések szerepelnek majd (legalábbis tavaly így volt, az idei évet nem garantálom, és nincs is rá ráhatásom), amelyekben a négy lehetőség közül kell kiválasztani a pontosan egy helyes vagy pontosan egy hibás állítást. (Azt tehát nem tudjuk előre, hogy melyik eset áll fenn.)
+
+Ebben a szorgalmiban az a feladat, hogy az előadásanyagokat átpörgetve (ezáltal is már részben a vizsgára készülve) gyűjts össze fenti típusú kérdéseket. Ezekhez írd meg a helyes válaszokat, és nagyon röviden indokold is meg őket. (Azaz magyarázd meg, miért igazak vagy miért hamisak az egyes lehetőségek.)
+
+Kérdésenként (négy lehetőség, helyes válasz, indoklás) fél-fél pont jár, összesen legfeljebb három pont szerezhető.
+
+(Az a terv, hogy ezeket megnéznénk az utolsó órán gyakorlásként.)
+
+Ötletek feladattípusokra:
+
+- fogalmak, definíciók;
+- tételek feltételei;
+- algoritmus vagy modell működése, jellemzői; stb.
+
+Néhány példa, de ezeknél jóval egyszerűbbeket is nyugodtan lehet írni:
+
+1. A VC dimenzió...
+   a. mindig pozitív egész szám.
+   b. lehet negatív.
+   c. alsó korlát abban az értelemben, hogy ha egy $\mathcal{F}$ klasszifikátorosztályra $\dim_\text{VC}(\mathcal{F})=d$, akkor az alaphalmaz minden legalább $d$ méretű $A$ részhalmazának minden címkézéséhez létezik egy $\mathcal{F}$-beli klasszifikátor, amely helyesen osztályozza az $A$-beli pontokat.
+   d. alsó korlát abban az értelemben, hogy ha egy $\mathcal{F}$ klasszifikátorosztályra $\dim_\text{VC}(\mathcal{F})=d$, akkor létezik az alaphalmaznak olyan $d$ méretű $A$ részhalmaza, amelynek minden címkézéséhez létezik olyan $\mathcal{F}$-beli klasszifikátor, amely helyesen osztályozza az $A$-beli pontokat.
+2. A VC dimenzió...
+   a. (azonos alaphalmaz felett) kevesebb paraméterrel rendelkező klasszifikátorosztályok esetén mindig szigorúan kisebb. (_Paraméterként -- praktikus korlátokat nem figyelembe véve -- tetszőleges valós számra gondolhatunk._)
+   b. monoton halmazfüggvény, azaz $\mathcal{H}_1 \subseteq \mathcal{H}_2$ halmazrendszerek esetén teljesül, hogy $\dim_\text{VC}(\mathcal{H}_1) \leq \dim_\text{VC}(\mathcal{H}_2)$.
+   c. az $\mathcal{X}=R^d$ alaphalmaz felett lineáris klasszifikátorokra éppen $d+1$.
+   d. véges halmazrendszerre mindig véges.
+3. Bináris klasszifikáció esetén...
+   a. az $F_1$-score mindig legalább annyi, mint a precision és a recall számtani közepe.
+   b. az $F_1$-score mindig legfeljebb annyi, mint a precision és a recall számtani közepe.
+   c. az accuracy mindig egyenlő a precision és a recall mértani közepével.
+   d. az accuracy mindig egyenlő a precision és a recall négyzetes közepével.
+
+:::{.callout-note title="Megoldókulcs" collapse="true"}
+
+1. d., a többi hamis.
+2. a., a többi igaz.
+3. b., a többi hamis.
+
+:::
+
+:::{.callout-tip title="Magyarázat" collapse="true"}
+
+1. Definíció.
+2. Az a. azért hamis, mert akár egyetlen paraméter is leírhat nagyon bonyolult osztályozásokat is.
+   - Ezt a feladatot [ez a közismert, de órán nem tárgyalt példa](https://mlweb.loria.fr/book/en/VCdiminfinite.html) ihlette, de erre az állításra jóval egyszerűbben is lehet ellenpéldát találni.
+   - Pl. legyen véges az alaphalmaz, soroljuk fel minden részhalmazát, és azokhoz rendeljünk valahogy egy-egy egyedi sorszámot. (Pl. valahogy -- visszafejthető módon -- felsorolom az elemeit.)
+   - Vagy tegyük fel, hogy van egy két pozitív egész paraméterrel meghatározott klasszifikátorosztályom: $\mathcal{F} = \{f_{a,b} : a,b \in \mathbb{Z}^+\}$. Ha a két paramétert egyetlen valós számmal "elkódolom" ($c=g(a,b)$, ahol $g$ egy rögzített injektív leképzés), akkor egy paraméterrel is le tudom írni ugyanazt a klasszifikátorosztályt: $\mathcal{F}' = \{f'_{c} : c \in C\}$, ahol $C = \{c : c=g(a,b), a,b\in\mathbb{Z}\}$ és $f'_{g(a,b)} = f_{a,b}$ bármely $a,b\in\mathbb{Z}$-re. Pl. a tizedesvessző elé teszem $a$-t, mögé $b$-t $(123{,}456)$; vagy az első paraméternek minden számjegyét megduplázom, és ezt összefűzöm $b$-vel egy felismerhető elválasztókód mentén $(112233\textbf{10}456)$; stb.
+3. Definíció és közepek.
+
+:::

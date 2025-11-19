@@ -1,0 +1,277 @@
+---
+title: "DMML-09"
+subtitle: "Support Vector Machines"
+author: "David Apagyi"
+date: "2025-11-20"
+title-block-banner: true
+lightbox: true
+format:
+  html:
+    grid: 
+      margin-width: 300px
+    html-math-method: katex
+    include-in-header:
+      - file: partials/analytics.html
+  ipynb: default
+execute:
+  echo: true
+toc: true
+reference-location: margin
+citation-location: margin
+---
+__Web page:__ [apagyidavid.web.elte.hu/2025-2026-1/dmml](https://apagyidavid.web.elte.hu/2025-2026-1/dmml){target="_blank"}
+
+<a target="_blank" href="https://colab.research.google.com/github/dapagyi/dmml-web/blob/gh-pages/notebooks/dmml-09.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+# Support Vector Machines
+
+## Spam Classification
+
+Spam classification is a classic application of SVMs[^1], as it is a great example that highlights the strengths of the kernel trick. In this example, in the feature vectors each element represents the presence or absence of a specific word in the email, thus they are high-dimensional and sparse.
+
+[^1]: See [H. Drucker, Donghui Wu and V. N. Vapnik, "Support vector machines for spam categorization"](https://ieeexplore.ieee.org/document/788645){target="_blank"} for more details.
+
+Also, we would afted need to map the data to a higher-dimensional space to make it linearly separable (or nearly so), but this would be usually -- especially in this case -- computationally expensive. Instead, we would use the kernel trick to compute the inner products in the higher-dimensional space without explicitly mapping the data points. (We don't even need to know what the explicit mapping is. Also, the kernel might correspond to a mapping to an infinite-dimensional space.)
+
+We won't cover this example in detail here, but _it is highly recommended_ to at least skim through [this task description (Exercise 2)](https://vkosuri.github.io/CourseraMachineLearning/home/week-7/exercises/machine-learning-ex6/ex6.pdf)[^2] and [this solution](https://gtraskas.github.io/post/ex6_spam/)[^3] using a linear kernel.
+
+[^2]: The original exercise is from a previous iteration of Andrew Ng's Machine Learning course on Coursera.
+[^3]: [This is a solution](https://gtraskas.github.io/post/ex6/) from the same author for the first exercise. (The task is about the decision boundaries of an SVM using an RBF kernel. We will do something similar in the next section.) [Here is another solution for the spam classification task.](https://github.com/kaleko/CourseraML/tree/master/ex6)
+
+In general, SVMs can be very effective (aften can achieve similar performance as tree-based models), but usually they require extensive (or at least more careful) hyperparameter tuning.
+
+## Visualizing Different Kernels
+
+```{python}
+# | code-fold: true
+
+import numpy as np
+import matplotlib.pyplot as plt
+import polars as pl
+from sklearn.svm import SVC
+from sklearn.datasets import make_classification, make_circles, make_moons
+from sklearn.inspection import DecisionBoundaryDisplay
+from sklearn.metrics import accuracy_score
+
+
+def plot_decision_boundary(ax, clf, X, y, title, kernel_name):
+    if clf is None:
+        # Show TODO placeholder
+        ax.text(
+            0.5,
+            0.5,
+            "TODO",
+            ha="center",
+            va="center",
+            fontsize=14,
+            bbox=dict(boxstyle="round,pad=1", facecolor="wheat", alpha=0.5),
+            transform=ax.transAxes,
+        )
+        ax.set_title(f"{title} | {kernel_name}", fontsize=10)
+        ax.set_xlabel("Feature 1", fontsize=9)
+        ax.set_ylabel("Feature 2", fontsize=9)
+        ax.grid(True, linestyle="--", alpha=0.3)
+        return
+
+    y_pred = clf.predict(X)
+    accuracy = accuracy_score(y, y_pred)
+
+    DecisionBoundaryDisplay.from_estimator(
+        clf,
+        X,
+        ax=ax,
+        response_method="predict",
+        plot_method="pcolormesh",
+        cmap=plt.cm.RdYlBu,
+        alpha=0.3,
+    )
+    ax.set_xlabel("Feature 1", fontsize=9)
+    ax.set_ylabel("Feature 2", fontsize=9)
+
+    n_classes = len(np.unique(y))
+    if n_classes == 2:
+        contour_display = DecisionBoundaryDisplay.from_estimator(
+            clf,
+            X,
+            ax=ax,
+            response_method="decision_function",
+            plot_method="contour",
+            levels=[-2, -1, 0, 1, 2],
+            colors=["k", "k", "k", "k", "k"],
+            linestyles=[":", "--", "-", "--", ":"],
+            alpha=0.7,
+        )
+        ax.clabel(contour_display.surface_, inline=True, fontsize=8, fmt="%.1f")
+
+    ax.scatter(X[:, 0], X[:, 1], c=y, cmap=plt.cm.RdYlBu, edgecolors="k", s=50, alpha=0.7)
+    ax.set_title(f"{title} | {kernel_name} \n Accuracy: {accuracy:.3f}", fontsize=10)
+    ax.grid(True, linestyle="--", alpha=0.3)
+
+    return accuracy
+
+
+def svm_demo(datasets, kernels):
+    fig, axes = plt.subplots(len(kernels), len(datasets), figsize=(5 * len(datasets), 5 * len(kernels)), dpi=72)
+    fig.suptitle(
+        "SVM Kernel Comparison: Decision Boundaries Across Different Datasets", fontsize=16, y=0.995, weight="semibold"
+    )
+
+    results = {}
+
+    for row, (kernel_name, kernel_params) in enumerate(kernels):
+        scores = {}
+        for col, (dataset_name, dataset) in enumerate(datasets):
+            ax = axes[row, col]
+
+            if kernel_params is None or dataset is None:
+                # Show TODO placeholder
+                plot_decision_boundary(ax, None, None, None, dataset_name, kernel_name)
+            else:
+                X, y = dataset
+                clf = SVC(**kernel_params)
+                clf.fit(X, y)
+
+                score = plot_decision_boundary(ax, clf, X, y, dataset_name, kernel_name)
+                scores[dataset_name] = score
+
+        if scores:
+            results[kernel_name] = scores
+
+    plt.tight_layout()
+    plt.show()
+
+    data = []
+    for kernel, scores in results.items():
+        data.append({"Kernel": kernel, **scores})
+    df = pl.DataFrame(data).with_columns(pl.mean_horizontal(pl.all().exclude("Kernel")).alias("Average Accuracy"))
+    display(df)
+```
+
+__Exercise:__ Extend the dataset generation and kernel configurations below and play around with different parameters. What are the meaning of `gamma` and `C` in the SVC model? How do they affect the decision boundaries? Try out different values (you might need to select these from quite wide ranges).
+
+Some useful links:
+
+- [Sample generators](https://scikit-learn.org/stable/api/sklearn.datasets.html#sample-generators){target="_blank"}
+- [User Guide: Support Vector Machines](https://scikit-learn.org/stable/modules/svm.html#support-vector-machines){target="_blank"}
+- [SVC documentation](https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC){target="_blank"}
+
+__Question:__ How would you approach multiclass classification with SVMs? (Check [the second link above](https://scikit-learn.org/stable/modules/svm.html#multi-class-classification){target="_blank"} or [Wikipedia.](https://en.wikipedia.org/wiki/Support_vector_machine#:~:text=%5Bedit%5D-,Multiclass%20SVM,-%5Bedit%5D){target="_blank"})
+```{python}
+# | column: screen
+# | fig-cap: "SVM Kernel Comparison: Decision Boundaries Across Different Datasets"
+
+np.random.seed(42)
+
+
+def generate_datasets(n_samples=200, seed=42):
+    # Linear separable data
+    X_linear, y_linear = make_classification(
+        n_samples=n_samples,
+        n_features=2,
+        n_redundant=0,
+        n_informative=2,
+        n_clusters_per_class=1,
+        flip_y=0.01,
+        class_sep=1.5,
+        random_state=seed + 2,
+    )
+
+    # Circular/non-linear data
+    X_circles, y_circles = make_circles(n_samples=n_samples, noise=0.1, factor=0.5, random_state=seed + 4)
+
+    # TODO: Moon-shaped data
+
+    # TODO: Multiclass data
+
+    # (You may choose other datasets as well.)
+
+    return [
+        ("Linear Separable", (X_linear, y_linear)),
+        ("Concentric Circles", (X_circles, y_circles)),
+        ("Interleaving Moons", None),
+        ("Multiclass Classification", None),
+    ]
+
+
+datasets = generate_datasets()
+common_params = dict(gamma="auto", C=1.0)
+kernels = [
+    ("Linear Kernel", dict(kernel="linear", **common_params)),
+    ("Sigmoid Kernel", dict(kernel="sigmoid", **common_params)),
+    ("Polynomial Kernel", None),  # TODO
+    ("RBF (Radial Basis Function) Kernel", None),  # TODO
+    # (You may choose other kernels as well.)
+]
+svm_demo(datasets, kernels)
+
+```
+
+::: {.content-visible when-profile="solutions"}
+::: {.content-visible when-format="html"}
+
+## Solutions
+
+There are some cherry-picked seeds and other parameters below for the datasets to create nice visualization.
+
+```{python}
+# | code-fold: true
+# | column: screen
+# | fig-cap: "SVM Kernel Comparison: Decision Boundaries Across Different Datasets"
+
+np.random.seed(42)
+
+
+def generate_datasets(n_samples=200, seed=42):
+    # Linear separable data
+    X_linear, y_linear = make_classification(
+        n_samples=n_samples,
+        n_features=2,
+        n_redundant=0,
+        n_informative=2,
+        n_clusters_per_class=1,
+        flip_y=0.01,
+        class_sep=1.5,
+        random_state=seed + 2,
+    )
+
+    # Circular/non-linear data
+    X_circles, y_circles = make_circles(n_samples=n_samples, noise=0.1, factor=0.5, random_state=seed + 4)
+
+    # Moon-shaped data
+    X_moons, y_moons = make_moons(n_samples=n_samples, noise=0.15, random_state=seed)
+
+    # Multiclass data
+    X_multiclass, y_multiclass = make_classification(
+        n_samples=n_samples,
+        n_features=2,
+        n_redundant=0,
+        n_informative=2,
+        n_clusters_per_class=1,
+        n_classes=3,
+        flip_y=0.01,
+        class_sep=1.5,
+        random_state=seed + 4,
+    )
+
+    return [
+        ("Linear Separable", (X_linear, y_linear)),
+        ("Concentric Circles", (X_circles, y_circles)),
+        ("Interleaving Moons", (X_moons, y_moons)),
+        ("Multiclass Classification", (X_multiclass, y_multiclass)),
+    ]
+
+
+datasets = generate_datasets()
+common_params = dict(gamma="auto", C=1.0)
+kernels = [
+    ("Linear Kernel", dict(kernel="linear", **common_params)),
+    ("Sigmoid Kernel", dict(kernel="sigmoid", **common_params)),
+    ("Polynomial Kernel", dict(kernel="poly", degree=3, **common_params)),
+    ("RBF (Radial Basis Function) Kernel", dict(kernel="rbf", **common_params)),
+]
+svm_demo(datasets, kernels)
+
+```
+
+:::
+:::

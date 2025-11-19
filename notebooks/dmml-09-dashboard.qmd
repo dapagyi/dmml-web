@@ -1,0 +1,381 @@
+---
+title: "Liver Disorder Prediction"
+# author: "David Apagyi"
+date: "2025-11-20"
+format:
+    dashboard: default
+theme: flatly # There are several other themes available, see https://quarto.org/docs/dashboards/theming.html#overview
+---
+
+```{python}
+import polars as pl
+
+df = pl.read_csv("https://raw.githubusercontent.com/dapagyi/dmml-web/main/data/liver_disorders.csv")
+```
+
+# What is this?
+
+## Row {.tabset}
+
+::: {.card title="Introduction"}
+
+# DMML-09: Example dashboard for the business analyst specialization
+
+__Web page:__ [apagyidavid.web.elte.hu/2025-2026-1/dmml](https://apagyidavid.web.elte.hu/2025-2026-1/dmml){target="_blank"}
+
+In case your team has chosen the business analyst specialization, you need to create a (not necessarily similar) dashboard for your final project, summarizing your work.
+
+The aim of this dashboard is to showcase some of the capabilities of Quarto for creating dashboards. You do not have to follow this structure, feel free to alter anything as you wish, start from scratch, or use other tools if you prefer.
+
+Some useful resources:
+
+- [Quarto: Get Started](https://quarto.org/docs/get-started/){target="_blank"};
+- [Documentation: Dashboards](https://quarto.org/docs/dashboards/){target="_blank"} (it consists of several pages);
+- [Examples.](https://quarto.org/docs/gallery/#dashboards){target="_blank"}
+
+In order to recreate this example, you need to to [install Quarto,](https://quarto.org/docs/get-started/){target="_blank"} download the corresponding Quarto Markdown (`.qmd`) file from the [GitHub repository of the course,](https://github.com/dapagyi/dmml-web/blob/main/notebooks/dmml-09-dashboard.qmd){target="_blank"} (ensure that you have the necessary dependencies installed), and render it by running `quarto render dmml-09-dashboard.qmd`. (There are some comments left in the source code that might help you, so it is worth checking it out even if start your dashboard from scratch.)
+
+After rendering, you will find the resulting HTML file in the same directory. You can read about uploading this to your web hosting at ELTE in the next section. (Don't forget to check out the other pages and tabs of this dashboard.)
+
+Since we haven't spent much time on dashboards, and sometimes it can be tricky to get everything right, feel free to [reach out to me,](https://apagyidavid.web.elte.hu/2025-2026-1/dmml/#elerhetoseg){target="_blank"} if you encounter any issues or have questions.
+
+:::
+
+::: {.card title="Web hosting at ELTE"}
+
+To upload your dashboard to your personal web page at ELTE, follow these steps:
+
+1. Log in to [Caesar Infopanel](https://info.caesar.elte.hu/){target="_blank"}, and ensure that you have the necessary services activated (AFS, interactive login, personal web page). If not, you can request activation there. (There are some tooltips on the page next to each service that might help you.)
+2. Install an SFTP client, e.g. [WinSCP](https://winscp.net/eng/index.php){target="_blank"} (Windows).
+3. Set up a new connection in your SFTP client with the following parameters:
+     - File protocol: `SFTP`
+     - Host name: `caesar.elte.hu`
+     - Port number: `22`
+     - User name: your ELTE IIG (or Caesar) username (the part of your email address before `@student.elte.hu`)
+     - Password: your ELTE IIG (or Caesar) password
+4. Navigate to your personal web directory: `/afs/elte.hu/user/<first letter of your username>/<your username>/web`. (E.g. for me, it is `/afs/elte.hu/user/a/apagyidavid/web`.)
+5. Upload the files and directories you need to this directory (either to the root or to a subdirectory, e.g. `dmml`).
+6. Browse your uploaded files at `https://<your username>.web.elte.hu`.
+
+It is preferred to upload the rendered dashboard to your personal web page at ELTE, but if you want to use another hosting service (e.g. GitHub Pages), or do not want to make it publicly available, please contact me.
+
+:::
+
+# Abstract
+
+## Row
+
+### Column {width=60%}
+
+::: {.card title="Liver Disorder Prediction" height="30%"}
+
+__In this project we project a project to project the project of the project.__
+
+_(...) Brief summary about your work and the achieved results. (...)_
+
+We used the [liver disorder dataset from Kaggle,](https://www.kaggle.com/datasets/fatemehmehrparvar/liver-disorders/data){target="_blank"} the same one as in the guidance of the exercise <span class="badge text-bg-primary me-1" style="background-color: #ffc107 !important; color: #000 !important;">HW/6</span><a href="./dmml-hw-06" target="_blank">Model Comparison.</a>
+
+The source code is available [in this GitHub repository.](https://github.com/dapagyi/dmml-web){target="_blank"}
+
+:::
+
+### Column {width=40%}
+
+#### Row
+
+```{python}
+# | content: valuebox
+# | title: "Total Patients"
+# | width: 50%
+
+# You can also add icons to value boxes, see https://quarto.org/docs/dashboards/data-display.html#value-boxes
+
+dict(color="light", value=f"{df.height}")
+
+```
+
+```{python}
+# | content: valuebox
+# | title: "Disorder Prevalence"
+# | width: 50%
+
+dict(color="warning", value=f"{(df.filter(pl.col('Selector') == 2).height / df.height * 100):.2f}%")
+
+```
+
+#### Row
+
+```{python}
+# | eval: false
+
+# This snippet does not display correctly on the dashboard using Chrome.
+
+import plotly.express as px
+
+
+fig = (
+    px.histogram(
+        df,
+        y="Selector",
+        color="Gender",
+        barmode="group",
+        title="Target Variable Distribution per Gender",
+        color_discrete_sequence=px.colors.qualitative.Pastel1,
+        orientation="h",
+        text_auto=True,
+    )
+    .update_yaxes(
+        tickvals=[1, 2],
+        ticktext=["Yes", "No"],
+    )
+    .update_traces(textfont_size=12)
+    .update_layout(
+        xaxis_title_text="Count",
+        yaxis_title_text="Liver Disorder?",
+    )
+)
+fig.show()
+
+```
+
+```{python}
+import altair as alt
+
+# This is the (sort of) altair version of the above plotly chart. (I used Claude AI to generate it.)
+
+chart = (
+    alt.Chart(df)
+    .mark_bar()
+    .encode(
+        x=alt.X("count()", axis=alt.Axis(title="Count")),
+        y=alt.Y("Gender:N", axis=alt.Axis(title="Gender")),
+        color=alt.Color(
+            "Selector:N",
+            legend=alt.Legend(
+                title="Liver Disorder?",
+                labelExpr="datum.value == 2 ? 'Yes' : 'No'",
+                orient="top-right",
+            ),
+        ),
+        yOffset="Selector:N",
+        tooltip=["Selector:N", "count()"],
+    )
+    .properties(title="Target Variable Distribution per Gender")
+)
+
+chart
+
+
+```
+
+# Dataset & EDA
+
+## Row
+
+### Column {.tabset width=70%}
+
+::: {.card title="Sample"}
+
+First 150 records (out of total `{python} df.height`) of the raw dataset.
+
+```{python}
+from itables import show
+
+show(df.head(150), style="width:100%;", paging=True, pageLength=15)
+```
+
+:::
+
+::: {.card title="Some statistics"}
+
+Whatever statistics you find interesting about the dataset.
+
+(These plots look quite bad, and aren't really informative. You would probably want to only highlight some of your findings on the dashboard, instead of dumping everything.)
+
+```{python}
+import numpy as np
+import plotly.express as px
+
+df_pandas = df.to_pandas()
+numeric_cols = df_pandas.select_dtypes(include=[np.number]).columns.tolist()
+corr = df_pandas[df_pandas.select_dtypes(include=[np.number]).columns].corr()
+mask = np.triu(np.ones_like(corr, dtype=bool))
+corr_masked = corr.mask(mask)
+fig = px.imshow(
+    corr_masked,
+    text_auto=True,
+    color_continuous_scale="RdBu_r",
+    title="Feature Correlation Matrix",
+    zmin=-1,
+    zmax=1,
+).update_layout(coloraxis_colorbar=dict(title="Correlation"))
+fig.show()
+
+```
+
+:::
+
+::: {.card title="Interesting insights"}
+
+In case you found something interesting during your EDA, highlight it here.
+
+```{python}
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+sns.pairplot(df.to_pandas(), hue="Selector", palette="colorblind")
+plt.suptitle("Numerical Features", y=1.02)
+plt.show()
+```
+
+:::
+
+::: {.card title="Other highlighted visualizations"}
+
+Thanks for clicking through the tabs.
+
+:::
+
+
+### Column {width=30%}
+
+::: {.card title="Features"}
+
+* _Age:_ Patient's age.
+* _Gender:_ Patient's gender.
+* _Total Bilirubin:_ The total amount of bilirubin in the blood, a yellow pigment produced by the breakdown of red blood cells.
+* _Direct Bilirubin:_ The direct fraction of bilirubin, specifically associated with liver function.
+* _Total Proteins:_ The total amount of proteins in the blood, including albumin and globulins.
+* _Albumin:_ A protein synthesized by the liver, crucial for maintaining blood volume and pressure.
+* _A/G Ratio:_ The ratio of albumin to globulins, providing insights into liver and kidney function.
+* _SGPT (Serum Glutamic Pyruvic Transaminase):_ An enzyme indicating liver health; elevated levels may suggest liver damage.
+* _SGOT (Serum Glutamic Oxaloacetic Transaminase):_ Another liver enzyme reflecting liver function; elevated levels may indicate liver problems.
+* _Alkphos (Alkaline Phosphatase):_ An enzyme associated with the biliary system; elevated levels may indicate liver or bone issues.
+
+Source: [Liver Cirrhosis Prediction 💊 | EDA + Models (Kaggle).](https://www.kaggle.com/code/vizeno/liver-cirrhosis-prediction-eda-models)
+
+:::
+
+# Modeling
+
+## Row
+
+### Column {width=70%}
+
+#### Row {height=60%}
+
+##### Column {width=33%}
+
+::: {.card title="Title #1"}
+
+A
+
+<hr/>
+
+This page is an example for more complex layouts.
+
+:::
+
+##### Column {width=33%}
+
+::: {.card title="Title #2"}
+
+B
+
+<hr/>
+
+You could highlight some important steps of your workflow here, e.g.:
+
+- Data preprocessing
+- Training
+- Cross-validation
+- Evaluation
+- Model comparison
+
+:::
+
+##### Column {width=33%}
+
+::: {.card title="Title #3"}
+
+C
+
+<hr/>
+
+You might be interested checking out the `scikit-learn` [examples](https://scikit-learn.org/stable/auto_examples/index.html){target="_blank"} for more visualization ideas.
+
+:::
+
+#### Row {height=40%}
+
+##### Column {.tabset width=50%}
+
+::: {.card title="Title #4"}
+
+D
+
+:::
+
+::: {.card title="Title #5"}
+
+E
+
+:::
+
+::: {.card title="Title #6"}
+
+F
+
+:::
+
+##### Column {width=50%}
+
+::: {.card title="Title #7"}
+
+G
+
+:::
+
+### Column {width=30%}
+
+#### Row
+
+```{python}
+# | content: valuebox
+# | title: "Best F1-score"
+
+dict(color="success", value=0.8932, icon="crosshair")
+
+```
+
+```{python}
+# | content: valuebox
+# | title: "Best ROC-AUC"
+
+dict(color="primary", value=0.9123, icon="graph-up-arrow")
+
+```
+
+```{python}
+# | content: valuebox
+# | title: "X"
+
+dict(color="info", value=0.9123, icon="graph-up-arrow")
+
+```
+
+```{python}
+# | content: valuebox
+# | title: "Brainrot"
+
+dict(color="warning", value=f"6-7", icon="exclamation-triangle")
+
+```
+
+```{python}
+# | content: valuebox
+# | title: "Missclassified Samples"
+
+dict(color="danger", value=f"{df.height}", icon="person-walking")
+
+```
