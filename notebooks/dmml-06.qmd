@@ -1,8 +1,10 @@
 ---
 title: "DMML-06"
 subtitle: "Kaggle; experiment tracking; custom `scikit-learn` transformers."
+author: "David Apagyi"
 date: "2025-10-16"
 title-block-banner: true
+lightbox: true
 format:
   html:
     grid: 
@@ -17,7 +19,7 @@ toc: true
 reference-location: margin
 citation-location: margin
 ---
-<strong>Web page:</strong> [apagyidavid.web.elte.hu/2025-2026-1/dmml](https://apagyidavid.web.elte.hu/2025-2026-1/dmml){target="_blank"}
+__Web page:__ [apagyidavid.web.elte.hu/2025-2026-1/dmml](https://apagyidavid.web.elte.hu/2025-2026-1/dmml){target="_blank"}
 
 <a target="_blank" href="https://colab.research.google.com/github/dapagyi/dmml-web/blob/gh-pages/notebooks/dmml-06.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 

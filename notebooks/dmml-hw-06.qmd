@@ -3,6 +3,7 @@ title: "DMML-HW-06"
 subtitle: ""
 date: "2025-10-02"
 title-block-banner: true
+lightbox: true
 format:
   html:
     grid: 
@@ -17,7 +18,7 @@ toc: true
 reference-location: margin
 citation-location: margin
 ---
-<strong>Honlap:</strong> [apagyidavid.web.elte.hu/2025-2026-1/dmml](https://apagyidavid.web.elte.hu/2025-2026-1/dmml){target="_blank"}
+__Honlap:__ [apagyidavid.web.elte.hu/2025-2026-1/dmml](https://apagyidavid.web.elte.hu/2025-2026-1/dmml){target="_blank"}
 
 <a target="_blank" href="https://colab.research.google.com/github/dapagyi/dmml-web/blob/gh-pages/notebooks/dmml-hw-06.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
@@ -86,7 +87,7 @@ Ez egy elég általános tanács, de ahhoz, hogy ne kelljen sokat ismételgetni,
 Gyakran egy adaton ugyanazon változásokat hajtjuk végre, ezeket egy jól kezelhető egységbe zárhatjuk a `scikit-learn` pipeline modulja segítségével. Ez nemcsak az adatelőkészítést teszi könnyebbé, hanem a modelltanítást, hiperparaméter-optimalizálást is.
 
 * [User Guide (`scikit-learn`): Pipelines and composite estimators](https://scikit-learn.org/stable/modules/compose.html#combining-estimators){target="_blank"}
-* [Examples (˙scikit-learn`): Pipelines and composite estimators](https://scikit-learn.org/stable/auto_examples/compose/index.html){target="_blank"}
+* [Examples (`scikit-learn`): Pipelines and composite estimators](https://scikit-learn.org/stable/auto_examples/compose/index.html){target="_blank"}
 
 Hasznos eszköz, érdemes használni, én személyesen nagyon szeretem.
 
@@ -149,7 +150,7 @@ df = df.unique()
 print(f"Shape (after removing duplicates): {df.shape}")
 ```
 
-Volt pár duplikátum, amiket töröltem. Ezeknél valószínűbbnek tűnt az, hogy valami hibából kerültek be, mintsem hogy bármi különösebb jelentőségük lenne, pl. hogy pont ugyanolyan paraméterekkel rendelkező emberek volnának. (De nem olvastam utána -- Kaggle-ön a Discussion oldalon gyakran találni ilyen infókat.)
+Volt pár duplikátum, amiket töröltem. Ezeknél valószínűbbnek tűnt az, hogy valami hibából adódóan kerültek be, mintsem hogy bármi különösebb jelentőségük lenne, pl. hogy pont ugyanolyan paraméterekkel rendelkező emberek volnának. (De nem olvastam utána -- Kaggle-ön a Discussion oldalon gyakran találni ilyen infókat.)
 
 Ennél többet már nem csinálok az adattal, nehogy esetleg valami data leakage-et okozzak. Még megnézek valamit, de már nem módosítok az adaton globálisan; máris leválasztom a teszt halmazt -- ráadásul úgy, hogy biztosan hasonló arányban legyenek a címkék a train és a test halmazban is (`stratify` paraméter).
 

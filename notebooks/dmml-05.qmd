@@ -1,8 +1,10 @@
 ---
 title: "DMML-05"
 subtitle: "Adatvizualizációs eszközök; interaktív vizualizációk; dashboardok."
+author: "Apagyi Dávid"
 date: "2025-10-09"
 title-block-banner: true
+lightbox: true
 format:
   html:
     grid: 
@@ -17,7 +19,7 @@ toc: true
 reference-location: margin
 citation-location: margin
 ---
-<strong>Honlap:</strong> [apagyidavid.web.elte.hu/2025-2026-1/dmml](https://apagyidavid.web.elte.hu/2025-2026-1/dmml){target="_blank"}
+__Honlap:__ [apagyidavid.web.elte.hu/2025-2026-1/dmml](https://apagyidavid.web.elte.hu/2025-2026-1/dmml){target="_blank"}
 
 <a target="_blank" href="https://colab.research.google.com/github/dapagyi/dmml-web/blob/gh-pages/notebooks/dmml-05.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
@@ -131,4 +133,4 @@ A fentiek mind a Quarto nevű csomaggal készültek, amivel statikus HTML oldala
 
 További példákat [ezen az oldalon](https://quarto.org/docs/gallery/#dashboards){target="_blank"} találni.
 
-_Ennél többet nem fog előkerülni ez a téma, de a dokumentáció, illetve a példák jól használhatók. Ha valakit érdekel ez a lehetőség a projektben, akkor szívesen segítek majd külön, ha esetleg elakad. (Egyébként a honlapra kikerült Notebookokat is ezzel a csomaggal készültek.)_
+_Ennél többet nem fog előkerülni ez a téma, de a dokumentáció, illetve a példák jól használhatók. Ha valakit érdekel ez a lehetőség a projektben, akkor szívesen segítek majd külön, ha esetleg elakad. (Egyébként a honlapra kikerült Notebookok is ezzel a csomaggal készültek.)_

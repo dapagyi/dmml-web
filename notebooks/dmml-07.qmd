@@ -1,8 +1,10 @@
 ---
 title: "DMML-07"
 subtitle: "Linear Models Revisited: Ridge and LAD Regression; `statsmodels` package"
+author: "David Apagyi"
 date: "2025-11-06"
 title-block-banner: true
+lightbox: true
 format:
   html:
     grid: 
@@ -17,7 +19,7 @@ toc: true
 reference-location: margin
 citation-location: margin
 ---
-<strong>Web page:</strong> [apagyidavid.web.elte.hu/2025-2026-1/dmml](https://apagyidavid.web.elte.hu/2025-2026-1/dmml){target="_blank"}
+__Web page:__ [apagyidavid.web.elte.hu/2025-2026-1/dmml](https://apagyidavid.web.elte.hu/2025-2026-1/dmml){target="_blank"}
 
 <a target="_blank" href="https://colab.research.google.com/github/dapagyi/dmml-web/blob/gh-pages/notebooks/dmml-07.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
@@ -380,12 +382,15 @@ There are several LP (MILP) solvers available in Python, e.g., Python-Mip, `scip
 
 class LADRegression:
     def __init__(self):
+        pass
         # TODO
 
     def fit(self, X, y):
+        pass
         # TODO
 
     def predict(self, X):
+        pass
         # TODO
 ```
 
