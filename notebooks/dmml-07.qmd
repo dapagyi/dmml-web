@@ -106,21 +106,25 @@ $$
 $$
 since
 $$
-y' - \Phi' \theta = \begin{bmatrix}
+\begin{align*}
+y' - \Phi' \theta &= \begin{bmatrix}
 y \\
 0
 \end{bmatrix} - \begin{bmatrix}
 \Phi \\
 \sqrt{\lambda} I
-\end{bmatrix} \theta = \begin{bmatrix}
+\end{bmatrix} \theta = \\ &= \begin{bmatrix}
 y - \Phi \theta \\
 - \sqrt{\lambda} \theta
 \end{bmatrix}.
+\end{align*}
 $$
 
 Thus, the ridge regression solution is
 $$
-\hat{\theta} = (\Phi'^T \Phi')^{-1} \Phi'^T y' = (\Phi^T \Phi + \lambda I)^{-1} \Phi^T y.
+\begin{align*}
+\hat{\theta} &= (\Phi'^T \Phi')^{-1} \Phi'^T y' = \\ &= (\Phi^T \Phi + \lambda I)^{-1} \Phi^T y.
+\end{align*}
 $$
 
 Let's implement ridge regression based on the solution of HW/2.
@@ -225,8 +229,10 @@ class RidgeRegression:
 
 ```
 
-:::{.callout-tip title="Solution" collapse="true"}
 
+::: {.content-visible when-profile="solutions"}
+::: {.content-visible when-format="html"}
+:::{.callout-tip title="Solution" collapse="true"}
 ```{python}
 # | echo: true
 
@@ -258,6 +264,8 @@ class RidgeRegression:
 
 ```
 
+:::
+:::
 :::
 
 Some examples with different values of the regularization parameter $\lambda$:

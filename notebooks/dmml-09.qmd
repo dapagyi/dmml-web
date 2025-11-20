@@ -33,10 +33,10 @@ Spam classification is a classic application of SVMs[^1], as it is a great examp
 
 Also, we would afted need to map the data to a higher-dimensional space to make it linearly separable (or nearly so), but this would be usually -- especially in this case -- computationally expensive. Instead, we would use the kernel trick to compute the inner products in the higher-dimensional space without explicitly mapping the data points. (We don't even need to know what the explicit mapping is. Also, the kernel might correspond to a mapping to an infinite-dimensional space.)
 
-We won't cover this example in detail here, but _it is highly recommended_ to at least skim through [this task description (Exercise 2)](https://vkosuri.github.io/CourseraMachineLearning/home/week-7/exercises/machine-learning-ex6/ex6.pdf)[^2] and [this solution](https://gtraskas.github.io/post/ex6_spam/)[^3] using a linear kernel.
+We won't cover this example in detail here, but _it is highly recommended_ to at least skim through [this task description (Exercise 2)](https://vkosuri.github.io/CourseraMachineLearning/home/week-7/exercises/machine-learning-ex6/ex6.pdf){target="_blank"}[^2] and [this solution](https://gtraskas.github.io/post/ex6_spam/){target="_blank"}[^3] using a linear kernel.
 
 [^2]: The original exercise is from a previous iteration of Andrew Ng's Machine Learning course on Coursera.
-[^3]: [This is a solution](https://gtraskas.github.io/post/ex6/) from the same author for the first exercise. (The task is about the decision boundaries of an SVM using an RBF kernel. We will do something similar in the next section.) [Here is another solution for the spam classification task.](https://github.com/kaleko/CourseraML/tree/master/ex6)
+[^3]: [This is a solution](https://gtraskas.github.io/post/ex6/){target="_blank"} from the same author for the first exercise. (The task is about the decision boundaries of an SVM using an RBF kernel. We will do something similar in the next section.) [Here is another solution for the spam classification task.](https://github.com/kaleko/CourseraML/tree/master/ex6){target="_blank"}
 
 In general, SVMs can be very effective (aften can achieve similar performance as tree-based models), but usually they require extensive (or at least more careful) hyperparameter tuning.
 
@@ -111,7 +111,7 @@ def plot_decision_boundary(ax, clf, X, y, title, kernel_name):
 
 
 def svm_demo(datasets, kernels):
-    fig, axes = plt.subplots(len(kernels), len(datasets), figsize=(5 * len(datasets), 5 * len(kernels)), dpi=72)
+    fig, axes = plt.subplots(len(kernels), len(datasets), figsize=(5 * len(datasets), 5 * len(kernels)))
     fig.suptitle(
         "SVM Kernel Comparison: Decision Boundaries Across Different Datasets", fontsize=16, y=0.995, weight="semibold"
     )
@@ -157,7 +157,6 @@ Some useful links:
 
 __Question:__ How would you approach multiclass classification with SVMs? (Check [the second link above](https://scikit-learn.org/stable/modules/svm.html#multi-class-classification){target="_blank"} or [Wikipedia.](https://en.wikipedia.org/wiki/Support_vector_machine#:~:text=%5Bedit%5D-,Multiclass%20SVM,-%5Bedit%5D){target="_blank"})
 ```{python}
-# | column: screen
 # | fig-cap: "SVM Kernel Comparison: Decision Boundaries Across Different Datasets"
 
 np.random.seed(42)
@@ -208,14 +207,12 @@ svm_demo(datasets, kernels)
 
 ::: {.content-visible when-profile="solutions"}
 ::: {.content-visible when-format="html"}
-
-## Solutions
+::: {.callout-tip collapse="true" title="Solution"}
 
 There are some cherry-picked seeds and other parameters below for the datasets to create nice visualization.
 
 ```{python}
 # | code-fold: true
-# | column: screen
 # | fig-cap: "SVM Kernel Comparison: Decision Boundaries Across Different Datasets"
 
 np.random.seed(42)
@@ -273,5 +270,6 @@ svm_demo(datasets, kernels)
 
 ```
 
+:::
 :::
 :::

@@ -302,7 +302,7 @@ C
 
 <hr/>
 
-You might be interested checking out the `scikit-learn` [examples](https://scikit-learn.org/stable/auto_examples/index.html){target="_blank"} for more visualization ideas.
+You might be interested in checking out the `scikit-learn` [examples](https://scikit-learn.org/stable/auto_examples/index.html){target="_blank"} for more visualization ideas.
 
 :::
 
