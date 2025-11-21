@@ -12,12 +12,22 @@ format:
     html-math-method: katex
     include-in-header:
       - file: partials/analytics.html
+    include-after-body:
+      - file: partials/sync-dark-mode.html
+      - file: partials/footer.html
+    css: partials/styles.css
+    respect-user-color-scheme: true
+    code-links: 
+      - repo
   ipynb: default
 execute:
   echo: true
 toc: true
 reference-location: margin
 citation-location: margin
+theme:
+  light: default
+  dark: [default, partials/dark-mode.scss]
 ---
 __Honlap:__ [apagyidavid.web.elte.hu/2025-2026-1/dmml](https://apagyidavid.web.elte.hu/2025-2026-1/dmml){target="_blank"}
 

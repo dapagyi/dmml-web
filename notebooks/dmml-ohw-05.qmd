@@ -11,12 +11,22 @@ format:
     html-math-method: katex
     include-in-header:
       - file: partials/analytics.html
+    include-after-body:
+      - file: partials/sync-dark-mode.html
+      - file: partials/footer.html
+    css: partials/styles.css
+    respect-user-color-scheme: true
+    code-links: 
+      - repo
   ipynb: default
 execute:
   echo: true
 toc: true
 reference-location: margin
 citation-location: margin
+theme:
+  light: default
+  dark: [default, partials/dark-mode.scss]
 ---
 __Honlap:__ [apagyidavid.web.elte.hu/2025-2026-1/dmml](https://apagyidavid.web.elte.hu/2025-2026-1/dmml){target="_blank"}
 
@@ -48,7 +58,7 @@ Néhány példa, de ezeknél jóval egyszerűbbeket is nyugodtan lehet írni:
 2. A VC dimenzió...
    a. (azonos alaphalmaz felett) kevesebb paraméterrel rendelkező klasszifikátorosztályok esetén mindig szigorúan kisebb. (_Paraméterként -- praktikus korlátokat nem figyelembe véve -- tetszőleges valós számra gondolhatunk._)
    b. monoton halmazfüggvény, azaz $\mathcal{H}_1 \subseteq \mathcal{H}_2$ halmazrendszerek esetén teljesül, hogy $\dim_\text{VC}(\mathcal{H}_1) \leq \dim_\text{VC}(\mathcal{H}_2)$.
-   c. az $\mathcal{X}=R^d$ alaphalmaz felett lineáris klasszifikátorokra éppen $d+1$.
+   c. az $\mathcal{X}=\mathbb{R}^d$ alaphalmaz felett lineáris klasszifikátorokra éppen $d+1$.
    d. véges halmazrendszerre mindig véges.
 3. Bináris klasszifikáció esetén...
    a. az $F_1$-score mindig legalább annyi, mint a precision és a recall számtani közepe.
