@@ -80,9 +80,21 @@ jobs:
           mkdir -p out/notebooks
           cp notebooks/*.html out/notebooks/ || true
           cp notebooks/*.ipynb out/notebooks/ || true
+          mkdir -p out/notebooks/partials
+          cp notebooks/partials/styles.css out/notebooks/partials/styles.css || true
           for d in notebooks/*_files; do
             [ -d "$d" ] && cp -r "$d" out/notebooks/;
           done
+
+      - name: Verify lib files
+        run: |
+          chmod +x scripts/verify-libs.sh
+          scripts/verify-libs.sh out/notebooks
+
+      - name: Merge lib files
+        run: |
+          chmod +x scripts/merge-libs.sh
+          scripts/merge-libs.sh out/notebooks
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

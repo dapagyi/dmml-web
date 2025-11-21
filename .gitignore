@@ -11,6 +11,8 @@ wheels/
 
 notebooks/dmml-*_files/
 notebooks/plots
+notebooks/libs
+notebooks/figure-html
 !notebooks/*.qmd
 !notebooks/*.py
 !notebooks/partials/analytics.html
