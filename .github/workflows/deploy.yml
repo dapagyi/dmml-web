@@ -63,7 +63,7 @@ jobs:
         run: |
           find notebooks -maxdepth 1 -name "*.qmd" -print0 | \
             xargs -0 -P $(nproc) -I {} \
-            bash -c 'QUARTO_PROFILE="solutions" uv run quarto render "{}" --quiet'
+            bash -c 'echo "::group::Rendering {}" && QUARTO_PROFILE="solutions" uv run quarto render "{}" ; STATUS=$? ; echo "::endgroup::" ; exit $STATUS'
         env:
           KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
           KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
