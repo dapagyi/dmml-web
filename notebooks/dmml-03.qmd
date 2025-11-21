@@ -1,6 +1,6 @@
 ---
 title: "DMML-03"
-subtitle: "Modelltanítás; `scikit-learn`; keresztvalidáció; hiperparaméter-optimalizálás."
+subtitle: "Modelltanítás; döntési fák; `scikit-learn`; modellek kiértékelése: hold-out módszer és keresztvalidáció; hiperparaméter-optimalizálás: random search, grid search, Optuna csomag."
 author: "Apagyi Dávid"
 date: "2025-09-25"
 title-block-banner: true
@@ -59,7 +59,6 @@ Legyen $\mathbb{P}(y = y_i) = p_i$: egy adott csúcsba jutó adatpontok hanyadr�
 ```{python}
 # | code-fold: true
 
-
 import pandas as pd
 from sklearn.model_selection import train_test_split, KFold, GridSearchCV
 from sklearn.preprocessing import LabelEncoder
@@ -89,7 +88,6 @@ X.head()
 ```{python}
 # | code-fold: true
 
-
 model = DecisionTreeClassifier()
 model
 ```
@@ -101,7 +99,6 @@ model.fit(X, y)
 
 ```{python}
 # | code-fold: true
-
 
 preds = model.predict(X)
 display(f"Misclassified: {sum(abs(y - preds))}")
@@ -140,76 +137,185 @@ tree = model.tree_
 tree.max_depth, len(X), tree.node_count, model.get_depth()
 ```
 
-# Keresztvalidálás, hiperparaméter-optimalizálás
+# Modellek kiértékelése: hold-out módszer és keresztvalidáció
 
-- [3.1. Cross-validation: evaluating estimator performance](https://scikit-learn.org/stable/modules/cross_validation.html)
-- [3.2. Tuning the hyper-parameters of an estimator](https://scikit-learn.org/stable/modules/grid_search.html)
+Hogyan tudunk kiértékelni egy modellt, és megbecsülni a teljesítményét ismeretlen adatokon? Erre nyújt megoldást a _validáció_.
+
+Ennel az egyik legfontosabb felhasználása (a túltanulás elkerülése mellett) a _hiperparaméter-optimalizálás_, amikor a modellünk hiperparamétereit szeretnénk a lehető legjobban beállítani. Az alábbi példák egy döntési fa `max_depth` hiperparaméterének kiválasztását mutatják be.
+
+A validáció a két legelterjedtebb módja a _hold-out módszer_ és a _keresztvalidáció_ (_cross-validation_).
+
+## Hold-out módszer
+
+A tanító adathalmazt felosztjuk egy tanító és egy validációs halmazra. A modellt a tanító halmazon tanítjuk, majd a validációs halmazon kiértékeljük.
+
 
 ```{python}
-# | code-fold: true
-
-
 records = []
-params = {"max_depth": 3, "min_samples_split": 5, "random_state": 42}
+params = {"criterion": "gini", "min_samples_split": 5}
+seed = 42
 
-for criterion in ["gini", "log_loss"]:
-  cv = KFold(n_splits=5, shuffle=True, random_state=42)
+for max_depth in range(2, 30):
+    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=seed)
 
-  for fold, (train_index, test_index) in enumerate(cv.split(X)):
+    model = DecisionTreeClassifier(max_depth=max_depth, **params, random_state=seed)
+    model.fit(X_train, y_train)
+    train_score = f1_score(y_train, model.predict(X_train))
+    val_score = f1_score(y_val, model.predict(X_val))
 
-    model = DecisionTreeClassifier(criterion=criterion, **params)
-
-    X_train_, y_train_ = X.loc[train_index], y[train_index]
-    X_test_, y_test_ = X.loc[test_index], y[test_index]
-
-    model.fit(X_train_, y_train_)
-    preds = model.predict(X_test_)
-    score = f1_score(y_test_, preds)
-
-    record = {"criterion": criterion, "fold": fold, "f1_score": score}
-    records.append(record)
+    records.append({"max_depth": max_depth, "train_f1_score": train_score, "val_f1_score": val_score})
 
 metrics = pd.DataFrame().from_records(records)
-display(metrics)
-metrics.groupby("criterion")["f1_score"].agg(["mean", "std"])
 ```
 
 ```{python}
 # | code-fold: true
 
-
-metrics.groupby("criterion")["f1_score"].agg(["mean", "std"]).plot.bar(
-    y="mean", yerr="std", ylim=(0.5, 1.0), grid=True, figsize=(6, 6)
+fig, ax = plt.subplots(figsize=(8, 6))
+metrics.groupby("max_depth")["train_f1_score"].agg(["mean", "std"]).plot(
+    y="mean", grid=True, ax=ax, label="Train F1 Score", alpha=0.8
 )
+metrics.groupby("max_depth")["val_f1_score"].agg(["mean", "std"]).plot(
+    y="mean", grid=True, ax=ax, label="Validation F1 Score", alpha=0.8
+)
+ax.set_title("Train and Validation F1 Scores vs. max_depth")
+fig.tight_layout()
+plt.show()
 ```
 
-Ennek a vizualizációnak persze nincs sok értelme ebben a formában.
+## Keresztvalidáció
 
+Az előzőnél valamivel kifinomultabb módszer a keresztvalidáció. Felosztjuk a tanító adathalmazt $k$ részre (_fold_). Minden egyes részre külön-külön elvégezzük a következő lépéseket:
+
+1. Az adott részt használjuk validációs halmazként.
+2. A többi ($k-1$ darab) részt egyesítjük, és ezt használjuk tanító halmazként.
+3. A modellt a tanító halmazon tanítjuk, majd a validációs halmazon kiértékeljük. 
+
+Ezáltal a $k$ darab metrikát kapunk, amelyeket utána aggregálhatunk.
+
+Sokféle változata van aszerint, hogy hogyan osztjuk fel az adatokat:
+
+- [3.1. Cross-validation: evaluating estimator performance](https://scikit-learn.org/stable/modules/cross_validation.html){target="_blank"}
+
+```{python}
+records = []
+params = {"criterion": "gini", "min_samples_split": 5}
+seed = 42
+
+for max_depth in range(2, 20):
+    cv = KFold(n_splits=5, shuffle=True, random_state=seed)
+
+    for fold, (train_index, val_index) in enumerate(cv.split(X)):
+        X_train, y_train = X.loc[train_index], y[train_index]
+        X_val, y_val = X.loc[val_index], y[val_index]
+
+        model = DecisionTreeClassifier(max_depth=max_depth, **params, random_state=seed)
+        model.fit(X_train, y_train)
+        train_score = f1_score(y_train, model.predict(X_train))
+        val_score = f1_score(y_val, model.predict(X_val))
+
+        records.append({"max_depth": max_depth, "fold": fold, "train_f1_score": train_score, "val_f1_score": val_score})
+
+metrics = pd.DataFrame().from_records(records)
+```
 
 ```{python}
 # | code-fold: true
 
+fig, ax = plt.subplots(figsize=(8, 6))
+metrics.groupby("max_depth")["train_f1_score"].agg(["mean", "std"]).plot(
+    y="mean", yerr="std", grid=True, ax=ax, label="Train F1 Score", alpha=0.8
+)
+metrics.groupby("max_depth")["val_f1_score"].agg(["mean", "std"]).plot(
+    y="mean", yerr="std", grid=True, ax=ax, label="Validation F1 Score", alpha=0.8
+)
+ax.set_title("Train and Validation F1 Scores vs. max_depth (K-Fold CV)")
+fig.tight_layout()
+plt.show()
+```
+
+A fenti kézi implementáció helyett törekedjünk a beépített eszközök használatára:
+
+- [`sklearn.model_selection.cross_val_score`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_val_score.html#sklearn.model_selection.cross_val_score){target="_blank"}
+- [`sklearn.model_selection.cross_validate`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html#sklearn.model_selection.cross_validate){target="_blank"}
+
+Ezek részletesebb használatáról a szakasz elején lévő linken olvashatunk.
+
+A fentiekhez hasonló ábrákat beépített függvényekkel is készíthetünk:
+
+- [3.5. Validation curves: plotting scores to evaluate models](https://scikit-learn.org/stable/modules/learning_curve.html){target="_blank"}
+- [`class sklearn.model_selection.ValidationCurveDisplay`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ValidationCurveDisplay.html){target="_blank"}
+- [`sklearn.model_selection.validation_curve`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.validation_curve.html#sklearn.model_selection.validation_curve){target="_blank"}
+- [Plotting Learning Curves and Checking Models’ Scalability](https://scikit-learn.org/stable/auto_examples/model_selection/plot_learning_curve.html){target="_blank"}
+- [Effect of model regularization on training and test error](https://scikit-learn.org/stable/auto_examples/model_selection/plot_train_error_vs_test_error.html){target="_blank"}
+
+# Hiperparaméter-optimalizálás: grid search, random search, Optuna csomag
+
+Az a célunk, hogy megtaláljuk a modellünk számára legjobb hiperparamétereket. Mit tekintsünk a legjobbnak? Az előbbiek alapján kézenfekvő, hogy a validációs halmazon legjobb teljesítményt elérő hiperparamétereket válasszuk.
+
+A két legelterjedtebb módszer a _grid search_ és a _random search_. Előbbi során egy előre definiált rácspontokon keressük a legjobb hiperparamétereket, míg utóbbi során véletlenszerűen mintavételezünk a hiperparaméter-térből. Ezeket lehet kombinálni is, illetve egyéb változatok is léteznek:
+
+- [3.2. Tuning the hyper-parameters of an estimator](https://scikit-learn.org/stable/modules/grid_search.html){target="_blank"}
+
+Mivel a hiperparaméter-optimalizálás során már történik egy (kereszt)validáció, ezért kézenfekvőnek tűnhet a modell teljesítményét az optimalizálás során használt validációs metrikával mérni. Azonban ez torzíthatja a becslésünket (hogy milyen eredményt érnénk el ismeretlen tesztadaton), hiszen a hiperparamétereket éppen úgy választottuk meg, hogy azok ilyen értelemben legyenek a legjobbak.
+
+Emiatt javasolt egy külön _teszt halmazt_ fenntartani, amelyet csak a végső modell kiértékelésére használunk; vagy pedig egy külső keresztvalidációt végezni. Erről bővebben itt olvashatunk:
+
+- [Nested versus non-nested cross-validation](https://scikit-learn.org/stable/auto_examples/model_selection/plot_nested_cross_validation_iris.html){target="_blank"}
+
+## Grid search
+
+```{python}
+# | code-fold: true
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 param_grid = {
     "criterion": ["gini", "entropy"],
     "max_depth": [None, 10, 20],
-    "min_samples_split": [2, 10, 20],
+    "min_samples_split": [5, 15],
 }
 
 model = DecisionTreeClassifier()
-grid_search = GridSearchCV(model, param_grid, cv=5, verbose=3, scoring="f1")
+grid_search = GridSearchCV(model, param_grid, cv=5, verbose=1, scoring="f1")
 grid_search.fit(X_train, y_train)
 
 print(grid_search.best_params_)
 print(grid_search.best_score_)
 ```
 
+__Feladat:__ Próbáljuk ki, hogy a `verbose` paraméter különböző értékeire (0, 1, 2, 3) milyen kimeneteket kapunk.
+
+```{python}
+# | code-fold: true
+
+# TODO
+```
+
+## Random search
+
+__Feladat:__ Végezzünk hiperparaméter-optimalizálást `RandomizedSearchCV` segítségével, de ahelyett, hogy előre definiált listákat adnánk meg a hiperparaméterekhez, használjunk eloszlásokat (pl. `scipy.stats.randint`, `scipy.stats.uniform`).
+
+```{python}
+# | code-fold: true
+
+# TODO
+```
 
 ## Optuna
 
 > Optimize Your Optimization; An open source hyperparameter optimization framework to automate hyperparameter search
 
-- [Optuna](https://optuna.org/)
-- [scikit-learn example](https://github.com/optuna/optuna-examples/blob/main/sklearn/sklearn_simple.py)
+- [Optuna](https://optuna.org/){target="_blank"}
+- [Dokumentáció](https://optuna.readthedocs.io/en/stable/index.html){target="_blank"}
+- [`scikit-learn` példa](https://github.com/optuna/optuna-examples/blob/main/sklearn/sklearn_simple.py){target="_blank"}
+- Optuna integration:
+  - [`scikit-learn` interface](https://optuna-integration.readthedocs.io/en/stable/reference/generated/optuna_integration.OptunaSearchCV.html#optuna_integration.OptunaSearchCV){target="_blank"}
+
+__Feladat:__ Telepítsük és próbáljuk ki az Optunát.
+
+```{python}
+# | code-fold: true
+
+# TODO
+```

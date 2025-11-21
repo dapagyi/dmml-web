@@ -199,7 +199,7 @@
                   <h3 class="fs-6">Projekt mérföldkő</h3>
                   <p>A mérföldkőig (november 13., csütörtök) a csoportoknak legalább alapszinten meg kell ismerkedniük a választott adathalmazukkal, és legalább egy baseline modellt el kell készíteniük. A gyakorlat egésze konzultációra lesz fenntartva, minden csoportból legyen legalább egyvalaki jelen, aki be tudja mutatni az eddigi munkát. Ez formailag egy rövid beszélgetést, egyeztetést jelent az adathalmazról, problémáról, kódról, eddigi eredményekről, valamint a további tervekről.</p>
                   <h3 class="fs-6">Poszter vagy dokumentáció</h3>
-                  <p>A dokumentáció egy néhány oldalas összefoglaló, ami teljeskörűen bemutatja a csoport által végzett munkát – úgy kell elkészíteni, hogy a kód elolvasása nélkül is minden világos legyen. Javasolt, de nem kötelező \(\LaTeX\)-ben (vagy <a href="https://typst.app/" target="_blank">Typstban</a>) elkészíteni. A dokumentáció végén fel kell tüntetni egy <em>Author Contributions Statementben</em>, hogy a csoport tagjai milyen arányban, milyen módon vettek részt a munka különböző részein.</p>
+                  <p>A dokumentáció egy néhány oldalas (magyar vagy angol nyelvű) összefoglaló, ami teljeskörűen bemutatja a csoport által végzett munkát – úgy kell elkészíteni, hogy a kód nélkül is érthető, világos legyen. Javasolt, de nem kötelező \(\LaTeX\)-ben (vagy <a href="https://typst.app/" target="_blank">Typstban</a>) elkészíteni. A dokumentáció végén fel kell tüntetni egy <em>Author Contributions Statementben</em>, hogy a csoport tagjai milyen arányban, milyen módon vettek részt a munka különböző részein.</p>
                   <p>Kísérleti jelleggel lehet posztert is készíteni dokumentáció helyett – ha valamelyik csoportnak ez az opció szimpatikusabb, külön egyeztessünk róla.</p>
                   <p class="mb-0">Értékelési szempontok:</p>
                   <ul>
@@ -208,7 +208,7 @@
                     <li>érthetőség, nyelvhelyesség.</li>
                   </ul>
                   <h3 class="fs-6">Projektbemutató</h3>
-                  <p>A prezentáció egy <em>diasor</em> elkészítését, majd bemutatását jelenti. A bemutatókra december 4-én fog sor kerülni, a pontos időkeret a későbbiekben fog kiderülni. A dokumentációban (vagy a poszteren), valamint a prezentációban ne szerepeljen kód.</p>
+                  <p>A prezentáció egy (magyar vagy angol nyelvű) <em>diasor</em> elkészítését, majd bemutatását jelenti. A bemutatókra december 4-én fog sor kerülni, a pontos időkeret a későbbiekben fog kiderülni. A dokumentációban (vagy a poszteren), valamint a prezentációban ne szerepeljen kód.</p>
                   <p class="mb-0">Előadás és diasor értékelési szempontok:</p>
                   <ul>
                     <li>szerkesztés, felépítés, alaposság;</li>
@@ -326,7 +326,7 @@
           </section>
           <section class="py-md-1">
             <h3 id="03-gyakorlat" class="text-body-emphasis fs-4">3. gyakorlat (2025-09-25) <a class="anchor-link" href="#03-gyakorlat"></a></h3>
-            <p>Modelltanítás; <code>scikit-learn</code>; keresztvalidáció; hiperparaméter-optimalizálás.</p>
+            <p>Modelltanítás; döntési fák; <code>scikit-learn</code>; modellek kiértékelése: hold-out módszer és keresztvalidáció; hiperparaméter-optimalizálás: random search, grid search, Optuna csomag.</p>
             <p class="mb-0"><strong>Órai anyagok:</strong></p>
             <ul>
               <li><a href="./notebooks/dmml-03" target="_blank">Notebook</a></li>
@@ -410,10 +410,13 @@
             <ul>
               <li><span class="badge text-bg-danger me-1">Sz/3</span><a href="./psets/dmml-07.pdf" target="_blank">VC-dimenzió: 3. feladat</a> (3 pont)</li>
               <li><span class="badge text-bg-danger me-1">Sz/4</span><a href="./psets/dmml-07.pdf" target="_blank">VC-dimenzió: nem megbeszélt feladatok</a> (3 pont)
-                <ul>
-                  <li>Bármelyik nem megbeszélt feladat(rész) &ndash; a 3. feladat kivételével &ndash; beadható egyenként 1-1, de összesen legfeljebb 3 pontért.</li>
-                  <li>A 4., 7. és 8. feladat inkább könnyű; a nehezebb feladatoknál a felső korlát igazolása körülményesebb, mint az alsó korláté &ndash; ezeknél már csak az alsó korlátért is jár a pont jelentős része.</li>
-                </ul>
+                <details>
+                  <summary>Megjegyzés</summary>
+                  <ul>
+                    <li>Bármelyik nem megbeszélt feladat(rész) &ndash; a 3. feladat kivételével &ndash; beadható egyenként 1-1, de összesen legfeljebb 3 pontért.</li>
+                    <li>A 4., 7. és 8. feladat inkább könnyű; a nehezebb feladatoknál a felső korlát igazolása körülményesebb, mint az alsó korláté &ndash; ezeknél már csak az alsó korlátért is jár a pont jelentős része.</li>
+                  </ul>
+                </details>
               </li>
             </ul>
           </section>
@@ -464,7 +467,7 @@
             <li><a href="https://www-users.cse.umn.edu/~kumar001/dmbook/index.php" target="_blank" class="text-decoration-none">Tan, P.-N., Steinbach, M., Karpatne, A., Kumar, V.: <em>Introduction to Data Mining</em>, 2nd Edition, Pearson, 2019. (ISBN: 978-0-273-76922-4)</a></li>
             <li><a href="https://probml.github.io/pml-book/" target="_blank" class="text-decoration-none">Murphy, K. P.: <em>Probabilistic Machine Learning: An Introduction</em>, MIT Press, 2022. (ISBN: 978-0262046824)</a></li>
           </ul>
-          <p>Az alábbi források sokkal közelebb állnak ahhoz, amit a gyakorlaton csinálunk: elmélet helyett több példakódot (leginkább <code>scikit-learn</code>) tartalmaznak. Egyes részek kezdenek kicsit elavulttá válni – változnak a használt könyvtárak, trendek, stb. –, de ettől függetlenül jól használható, könnyen értelmezhető olvasmányok.</p>
+          <p>Az alábbi források inkább gyakorlati fókuszúak: elmélet helyett több példakódot (leginkább <code>scikit-learn</code>) tartalmaznak. Egyes részek kezdenek kicsit elavulttá válni – változnak a használt könyvtárak, trendek, stb. –, de ettől függetlenül jól használható, könnyű olvasmányok.</p>
           <ul>
             <li><a href="https://machinelearningmastery.com/products/" target="_blank" class="text-decoration-none">Brownlee, J.: <em>Machine Learning Mastery with Python</em></a>
               <ul>

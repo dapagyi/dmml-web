@@ -4,7 +4,7 @@ title: "Liver Disorder Prediction"
 date: "2025-11-20"
 format:
     dashboard: default
-theme: flatly # There are several other themes available, see https://quarto.org/docs/dashboards/theming.html#overview
+theme: flatly # There are several other themes available, see https://quarto.org/docs/dashboards/theming.html#overview or https://bootswatch.com/
 ---
 
 ```{python}
@@ -58,6 +58,22 @@ To upload your dashboard to your personal web page at ELTE, follow these steps:
 6. Browse your uploaded files at `https://<your username>.web.elte.hu`.
 
 It is preferred to upload the rendered dashboard to your personal web page at ELTE, but if you want to use another hosting service (e.g. GitHub Pages), or do not want to make it publicly available, please contact me.
+
+:::
+
+::: {.card title="Restrict access"}
+
+If you want to restrict access to your dashboard, you can place a `.htaccess` file in the same directory as your dashboard file with the following content:
+
+```
+require niifEduPersonHeldCourse abgtm22ga
+```
+
+This ensures that only the staff members of this course can access the contents of that directory.
+
+You can read more about this in the documentation section on the [Caesar Infopanel](https://info.caesar.elte.hu/){target="_blank"} under the third topic.
+
+Unfortunately, the user directive listed in the documentation does not seem to work (i.e, specifying users with `require user user1@student.elte.hu user2@student.elte.hu (...)`), so even you will not be able to access your own dashboard if you try to use that. As a result, you will not be able to access your own dashboard if you try to use it. Therefore, during the presentation session, you may need to showcase your dashboard from your local machine or temporarily remove the `.htaccess` file.
 
 :::
 
