@@ -7,3 +7,14 @@ body {
 footer.footer {
     margin-top: auto;
 }
+
+h1 code,
+h2 code,
+h3 code,
+dl.code-annotation-container-grid dd span code {
+    background-color: #36393d;
+}
+
+div.cell-output pre code {
+    background-color: #272c30;
+}
