@@ -43,23 +43,23 @@ KAGGLE_KEY=your_key
 ```
 
 ```{python}
-from dotenv import load_dotenv  # Install the "python-dotenv" package if you don't have it yet.
-import mlflow  # Install the "mlflow" package if you don't have it yet.
-import pandas as pd
 import os
-from sklearn.model_selection import train_test_split
+
+import matplotlib.pyplot as plt
+import mlflow  # Install the "mlflow" package if you don't have it yet.
+import numpy as np
+import pandas as pd
+from dotenv import load_dotenv  # Install the "python-dotenv" package if you don't have it yet.
+from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-from sklearn.model_selection import RandomizedSearchCV, cross_val_score
-import numpy as np
+from sklearn.model_selection import RandomizedSearchCV, cross_val_score, train_test_split
 from sklearn.pipeline import Pipeline
-from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
-import matplotlib.pyplot as plt
+
 
 load_dotenv()
 print(f"KAGGLE_USERNAME={os.getenv('KAGGLE_USERNAME')}")
-
 ```
 
 You can download datasets from Kaggle using the `kaggle` command. (Install the `kaggle` package if you don't have it yet.)
@@ -67,18 +67,15 @@ You can download datasets from Kaggle using the `kaggle` command. (Install the `
 ```{python}
 !kaggle competitions download -c house-prices-advanced-regression-techniques -p ../data/house-prices
 !unzip -o ../data/house-prices/house-prices-advanced-regression-techniques.zip -d ../data/house-prices
-
 ```
 
 ```{python}
 df = pd.read_csv("../data/house-prices/train.csv")
 df.head()
-
 ```
 
 ```{python}
 df.info()
-
 ```
 
 We will use only a few columns for simplicity.
@@ -96,7 +93,6 @@ target_column = "SalePrice"
 df = df[[*selected_features, target_column]]
 
 df.head()
-
 ```
 
 # Experiment tracking
@@ -129,7 +125,6 @@ Load these environment variables into your kernel:
 ```{python}
 load_dotenv()
 print(f"MLFLOW_TRACKING_URI={os.getenv('MLFLOW_TRACKING_URI')}")
-
 ```
 
 Create a simple experiment that tracks some hyperparameters and metrics.
@@ -153,7 +148,6 @@ preprocessor = ColumnTransformer(
 )
 
 preprocessor
-
 ```
 
 ```{python}
@@ -268,7 +262,6 @@ param_distributions = {
 }
 
 train_and_evaluate(pipeline, param_distributions, X_train, y_train, X_test, y_test)
-
 ```
 
 # Custom `scikit-learn` transformers
@@ -282,8 +275,9 @@ df.head()
 Let's say we want to create a transformer that adds a new feature: the age of the house at the time of sale. We can create a custom transformer by inheriting from `BaseEstimator` and `TransformerMixin`:
 
 ```{python}
-from sklearn.base import BaseEstimator, TransformerMixin
 from datetime import datetime
+
+from sklearn.base import BaseEstimator, TransformerMixin
 
 
 class DateDiffTransformer(BaseEstimator, TransformerMixin):
@@ -303,7 +297,6 @@ display(df.head())
 transformer = DateDiffTransformer()
 transformed_df = transformer.fit_transform(df)
 display(transformed_df.head())
-
 ```
 
 Now we can integrate this custom transformer into our existing pipeline.
@@ -329,13 +322,10 @@ pipeline = Pipeline(
 )
 
 pipeline
-
 ```
 
 ```{python}
-
 train_and_evaluate(pipeline, param_distributions, X_train, y_train, X_test, y_test)
-
 ```
 
 ```{python}
@@ -374,7 +364,6 @@ param_distributions = {
 }
 
 train_and_evaluate(pipeline, param_distributions, X_train, y_train, X_test, y_test)
-
 ```
 
 

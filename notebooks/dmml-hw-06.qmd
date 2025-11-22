@@ -120,11 +120,15 @@ Ez már egyáltalán nem része opcionálisan sem a feladatnak, de akit érdekel
 :::
 
 ```{python}
+# | code-fold: true
 # | eval: false
 
-
+# TODO
 ```
 
+
+::: {.content-visible when-profile="solutions"}
+::: {.content-visible when-format="html"}
 ::: {.callout-tip title="Útmutatás" collapse="true"}
 
 Én példaképpen az alábbi egyetemista szellemiségű adathalmazt választottam:
@@ -149,8 +153,8 @@ EDA nem része a feladatnak, de minimálisan azért megnézem, hogy mivel lehet 
 ```{python}
 # | code-fold: true
 
-
 import polars as pl
+
 
 df = pl.read_csv("../data/liver_disorders.csv")
 print(f"Shape: {df.shape}")
@@ -167,8 +171,8 @@ Ennél többet már nem csinálok az adattal, nehogy esetleg valami data leakage
 ```{python}
 # | code-fold: true
 
-
 from sklearn.model_selection import train_test_split
+
 
 train_df, test_df = train_test_split(df, test_size=0.2, random_state=42, stratify=df["Selector"])
 
@@ -182,7 +186,6 @@ Hiányzó értékek vannak esetleg?
 ```{python}
 # | code-fold: true
 
-
 print(df.null_count())
 
 df.filter(pl.any_horizontal(pl.all().is_null()))
@@ -193,8 +196,8 @@ Négy hiányzó érték nem túl jelentős szerencsére. Az "A/G Ratio" egy vér
 ```{python}
 # | code-fold: true
 
-
 import seaborn as sns
+
 
 sns.histplot(df, x="A/G Ratio", hue="Selector", palette="colorblind", kde=True)
 
@@ -206,7 +209,6 @@ Mi a helyzet a többi feature eloszlásával?
 
 ```{python}
 # | code-fold: true
-
 
 import matplotlib.pyplot as plt
 
@@ -275,5 +277,6 @@ weighted avg       0.66      0.71      0.65       228
 
 ```
 
-
+:::
+:::
 :::

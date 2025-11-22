@@ -63,10 +63,8 @@ Néhány további EDA, azaz _Exploratory Data Analysis_ ("feltáró adatelemzés
 ```{python}
 # | code-fold: true
 
-
-import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
+import pandas as pd
 
 df = pd.read_csv("https://apagyidavid.web.elte.hu/2025-2026-1/dmml/data/titanic.csv")
 df = df.rename({"Parch": "ParCh"})
@@ -77,7 +75,9 @@ df.head()
 
 A `Cabin` oszlopról hasznos információk érhetők el [ebben az elemzésben](https://www.kaggle.com/code/gunesevitan/titanic-advanced-feature-engineering-tutorial?scriptVersionId=27280410&cellId=22) (1.2.4 szakasz):
 
+```{=html}
 <iframe src="https://www.kaggle.com/embed/gunesevitan/titanic-advanced-feature-engineering-tutorial?cellId=22&cellIds=22&kernelSessionId=27280410" height="300" style="margin: 0 auto; width: 100%; max-width: 950px;" frameborder="0" scrolling="auto" title="Titanic - Advanced Feature Engineering Tutorial"></iframe>
+```
 
 Contingency table (cross tabulation, crosstab; magyarul leginkább kontingenciatáblázat/-tábla):
 
@@ -181,8 +181,8 @@ Az elemzés során használj minél többféle órán látott módszert. Nézz u
 1. Vizsgáld meg egy (órán eddig nem vizsgált) kategorikus és egy folytonos, numerikus változó eloszlását, és ábrázold is egy megfelelő diagramon.
 
 ```{python}
+# | code-fold: true
 # | eval: false
-
 
 # TODO
 ```
@@ -190,8 +190,8 @@ Az elemzés során használj minél többféle órán látott módszert. Nézz u
 2. Hogyan hat a túlélés valószínűségére, ha egy családtagod utazott veled együtt (`SibSp` és `ParCh` oszlopok)? Fogalmazz meg előre egy hipotézist, és próbáld meg ellenőrizni. A kapott eredményhez készíts megfelelő vizualizációt és számolj statisztikákat. Mennyire tartod meglepőnek az eredményt? Mit gondolsz, ha kettő helyett négy oszlopunk lenne, külön a testvéreknek, házastársnak, szülőnek és gyereknek, hasonló eredményre jutnánk?
 
 ```{python}
+# | code-fold: true
 # | eval: false
-
 
 # TODO
 ```
@@ -199,8 +199,8 @@ Az elemzés során használj minél többféle órán látott módszert. Nézz u
 3. A `.query()` metódussal a sorokra lehet szűrni. Próbáld meg megérteni, jellemezni néhány grafikon segítségével a harmadosztályú utasokat.
 
 ```{python}
+# | code-fold: true
 # | eval: false
-
 
 # TODO
 ```
@@ -208,8 +208,8 @@ Az elemzés során használj minél többféle órán látott módszert. Nézz u
 4. Válassz egy oszlopot, pl. `Age` és vedd a `df["Age"]` `pd.Series`-t. Milyen műveleteket tudsz rajta elvégezni, amiket már egy `np.array`-en megszoktál? Meg tudod szorozni, tudod venni az átlagát, stb.? Találsz olyan műveletet, amit csak ezen lehet? És olyat, amit csak egy `np.array`-jel tudtál megcsinálni? Mi van, ha két oszlopot veszel, pl. `df[["Age", "Pclass"]]`? Mennyire viselkedik ez a típusú objektum egy többdimenziós `np.array`-hez hasonlóan?
 
 ```{python}
+# | code-fold: true
 # | eval: false
-
 
 # TODO
 ```
@@ -221,8 +221,8 @@ Az elemzés során használj minél többféle órán látott módszert. Nézz u
 Vizsgáld meg, hogy lehet-e ennek valami értelmes magyarázata, vagy ezeket hibás (kiugró) értékekként kell kezelnünk. Pl. gyerek, és ezért utazik ingyen, vagy valami családtaggal stb.
 
 ```{python}
+# | code-fold: true
 # | eval: false
-
 
 # TODO
 ```
@@ -426,8 +426,8 @@ A változó értékeit egy lineáris leképezéssel a $[0,1]$ vagy esetleg a $[-
 6. A `Sex` kategorikus változót kódold el numerikus értékké! Milyen kódolást használtál? Lehet-e mást?
 
 ```{python}
+# | code-fold: true
 # | eval: false
-
 
 # TODO
 ```
@@ -435,8 +435,8 @@ A változó értékeit egy lineáris leképezéssel a $[0,1]$ vagy esetleg a $[-
 7. Az `Age` oszlopot az átlag helyett kódold el a *medián* szerint binárisan! Nézd meg, hogy az utasosztályok szerint milyen eloszlást kapsz!
 
 ```{python}
+# | code-fold: true
 # | eval: false
-
 
 # TODO
 ```
@@ -444,8 +444,8 @@ A változó értékeit egy lineáris leképezéssel a $[0,1]$ vagy esetleg a $[-
 8. Az *ordinal encoding* során a transzformálni kívánt változónak van egy *természetes* sorrendje (pl. napok, hónapok). Ekkor a kódolás során ezt szeretnénk megtartani. Jelen esetben ilyen például az `AgeGroup` változó. Alakítsd át numerikus értékké a sorrend tiszteletben tartásával!
 
 ```{python}
+# | code-fold: true
 # | eval: false
-
 
 # TODO
 ```
@@ -453,8 +453,8 @@ A változó értékeit egy lineáris leképezéssel a $[0,1]$ vagy esetleg a $[-
 9. A `scikit-learn.preprocessing` modul nem csak a skálázásra, de az elkódolásra is tartalmaz beépített függvényt. A [LabelEncoder](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html#sklearn.preprocessing.LabelEncoder) segítségével ismételd meg az `Embarked` oszlop órán látott Label encoding változatát!
 
 ```{python}
+# | code-fold: true
 # | eval: false
-
 
 # TODO
 ```
@@ -463,8 +463,8 @@ A változó értékeit egy lineáris leképezéssel a $[0,1]$ vagy esetleg a $[-
 10. Készíts egy vezetéknév oszlopot és nézd nézd meg a leggyakoribb neveket. A vezetéknév kinyeréséhez figyeld meg, hogy mindenki vezetékneve vesszővel elválasztva szerepel a `string` elején. Ismered a megfelelő python parancsot erre? Ha nem, nézd meg, hogy mit csinál `.split(",")` parancs az oszlop egy tetszőleges elemén.
 
 ```{python}
+# | code-fold: true
 # | eval: false
-
 
 # TODO
 ```
@@ -472,8 +472,8 @@ A változó értékeit egy lineáris leképezéssel a $[0,1]$ vagy esetleg a $[-
 11. Kódold el az `Age` oszlopot a kvartilisek alapján! Használd a `quantile` vagy `percentile` függvényeket. Milyen típusú kódolás ez? Mit gondolsz, milyen modellek esetén érdemes így elkódolni egy adatot, és mikor felesleges, sőt hátrányos?
 
 ```{python}
+# | code-fold: true
 # | eval: false
-
 
 # TODO
 ```
@@ -482,8 +482,8 @@ A változó értékeit egy lineáris leképezéssel a $[0,1]$ vagy esetleg a $[-
 
 
 ```{python}
+# | code-fold: true
 # | eval: false
-
 
 # TODO
 ```

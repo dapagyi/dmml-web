@@ -79,13 +79,10 @@ Böngészd, használd a dokumentációt:
 ```{python}
 # | code-fold: true
 
-
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from sklearn.datasets import make_blobs
-import matplotlib.pyplot as plt
-import seaborn as sns
-import polars as pl
 ```
 
 
@@ -96,7 +93,6 @@ import polars as pl
 
 ```{python}
 # | eval: false
-
 
 def initialize_centroids(points: np.ndarray, n_clusters: int) -> np.ndarray:
     """Initialize centroids for KMeans clustering."""
@@ -128,7 +124,6 @@ test_centroid_initialization()
 ```{python}
 # | eval: false
 
-
 def foo_bar(p, c): # <1>
     """Darth Vader""" # <2>
 
@@ -151,7 +146,6 @@ def foo_bar(p, c): # <1>
 ```{python}
 # | eval: false
 
-
 def closest_centroids(points: np.ndarray, centroids: np.ndarray) -> np.ndarray:
     """Assign each point to the closest centroid."""
 
@@ -172,7 +166,6 @@ print(closest_centroids(points, centroids))
 ```{python}
 # | eval: false
 
-
 def calculate_new_centroids(X: np.ndarray, labels: np.ndarray, n_clusters: int) -> np.ndarray:
     # TODO. (Hint: use a list comprehension.)
     raise NotImplementedError()
@@ -185,7 +178,6 @@ def calculate_new_centroids(X: np.ndarray, labels: np.ndarray, n_clusters: int) 
 
 ```{python}
 # | eval: false
-
 
 class KMeans:
     def __init__(
@@ -220,7 +212,6 @@ print(kmeans._labels)
 
 ```{python}
 # | eval: false
-
 
 random_state = 0
 np.random.seed(random_state)
@@ -258,7 +249,6 @@ Idézzük fel az idevonatkozó ismereteinket, és válaszoljunk meg néhány ala
 ```{python}
 # | code-fold: true
 
-
 df = pd.read_csv("https://apagyidavid.web.elte.hu/2025-2026-1/dmml/data/titanic.csv")
 df.rename(columns={"Parch": "ParCh"}, inplace=True)
 print(f"Shape: {df.shape}")
@@ -269,8 +259,8 @@ df.head()
     * Mik az egyes oszlopokban lévő adatok típusai? Van-e olyan, ami furcsa?
 
 ```{python}
+# | code-fold: true
 # | eval: false
-
 
 # TODO
 ```
@@ -279,8 +269,8 @@ df.head()
     * `matplotlib` segítségével vizualizáljuk oszloponként a hiányzó értékek arányát az összes sorhoz képest ([`matplotlib` dokumentáció](https://matplotlib.org/){target="_blank"}).
 
 ```{python}
+# | code-fold: true
 # | eval: false
-
 
 # TODO
 ```
@@ -290,8 +280,8 @@ df.head()
     * Vizualizáljuk az előbbi értékek eloszlását `seaborn` segítségével ([`seaborn` dokumentáció](https://seaborn.pydata.org/){target="_blank"}). (Ez csak egy "wrapper" a `matplotlib` felett.)
 
 ```{python}
+# | code-fold: true
 # | eval: false
-
 
 # TODO
 ```
@@ -303,8 +293,8 @@ Használjuk a `groupby` és `hist` függvényeket a `pandas` `DateFrame`-re alka
 :::
 
 ```{python}
+# | code-fold: true
 # | eval: false
-
 
 # TODO
 ```
@@ -338,12 +328,11 @@ Valószínűleg `pandas` alapok unalomig voltak már más órákon. Nagyon sokan
 11. Böngésszük egy kicsit a dokumentációt, majd oldjuk meg az előző szakaszban lévő feladatokat `polars` segítségével.
 
 ```{python}
+# | code-fold: true
 # | eval: false
-
 
 # TODO
 ```
-
 
 ::: {.content-visible when-profile="solutions"}
 ::: {.content-visible when-format="html"}
@@ -432,6 +421,7 @@ points = np.array([[1, 2], [3, 4], [5, 6]])
 centroids = np.array([[2, 2], [6, 6]])
 closest_centroids(points, centroids)
 ```
+
 :::
 
 ::: {.callout-tip collapse="true"}
@@ -442,11 +432,13 @@ def calculate_new_centroids(X: np.ndarray, labels: np.ndarray, n_clusters: int) 
     clusters = [X[labels == i] for i in range(n_clusters)]
     return np.array([cluster.mean(axis=0) for cluster in clusters])
 
+
 # Example usage
 points = np.array([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]])
 labels = np.array([0, 0, 1, 1, 1])
 calculate_new_centroids(points, labels, 2)
 ```
+
 :::
 
 ::: {.callout-tip collapse="true"}
@@ -491,7 +483,6 @@ Futassuk le a fenti cellát néhányszor. Mit tapasztalunk?
 
 ```{python}
 # | fig-cap: "Bal oldalt a valódi klaszterek, jobb oldalt a megtaláltak vannak. Jól látható a $k$-means algoritmus egy gyengesége, hogy csak [Voronoi-cellák](https://en.wikipedia.org/wiki/Voronoi_diagram) mentén tud klasztereket találni, minden ezzel járó következménnyel együtt."
-
 
 random_state = 0
 np.random.seed(random_state)
@@ -570,6 +561,9 @@ df.hist("Age", by="Pclass", layout=(1, 3), density=True, figsize=(18, 6))
 ## 11. feladat megoldása (részlet)
 
 ```{python}
+import polars as pl
+
+
 df = pl.read_csv("https://apagyidavid.web.elte.hu/2025-2026-1/dmml/data/titanic.csv")
 df = df.rename({"Parch": "ParCh"})
 df.head()
@@ -605,7 +599,6 @@ df[numerical_cols].describe()
 ```
 
 :::
-
 
 :::
 :::

@@ -55,13 +55,13 @@ In general, SVMs can be very effective (aften can achieve similar performance as
 ```{python}
 # | code-fold: true
 
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 import polars as pl
-from sklearn.svm import SVC
-from sklearn.datasets import make_classification, make_circles, make_moons
+from sklearn.datasets import make_circles, make_classification, make_moons
 from sklearn.inspection import DecisionBoundaryDisplay
 from sklearn.metrics import accuracy_score
+from sklearn.svm import SVC
 
 
 def plot_decision_boundary(ax, clf, X, y, title, kernel_name):

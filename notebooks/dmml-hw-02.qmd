@@ -42,11 +42,11 @@ Legyenek az $x_i$ mérési pontjaink a $[0, 5]$ intervallum pontjai $0.01$ lép�
 # | code-fold: true
 # | eval: false
 
-
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.linalg.lapack import dtrtri
 from functools import partial
+
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.linalg.lapack import dtrtri
 
 rng = np.random.default_rng()
 ```
@@ -59,15 +59,15 @@ def f(x):
     # TODO
     return
 
+
 # TODO
-x = 
-fx = 
-y = 
+x = ...
+fx = ...
+y = ...
 ```
 
 ```{python}
 # | eval: false
-
 
 fig, ax = plt.subplots(figsize=(12, 6), dpi=144)
 ax.plot(x, y, lw=0.8, alpha=0.8)
@@ -99,10 +99,8 @@ Ezt a következőképpen tehetjük meg: legyen $A = [x^T, \mathbb{1}^T] \in \mat
 ```{python}
 # | eval: false
 
-
 # TODO
-
-[m, b] = 
+[m, b] = ...
 print(f"m = {m:.5f}\nb = {b:.5f}")
 ```
 
@@ -160,7 +158,7 @@ _Használd ki,_ hogy mindezt azért csináltuk, mivel az $R$ inverzét gyorsan k
 
 
 # TODO
-theta =
+theta = ...
 ``` 
 
 Ábrázold a kapott eredményt, illetve számold ki a modell $R^2$ hibáját.
@@ -200,6 +198,7 @@ def f_i_gauss(x, i, d):
     # TODO
     return
 
+
 d = 10
 basis_functions = [partial(f_i_gauss, i=i + 1, d=d) for i in range(d)]
 Phi_gauss = PhiCalculator(basis_functions)(x)
@@ -211,7 +210,7 @@ print(f"Shape of Phi (should be n×d): {Phi_gauss.shape}")
 
 
 # TODO
-theta_gauss =
+theta_gauss = ...
 ```
 
 ```{python}

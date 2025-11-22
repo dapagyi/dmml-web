@@ -70,10 +70,10 @@ A `matplotlib`, mint korábban már láttuk, egy alacsony szintű, de sokoldalú
 ```{python}
 # | code-fold: true
 
-
-import pandas as pd
 import matplotlib.pyplot as plt
+import pandas as pd
 import seaborn as sns
+
 
 df = pd.read_csv("http://dmml.dapagyi.dedyn.io/static/dmml-2025-09-25/train.csv")
 
@@ -123,6 +123,7 @@ A korábban már linkelt galériát érdemes végiggörgetni, néhányat kiprób
 
 ```{python}
 import plotly.express as px
+
 
 df = px.data.iris()
 fig = px.scatter(df, x="sepal_length", y="sepal_width", color="species", title="Iris Dataset")

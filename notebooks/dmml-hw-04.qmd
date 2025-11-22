@@ -43,8 +43,8 @@ Próbálj meg minél jobb eredményt elérni a teszt adathalmazon előfeldolgoz�
 Turbózd fel a HF/3-as megoldásodat. Végezz EDA-t, készíts plotokat, ellenőrizd a változók eloszlását, hiányzó értékeket -- foglalkozz a pótlásukkal --, outliereket, stb. Próbálj ki már összetettebb modelleket is. A cél az, hogy tulajdonképpen egy egész kis miniprojekt kerekedjen ki ebből.
 
 ```{python}
+# | code-fold: true
 # | eval: false
 
-
+# TODO
 ```
-

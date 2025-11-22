@@ -69,16 +69,16 @@ Legyen $\mathbb{P}(y = y_i) = p_i$: egy adott csúcsba jutó adatpontok hanyadr�
 ```{python}
 # | code-fold: true
 
+import matplotlib.pyplot as plt
 import pandas as pd
-from sklearn.model_selection import train_test_split, KFold, GridSearchCV
-from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import (
+    ConfusionMatrixDisplay,
     confusion_matrix,
     f1_score,
-    ConfusionMatrixDisplay,
 )
+from sklearn.model_selection import GridSearchCV, KFold, train_test_split
+from sklearn.preprocessing import LabelEncoder
 from sklearn.tree import DecisionTreeClassifier, plot_tree
-import matplotlib.pyplot as plt
 
 
 df = pd.read_csv("https://apagyidavid.web.elte.hu/2025-2026-1/dmml/data/titanic.csv")
@@ -103,7 +103,6 @@ model
 ```
 
 ```{python}
-
 model.fit(X, y)
 ```
 
@@ -298,6 +297,7 @@ __Feladat:__ Próbáljuk ki, hogy a `verbose` paraméter különböző értékei
 
 ```{python}
 # | code-fold: true
+# | eval: false
 
 # TODO
 ```
@@ -308,6 +308,7 @@ __Feladat:__ Végezzünk hiperparaméter-optimalizálást `RandomizedSearchCV` s
 
 ```{python}
 # | code-fold: true
+# | eval: false
 
 # TODO
 ```
@@ -326,6 +327,7 @@ __Feladat:__ Telepítsük és próbáljuk ki az Optunát.
 
 ```{python}
 # | code-fold: true
+# | eval: false
 
 # TODO
 ```

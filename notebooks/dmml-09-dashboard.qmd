@@ -10,6 +10,7 @@ theme: flatly # There are several other themes available, see https://quarto.org
 ```{python}
 import polars as pl
 
+
 df = pl.read_csv("https://raw.githubusercontent.com/dapagyi/dmml-web/main/data/liver_disorders.csv")
 ```
 
@@ -157,8 +158,8 @@ fig.show()
 ```{python}
 import altair as alt
 
-# This is the (sort of) altair version of the above plotly chart. (I used Claude AI to generate it.)
 
+# This is the (sort of) altair version of the above plotly chart. (I used Claude AI to generate it.)
 chart = (
     alt.Chart(df)
     .mark_bar()
@@ -197,6 +198,7 @@ First 150 records (out of total `{python} df.height`) of the raw dataset.
 ```{python}
 from itables import show
 
+
 show(df.head(150), style="width:100%;", paging=True, pageLength=15)
 ```
 
@@ -211,6 +213,7 @@ Whatever statistics you find interesting about the dataset.
 ```{python}
 import numpy as np
 import plotly.express as px
+
 
 df_pandas = df.to_pandas()
 numeric_cols = df_pandas.select_dtypes(include=[np.number]).columns.tolist()
@@ -238,6 +241,7 @@ In case you found something interesting during your EDA, highlight it here.
 ```{python}
 import matplotlib.pyplot as plt
 import seaborn as sns
+
 
 sns.pairplot(df.to_pandas(), hue="Selector", palette="colorblind")
 plt.suptitle("Numerical Features", y=1.02)
@@ -361,7 +365,6 @@ G
 # | title: "Best F1-score"
 
 dict(color="success", value=0.8932, icon="crosshair")
-
 ```
 
 ```{python}
@@ -369,7 +372,6 @@ dict(color="success", value=0.8932, icon="crosshair")
 # | title: "Best ROC-AUC"
 
 dict(color="primary", value=0.9123, icon="graph-up-arrow")
-
 ```
 
 ```{python}
@@ -377,7 +379,6 @@ dict(color="primary", value=0.9123, icon="graph-up-arrow")
 # | title: "X"
 
 dict(color="info", value=0.9123, icon="graph-up-arrow")
-
 ```
 
 ```{python}
@@ -385,7 +386,6 @@ dict(color="info", value=0.9123, icon="graph-up-arrow")
 # | title: "Brainrot"
 
 dict(color="warning", value=f"6-7", icon="exclamation-triangle")
-
 ```
 
 ```{python}
@@ -393,5 +393,4 @@ dict(color="warning", value=f"6-7", icon="exclamation-triangle")
 # | title: "Missclassified Samples"
 
 dict(color="danger", value=f"{df.height}", icon="person-walking")
-
 ```

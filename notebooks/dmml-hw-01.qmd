@@ -41,8 +41,8 @@ Az elemzés során használj minél többféle órán látott módszert: haszná
 Nyugodtan használj külső forrásokat, less el más adatelemzési technikákat, ezeket tüntesd fel a megoldásodban.
 
 ```{python}
+# | code-fold: true
 # | eval: false
-
 
 # TODO
 ```

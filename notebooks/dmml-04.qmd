@@ -164,24 +164,23 @@ Nagyon fontos, előadáson minden bizonnyal már szerepelt, így itt nem részle
 ```{python}
 # | code-fold: true
 
-
-import polars as pl
-
-from sklearn.datasets import make_classification
-from sklearn.model_selection import train_test_split
-from sklearn.model_selection import RandomizedSearchCV
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, RocCurveDisplay, classification_report
-
-from scipy.stats import uniform, loguniform
-
 import matplotlib.pyplot as plt
-from sklearn.metrics import roc_auc_score
+import polars as pl
+from scipy.stats import loguniform, uniform
+from sklearn.datasets import make_classification
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import (
+    ConfusionMatrixDisplay,
+    RocCurveDisplay,
+    classification_report,
+    confusion_matrix,
+    roc_auc_score,
+)
+from sklearn.model_selection import RandomizedSearchCV, train_test_split
 ```
 
 ```{python}
 # | code-fold: true
-
 
 # Data preparation
 X, y = make_classification(n_samples=5000, n_features=100, n_informative=95, n_classes=2)
@@ -190,13 +189,10 @@ X = pl.DataFrame(X)
 print(f"Data shapes: {X.shape}, {y.shape}")
 X_modeling, X_test, y_modeling, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
 print(f"Train-test split: {X_modeling.shape}, {X_test.shape}")
-
-
 ```
 
 ```{python}
 # | code-fold: true
-
 
 # Modeling
 model = RandomForestClassifier(
@@ -229,7 +225,6 @@ search.fit(X_modeling, y_modeling)
 ```{python}
 # | code-fold: true
 
-
 # CV results
 results = pl.DataFrame(search.cv_results_)
 results = results.sort("rank_test_roc_auc")
@@ -238,7 +233,6 @@ results.head(3)
 
 ```{python}
 # | code-fold: true
-
 
 # Evaluation
 best_model = search.best_estimator_
@@ -269,7 +263,6 @@ Ha nem foglalkozunk a küszöbbel (tehát hagyjuk a default 0.5-ön), akkor a `.
 
 ```{python}
 # | code-fold: true
-
 
 plot_args = {"alpha": 0.5, "bins": 25, "density": False}
 

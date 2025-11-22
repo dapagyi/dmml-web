@@ -66,7 +66,9 @@ Néhány példa, de ezeknél jóval egyszerűbbeket is nyugodtan lehet írni:
    c. az accuracy mindig egyenlő a precision és a recall mértani közepével.
    d. az accuracy mindig egyenlő a precision és a recall négyzetes közepével.
 
-:::{.callout-note title="Megoldókulcs" collapse="true"}
+::: {.content-visible when-profile="solutions"}
+::: {.content-visible when-format="html"}
+::: {.callout-note title="Megoldókulcs" collapse="true"}
 
 1. d., a többi hamis.
 2. a., a többi igaz.
@@ -74,7 +76,7 @@ Néhány példa, de ezeknél jóval egyszerűbbeket is nyugodtan lehet írni:
 
 :::
 
-:::{.callout-tip title="Magyarázat" collapse="true"}
+::: {.callout-tip title="Magyarázat" collapse="true"}
 
 1. Definíció.
 2. Az a. azért hamis, mert akár egyetlen paraméter is leírhat nagyon bonyolult osztályozásokat is.
@@ -83,4 +85,6 @@ Néhány példa, de ezeknél jóval egyszerűbbeket is nyugodtan lehet írni:
    - Vagy tegyük fel, hogy van egy két pozitív egész paraméterrel meghatározott klasszifikátorosztályom: $\mathcal{F} = \{f_{a,b} : a,b \in \mathbb{Z}^+\}$. Ha a két paramétert egyetlen valós számmal "elkódolom" ($c=g(a,b)$, ahol $g$ egy rögzített injektív leképzés), akkor egy paraméterrel is le tudom írni ugyanazt a klasszifikátorosztályt: $\mathcal{F}' = \{f'_{c} : c \in C\}$, ahol $C = \{c : c=g(a,b), a,b\in\mathbb{Z}\}$ és $f'_{g(a,b)} = f_{a,b}$ bármely $a,b\in\mathbb{Z}$-re. Pl. a tizedesvessző elé teszem $a$-t, mögé $b$-t $(123{,}456)$; vagy az első paraméternek minden számjegyét megduplázom, és ezt összefűzöm $b$-vel egy felismerhető elválasztókód mentén $(112233\textbf{10}456)$; stb.
 3. Definíció és közepek.
 
+:::
+:::
 :::
