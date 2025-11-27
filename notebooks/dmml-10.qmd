@@ -1,0 +1,84 @@
+---
+title: "DMML-10"
+subtitle: "Recommendation Systems."
+author: "David Apagyi"
+date: "2025-11-27"
+title-block-banner: true
+lightbox: true
+format:
+  html:
+    grid: 
+      margin-width: 300px
+    html-math-method: katex
+    include-in-header:
+      - file: partials/analytics.html
+    include-after-body:
+      - file: partials/sync-dark-mode.html
+      - file: partials/footer.html
+    css: partials/styles.css
+    respect-user-color-scheme: true
+    code-links: 
+      - repo
+  ipynb: default
+execute:
+  echo: true
+toc: true
+reference-location: margin
+citation-location: margin
+theme:
+  light: default
+  dark: [default, partials/dark-mode.scss]
+---
+__Web page:__ [apagyidavid.web.elte.hu/2025-2026-1/dmml](https://apagyidavid.web.elte.hu/2025-2026-1/dmml){target="_blank"}
+
+<a target="_blank" href="https://colab.research.google.com/github/dapagyi/dmml-web/blob/notebooks/dmml-10.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+# Recommendation Systems
+
+Useful resources:
+
+- [Ullman et al., Mining of Massive Datasets](http://www.mmds.org/){target="_blank"} ([Chapter 3: Finding Similar Items,](http://infolab.stanford.edu/~ullman/mmds/ch3n.pdf){target="_blank"} [Chapter 9: Recommendation Systems](http://infolab.stanford.edu/~ullman/mmds/ch9.pdf){target="_blank"})
+- [Beginner Tutorial: Recommender Systems in Python (Datacamp)](https://www.datacamp.com/tutorial/recommender-systems-python){target="_blank"}
+- [Recommendation System for Streaming Platforms Tutorial (Datacamp)](https://www.datacamp.com/tutorial/streaming-platform-analysis){target="_blank"}
+- [Wikipedia: Recommender System](https://en.wikipedia.org/wiki/Recommender_system){target="_blank"}
+
+## Demo
+
+Clone [this repository:](https://github.com/dapagyi/dmml-recsys){target="_blank"}
+
+```bash
+git clone git@github.com:dapagyi/dmml-recsys.git
+```
+
+Then, navigate to the folder and start the demo API (e.g. using `uv` as [package and dependency manager](https://docs.astral.sh/uv/){target="_blank"}):
+
+```bash
+cd dmml-recsys/dmml-recsys-api
+uv run litestar --app src.app:app run --host 0.0.0.0 --port 8000
+```
+
+Set `http://localhost:8000` as your API URL [in the frontend application.](https://apagyidavid.web.elte.hu/2025-2026-1/dmml/recsys){target="_blank"} 
+
+While developing, you can test your recommenders separately:
+
+```
+(dmml-recsys-api) david@david-thinkpad:~/code/dmml-packages/dmml-recsys/dmml-recsys-api$ python src/rec_test.py
+Top 5 tag-based recommendations for item_id 1 (Toy Story):
+Item ID: 2355 (A Bug's Life), Score: 0.9013892751944388
+Item ID: 3114 (Toy Story 2), Score: 0.5772673193368394
+Item ID: 122918 (Guardians of the Galaxy 2), Score: 0.4330096702897574
+Item ID: 68954 (Up), Score: 0.2260398610190949
+Item ID: 115617 (Big Hero 6), Score: 0.15214187468804743
+```
+
+__Exercise:__ Try to come up with your own recommendation algorithm and implement it in the demo API (in the `src/recommenders.py` file).
+
+::: {.content-visible when-profile="solutions"}
+::: {.content-visible when-format="html"}
+::: {.callout-tip title="Solutions" collapse="true"}
+
+You can find some implementations in the `solutions` branch.
+
+:::
+:::
+:::

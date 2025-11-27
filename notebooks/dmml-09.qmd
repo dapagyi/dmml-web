@@ -1,6 +1,6 @@
 ---
 title: "DMML-09"
-subtitle: "Support Vector Machines"
+subtitle: "Support Vector Machines."
 author: "David Apagyi"
 date: "2025-11-20"
 title-block-banner: true

@@ -1,6 +1,6 @@
 ---
 title: "DMML-07"
-subtitle: "Linear Models Revisited: Ridge and LAD Regression; `statsmodels` package"
+subtitle: "Linear Models Revisited: Ridge and LAD Regression; `statsmodels` package."
 author: "David Apagyi"
 date: "2025-11-06"
 title-block-banner: true
