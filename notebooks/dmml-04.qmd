@@ -135,7 +135,7 @@ Remek leírás a fenti, rövid -- nem teljesértékű -- kiemelés:
 
 ::: {.callout-note title="Megjegyzés"}
 
-Ezen a kérdéskör sokak számára képezi vita tárgyát. Néhány példa:
+Ez a kérdéskör sokak számára képezi vita tárgyát. Néhány példa:
 
 * [Why is accuracy not the best measure for assessing classification models?](https://stats.stackexchange.com/questions/312780/why-is-accuracy-not-the-best-measure-for-assessing-classification-models/312787#312787){target="_blank"}
 * [Is accuracy an improper scoring rule in a binary classification setting?](https://stats.stackexchange.com/questions/359909/is-accuracy-an-improper-scoring-rule-in-a-binary-classification-setting){target="_blank"}

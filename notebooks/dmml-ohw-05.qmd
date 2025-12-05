@@ -50,12 +50,12 @@ Kérdésenként (négy lehetőség, helyes válasz, indoklás) fél-fél pont j�
 
 Néhány példa, de ezeknél jóval egyszerűbbeket is nyugodtan lehet írni:
 
-1. A VC dimenzió...
+1. A VC-dimenzió...
    a. mindig pozitív egész szám.
    b. lehet negatív.
    c. alsó korlát abban az értelemben, hogy ha egy $\mathcal{F}$ klasszifikátorosztályra $\dim_\text{VC}(\mathcal{F})=d$, akkor az alaphalmaz minden legalább $d$ méretű $A$ részhalmazának minden címkézéséhez létezik egy $\mathcal{F}$-beli klasszifikátor, amely helyesen osztályozza az $A$-beli pontokat.
    d. alsó korlát abban az értelemben, hogy ha egy $\mathcal{F}$ klasszifikátorosztályra $\dim_\text{VC}(\mathcal{F})=d$, akkor létezik az alaphalmaznak olyan $d$ méretű $A$ részhalmaza, amelynek minden címkézéséhez létezik olyan $\mathcal{F}$-beli klasszifikátor, amely helyesen osztályozza az $A$-beli pontokat.
-2. A VC dimenzió...
+2. A VC-dimenzió...
    a. (azonos alaphalmaz felett) kevesebb paraméterrel rendelkező klasszifikátorosztályok esetén mindig szigorúan kisebb. (_Paraméterként -- praktikus korlátokat nem figyelembe véve -- tetszőleges valós számra gondolhatunk._)
    b. monoton halmazfüggvény, azaz $\mathcal{H}_1 \subseteq \mathcal{H}_2$ halmazrendszerek esetén teljesül, hogy $\dim_\text{VC}(\mathcal{H}_1) \leq \dim_\text{VC}(\mathcal{H}_2)$.
    c. az $\mathcal{X}=\mathbb{R}^d$ alaphalmaz felett lineáris klasszifikátorokra éppen $d+1$.
